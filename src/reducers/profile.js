@@ -6,17 +6,23 @@ const initialState = {
     style: [filter, {}, {},],
     menuMode:'post',
     response: undefined,
-    error: false
+    error: false,
+    followingMode:false
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case 'CLICK_MENU_ITEM':
             return {
+                ...state,
                 style: { ...action.payload.style },
                 menuMode:action.payload.menuMode,
             };
-        
+        case 'PROF_OR_FOLLOW':
+            return {
+                ...state,
+                followingMode:action.payload.followingMode
+            }
         default:
             return state;
     }

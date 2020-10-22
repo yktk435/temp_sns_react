@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import MyProfile from '../components/centerarea/profile/MyProfile';
 import * as actions from '../actions/login';
 import * as fetch from '../actions/fetch';
-import {withRouter} from 'react-router' 
+import { withRouter } from 'react-router' 
+import * as profile from '../actions/profile'
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -22,7 +23,9 @@ const mapStateToProps = (state, ownProps) => ({
     picObj: state.profile.picObj,
     // ぐっと
     goodObj: state.profile.goodObj,
-    ...ownProps.location
+    location: ownProps.location,
+    followingMode:state.profile.followingMode,
+
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -34,7 +37,14 @@ const mapDispatchToProps = dispatch => ({
     },
     startLogin(ipassData) {
         dispatch(fetch.startLogin(ipassData))
-    }
+    },
+    clickMenuItem(menuMode) {
+        dispatch(profile.clickMenuItem(menuMode))
+    },
+    profileOrFollowing(menuMode) {
+        dispatch(profile.profileOrFollowing(menuMode))
+    },
+    
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MyProfile));

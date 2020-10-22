@@ -5,8 +5,11 @@ import Following from './following'
 import MyProfile from '../../../containers/MyProfile'
 import { Switch, Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux'; // 追加
+// import { Provider } from 'react-redux';
+import { useStore } from 'react-redux'
 
 class Profile extends React.Component {
+    
     componentWillMount() {
         this.props.getArticles(this.props.accessToken)
     }
@@ -26,16 +29,26 @@ class Profile extends React.Component {
         // const { userName, userId, iconUrl, headerUrl, postObj, articles } = this.props
         console.log('00000000000000000000000000000000000000000000')
         console.log(this.props)
+        // let store=useStore()
         return (
-            
-                <Switch>
+            <div>
+                {(() => {
+                    if (this.props.followingMode) {
+                        return (<Following />)
+                    } else { 
+                        return(<MyProfile/>)
+                        
+                    }
+                })()}
+</div>            
+                // <Switch>
 
-                    <Route path="/profile/:menu" component={ProfileMenu} />
-                    <Route path="/profile" component={MyProfile} />
-                    {/* <MyProfile {...this.props} /> */}
-                    {/* <Following /> */}
+                //     <Route path="/profile/:menu" component={ProfileMenu} />
+                //     <Route path="/profile" component={MyProfile} />
+                //     {/* <MyProfile {...this.props} /> */}
+                //     {/* <Following /> */}
 
-                </Switch>
+                // </Switch>
             
         )
     }

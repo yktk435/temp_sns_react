@@ -26,3 +26,10 @@ export const clickMenuItem = menuMode => {
     })
 }
 
+export const profileOrFollowing = menuMode => (
+    {
+        type: 'PROF_OR_FOLLOW',
+        payload: {
+            followingMode: menuMode == 'following' ? true : false
+        }
+    })

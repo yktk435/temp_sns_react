@@ -5,6 +5,7 @@ import Home from '../../containers/home'
 import Notification from './notification/notification'
 import Dm from './dm/dm'
 import Profile from '../../containers/profile'
+
 import Setting from '../../containers/setting'
 import OtherUserPage from '../../containers/otherUserPage'
 import Following from '../../containers/following';

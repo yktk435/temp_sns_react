@@ -4,7 +4,7 @@ import good from '../../images/good.png'
 import rep from '../../images/rep.png'
 import retweet from '../../images/retweet.png'
 const MyProfile = (props) => {
-    const { userName, userId, iconUrl, headerUrl, postObj, articles, style, clickMenuItem, menuMode } = props
+    const { userName, userId, iconUrl, headerUrl, postObj, articles, style, clickMenuItem, menuMode ,profileOrFollowing} = props
     console.log('MyProfileMyProfileMyProfileMyProfileMyProfileMyProfile')
     console.log(props)
     return (
@@ -38,9 +38,17 @@ const MyProfile = (props) => {
                     {/* フォロー フォロワー */}
                     <div style={{ display: "flex" }}>
                         {/* <!-- フォロー --> */}
-                        <Link to="/following" ><div style={{ color: "rgb(115, 129, 136)", marginTop: "5px", marginRight: "10px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロー</div></Link>
+                        {/* <Link to="/following" ><div style={{ color: "rgb(115, 129, 136)", marginTop: "5px", marginRight: "10px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロー</div></Link> */}
                         {/* <!-- フォロワー --> */}
-                        <Link to="/profile/following" ><div style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロワー</div></Link>
+                        {/* <Link to="/profile/following" ><div style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロワー</div></Link> */}
+                        
+                        {/* <!-- フォロー --> */}
+                        <div className="pointer" onCLick={(e) => {
+                            console.log(e)
+                            profileOrFollowing('following')
+                        }} style={{ color: "rgb(115, 129, 136)", marginTop: "5px", marginRight: "10px" }}><span onClick={() => { console.log('span');profileOrFollowing('following')}} style={{ color: "white", fontWeight: "bold" }}>3</span>フォロー</div>
+                        {/* <!-- フォロワー --> */}
+                        <div className="pointer" onCLick={()=>{profileOrFollowing('following')}} style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロワー</div>
                     </div>
                     {/* <!-- 投稿・返信・メディア(写真)・いいね(ぐっと)を表示 --> */}
                     <div style={{ width: "100%", display: "inline-flex" }}>
