@@ -8,7 +8,8 @@ import CenterArea from './containers/centerarea'
 import Login from './containers/login'
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './index.css'
-import CreateAccount from './components/createAccount'
+import CreateAccount from './containers/createAccount'
+// import CreateAccount from './components/createAccount'
 class App extends Component {
   componentWillMount() {
 
@@ -26,7 +27,6 @@ class App extends Component {
     } else {
       // クッキーにアクセストークンがあるならそれを使ってログイン
       token = token[1];
-      console.log(token)
       // dispatch
       this.props.startLoginWithToken(token)
     }
@@ -47,7 +47,7 @@ class App extends Component {
       
       <Switch>
         <Route path="/login" component={Login}/>
-        <Route path="/create"  component={CreateAccount}/>
+        <Route path="/create" component={CreateAccount} />
       </Switch>
       
     )

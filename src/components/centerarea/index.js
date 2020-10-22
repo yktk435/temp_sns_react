@@ -7,11 +7,14 @@ import Dm from './dm/dm'
 import Profile from '../../containers/profile'
 import Setting from '../../containers/setting'
 import OtherUserPage from '../../containers/otherUserPage'
+import Following from '../../containers/following';
 
 
 class CenterArea extends React.Component {
     
     render() {
+        console.log('LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL')
+        console.log(this.props)
         const { menuName } = this.props;
         return (
             <div className="main center border" style={{ width: "560px", height: "100vh" ,overflow:"auto"}}>
@@ -27,6 +30,8 @@ class CenterArea extends React.Component {
                     <Route path="/home" component={Home}/>
                     <Route path="/notification" component={Notification} />
                     <Route path="/dm" component={Dm} />
+                    {/* <Route path="/following" component={Following} /> */}
+                    <Route path="/following" component={Following} />
                     <Route path="/profile" component={Profile} />
                     <Route path="/setting" component={Setting} />
                     <Route path="/user/:userId" component={OtherUserPage} />

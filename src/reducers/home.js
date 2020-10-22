@@ -20,19 +20,19 @@ export default (state = initialState, action) => {
                 imageFile: undefined,
                 imageUrl:undefined
             }
-            break;
+            
         case 'IMAGE_CHOICE':
             return {
                 ...state,
                 imageUrl: action.payload.imageUrl,
             }
-            break;
+            
         case 'IMAGE_CLEAR':
             return {
                 ...state,
                 imageUrl: undefined,
             }
-            break;
+            
         default:
             return state;
     }

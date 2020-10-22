@@ -27,7 +27,6 @@ export default (state = initialState, action) => {
 
     switch (action.type) {
         case 'GET_USERINFO':
-            console.log(action.payload)
             return action.payload.error
                 ? {
                     ...state,
@@ -43,7 +42,7 @@ export default (state = initialState, action) => {
                         auth: true,
                     },
                 };
-            break;
+            
         case 'GET_OTHER_USERINFO':
             return action.payload.error
                 ? {
@@ -59,7 +58,7 @@ export default (state = initialState, action) => {
                         error: false,
                     },
                 };
-            break;
+            
         case 'LOGIN_ERROR':
             return {
                 ...state,
@@ -69,7 +68,7 @@ export default (state = initialState, action) => {
                     error: true
                 }
             }
-            break;
+            
         case 'LOGIN_ERROR_EITH_TOKEN':
             return {
                 ...state,
@@ -79,14 +78,14 @@ export default (state = initialState, action) => {
                     
                 }
             }
-            break;
+            
         case 'LOGOUT':
             return {
                 user: {
                 auth:false   
                 }
             }
-            break;
+            
         default:
             return state;
     }

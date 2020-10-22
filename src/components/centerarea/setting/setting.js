@@ -1,14 +1,12 @@
 import React from 'react'
 import right from '../../images/right.png'
+import {Link} from 'react-router-dom'
 class Setting extends React.Component{
     componentWillMount() {
         
     }
     render() {
         const { userId } = this.props
-        console.log('setting')
-        console.log(this.props)
-        console.log('setting')
         return (
             <div className="main-container" style={{ overflow: "auto" }}>
                 <React.Fragment>
@@ -29,9 +27,9 @@ class Setting extends React.Component{
 }
 const CenterItem = (props) => {
     return (
-        <div id={props.id} class="setting-outer setting-name-hover" style={props.divstyle} onClick={(e) => {
+        <Link to={"/setting/"+props.id}><div id={props.id} class="setting-outer setting-name-hover" style={props.divstyle} onClick={(e) => {
             let div = e.target.closest('div.setting-outer.setting-name-hover')
-            console.log(div)
+            
             props.clickMenuItem(div.innerText)
         }}>
             <a class="a-to-block2 pointer" style={{ height: "30px" }}>
@@ -43,6 +41,7 @@ const CenterItem = (props) => {
                 </div>
             </a>
         </div>
+        </Link>
     )
 
 }

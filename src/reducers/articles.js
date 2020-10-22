@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
                     error: false,
                 }
                 ;
-            break;
+            
         case 'RECEIVE_ARTICLES':
             return action.payload.error
             ? {
@@ -45,12 +45,12 @@ export default (state = initialState, action) => {
                 ),
                 error: false,
             }
-            break;
+            
         case 'LOGOUT':
             return {
                  ...initialState
             }
-            break
+            
         default:
             return state;
     }

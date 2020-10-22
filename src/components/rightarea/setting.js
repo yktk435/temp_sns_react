@@ -1,5 +1,7 @@
 import React from 'react'
-import right from '../images/right.png'
+import { Switch, Route } from 'react-router-dom';
+import Change from '../../containers/change'
+import AccountMenuTable from '../../containers/accountMenuTable'
 const Setting = () => {
 
     return (
@@ -16,11 +18,6 @@ const Setting = () => {
             </React.Fragment>
         </div>
     )
-}
-const CenterItemName = (props) => {
-
-
-
 }
 const CenterItem = (props) => {
     return (
@@ -39,6 +36,7 @@ const CenterItem = (props) => {
 }
 
 export const RightAreaSetting = (props) => {
+    
     return (
         <div className="main right border" style={{ overflow: "auto", height: "100vh", width: "350px", display: props.display }}>
             <React.Fragment>
@@ -50,21 +48,13 @@ export const RightAreaSetting = (props) => {
                 <div class="setting-outer" style={{ height: "30px" }}>
                     <div class="setting-menu-inner">ログインとセキュリティ</div>
                 </div>
-                <RightItem itemName="ユーザ名" itemContent="testId" />
-                <RightItem itemName="メールアドレス" itemContent="example@exampole.com" />
-                <RightItem2 itemName="パスワード" />
-                {/* <!-- アカウント削除 --> */}
-                <div class="setting-outer setting-name-hover">
-                    <a href="" class="a-to-block2" style={{height: "30px"}}>
-                        <div class="setting-inner">アカウント削除</div>
-                        <div class="menu-name" aria-label="メニュー名" style={{transform: "translate(-20%, -75%)",right: "1%"}}>
-                            <a class="" href="" aria-label="新規アクション">
-                                <img class="right-icon" src={right} alt="新規メッセージ"/>
-                            </a>
-                        </div>
-                    </a>
+                <Switch>
+                    <Route path="/setting/account/:menu" component={Account} />
+                    <Route path="/setting/account/" component={AccountMenuTable} />
+                    <Route path="/setting/security" component={ChangeUserId} />
+                    {/* <Route path="/setting/notification" component={Notification} /> */}
+                </Switch>
 
-                </div>
             </React.Fragment>
         </div>
     )
@@ -76,37 +66,143 @@ export const RightItemName = (props) => {
         </div>
     )
 }
- const RightItem = (props) => {
-    return (
-        <div class="setting-outer setting-name-hover">
-            <a href="" class="a-to-block2">
-                <div>
-                    <div class="">{props.itemName}</div>
-                    <div style={{ fontSize: "13px", color: "rgb(115, 129, 136)" }}>{props.itemContent}</div>
-                </div>
-                <div class="menu-name" aria-label="メニュー名" style={{ transform: "translate(-20%, -50%)", right: "1%" }}>
-                    <a class="" href="" aria-label="新規アクション">
-                        <img class="right-icon" src={right} alt="新規メッセージ" />
-                    </a>
-                </div>
-            </a>
+// const RightItem = (props) => {
+//     return (
+//         <Link style={{ textDecoration: "none" }} to={"/setting/" + props.to}>
+//             <div class="setting-outer setting-name-hover">
+//                 <a href="" class="a-to-block2">
+//                     <div>
+//                         <div class="">{props.itemName}</div>
+//                         <div style={{ fontSize: "13px", color: "rgb(115, 129, 136)" }}>{props.itemContent}</div>
+//                     </div>
+//                     <div class="menu-name" aria-label="メニュー名" style={{ transform: "translate(-20%, -50%)", right: "1%" }}>
+//                         <a class="" href="" aria-label="新規アクション">
+//                             <img class="right-icon" src={right} alt="新規メッセージ" />
+//                         </a>
+//                     </div>
+//                 </a>
+//             </div>
+//         </Link>
+//     )
+// }
+// const RightItem2 = (props) => {
+//     return (
+//         <Link style={{ textDecoration: "none" }} to={"/setting/" + props.to}><div class="setting-outer setting-name-hover" style={{ borderBottom: "10px solid rgb(56, 68, 77)" }}>
+//             <a href="" class="a-to-block2" style={{ height: "30px" }}>
+//                 <div class="setting-inner">{props.itemName}</div>
+//                 <div class="menu-name" aria-label="メニュー名" style={{ transform: "translate(-20%, -75%)", right: "1%" }}>
+//                     <a class="" href="" aria-label="新規アクション">
+//                         <img class="right-icon" src={right} alt="新規メッセージ" />
+//                     </a>
+//                 </div>
+//             </a>
+//         </div>
+//         </Link>
+//     )
+// }
 
+const Account = (props) => {
+    
+    return (
+        <div>
+            {(() => {
+                switch (props.match.params.menu) {
+                    case 'change_user_id':
+                        return (
+                            <div><Change menu="ユーザ名"  id="userid" type="text"/>
+                            </div>)
+
+                        
+                    case 'change_mail':
+                        return (
+                            <div><Change menu="メールアドレス"  id="mail" type="text"/>
+                            </div>)
+                        
+                    case 'change_pass':
+                        return (
+                            <div><Change menu="パスワード"  id="pass" type="password"/>
+                            </div>)
+
+                        
+
+                    default:
+                        
+                }
+            })()}
+            {/* <Switch>
+
+                <Route path="/setting/account/change_user_id" component={ChangeUserId} />
+
+                <Route path="/setting/account/change_mail" component={ChangeMail} />
+                <Route path="/setting/account/change_pass" component={ChangePass}/> 
+                <Route path="/setting/account" component={AccountMenuTable} />
+            </Switch> */}
         </div>
     )
 }
-const RightItem2 = (props) => {
+// const AccountMenuTable = () => {
+//     return (
+//         <div>
+//             <RightItem itemName="ユーザ名" itemContent="testId" to="account/change_user_id" />
+//             <RightItem itemName="メールアドレス" itemContent="example@exampole.com" to="account/change_mail" />
+//             <RightItem2 itemName="パスワード" to="account/change_pass" />
+//             {/* <!-- アカウント削除 --> */}
+//             <div class="setting-outer setting-name-hover">
+//                 <a href="" class="a-to-block2" style={{ height: "30px" }}>
+//                     <div class="setting-inner">アカウント削除</div>
+//                     <div class="menu-name" aria-label="メニュー名" style={{ transform: "translate(-20%, -75%)", right: "1%" }}>
+//                         <a class="" href="" aria-label="新規アクション">
+//                             <img class="right-icon" src={right} alt="新規メッセージ" />
+//                         </a>
+//                     </div>
+//                 </a>
+//             </div>
+//         </div>
+//     )
+// }
+const ChangeUserId = (props) => {
     return (
-        <div class="setting-outer setting-name-hover" style={{borderBottom: "10px solid rgb(56, 68, 77)"}}>
-        <a href="" class="a-to-block2" style={{height: "30px"}}>
-                <div class="setting-inner">{props.itemName}</div>
-            <div class="menu-name" aria-label="メニュー名" style={{transform: "translate(-20%, -75%)",right: "1%"}}>
-                <a class="" href="" aria-label="新規アクション">
-                    <img class="right-icon" src={right} alt="新規メッセージ"/>
-                </a>
+        <div class="setting-outer setting-name-hover" style={{ borderBottom: "10px solid rgb(37, 51, 65)" }}>
+            {/* 名前 */}
+            <div style={{ backgroundColor: "rgb(25, 39, 52)", padding: "1px 10px", margin: "15px", }}>
+                <div style={{ marginLeft: "30px", paddingTop: "5px", color: "rgb(136, 153, 166)", }}>
+                    ユーザ名</div>
+                <input className="text-area" type="text" style={{ width: "90%", display: "block", margin: "0 auto", height: "25px", backgroundColor: "rgba(0, 0, 0, 0)", border: "1px solid rgba(0, 0, 0, 0)", borderBottom: "3px solid rgb(136, 153, 166)", }} />
             </div>
-        </a>
+            {/* 保存ボタン */}
+            <SaveButton />
+        </div>
+    )
+}
 
-    </div>
+// const Change = (props) => {
+//     return (
+//         <div class="setting-outer setting-name-hover" style={{ borderBottom: "10px solid rgb(37, 51, 65)" }}>
+//             {/* 名前 */}
+//             <div style={{ backgroundColor: "rgb(25, 39, 52)", padding: "1px 10px", margin: "15px", }}>
+//                 <div style={{ marginLeft: "30px", paddingTop: "5px", color: "rgb(136, 153, 166)", }}>
+//                     {props.menu}</div>
+//                 <input id={props.id} className="text-area" type="text" style={{ width: "90%", display: "block", margin: "0 auto", height: "25px", backgroundColor: "rgba(0, 0, 0, 0)", border: "1px solid rgba(0, 0, 0, 0)", borderBottom: "3px solid rgb(136, 153, 166)", }} />
+//             </div>
+//             {/* 保存ボタン */}
+//             <SaveButton />
+//         </div>
+//     )
+// }
+
+const SaveButton = () => {
+    return (
+        <div className="pointer post-icon" style={{
+            background: "rgb(29, 161, 242)",
+            margin: "0 0 0 80%",
+            textAlign: "center",
+            borderRadius: "20px",
+            padding: "5px 1px",
+            width: "60px",
+            fontWeight: "bold",
+        }}>
+            保存
+        </div>
     )
 }
 export default Setting

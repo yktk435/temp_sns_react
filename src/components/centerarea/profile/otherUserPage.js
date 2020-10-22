@@ -1,16 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import header from '../../images/user_header.jpg'
-import user from '../../images/user.jpg'
 import good from '../../images/good.png'
-import heart from '../../images/heart.png'
 import rep from '../../images/rep.png'
 import retweet from '../../images/retweet.png'
 class OtherUserPage extends React.Component {
     render() {
         const { userName, userId, iconUrl, headerUrl, postObj } = this.props
-        // console.log('============================================================================',postObj)
+        
 
         return (
             <div className="main-container" style={{ overflow: "auto" }}>
@@ -60,7 +57,7 @@ class OtherUserPage extends React.Component {
                 {/* <!-- ユーザ投稿一覧 --> */}
                 <div></div>
                 {/* {(() => {
-                    console.log('==============================', postObj)
+                    
                     if (typeof postObj === 'undefined') {
                         return (<p>読込中</p>)
                     } else {

@@ -21,6 +21,7 @@ class LeftArea extends React.Component {
 
     }
     render() {
+        
         return (
             <header>
                 <EventListener target="window" onResize={(e) => this.props.windowSizeChange(e.target.innerWidth)} />
@@ -31,12 +32,12 @@ class LeftArea extends React.Component {
                         </a></Link>
                     </div>
                     <div>
-                        <IconParts styleObj={this.props.style[0]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="home" to="home" alt="ホームアイコン" innerstr="ホーム" image={home} />
-                        <IconParts clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="search" to="search" alt="検索アイコン" innerstr="検索" image={search} />
-                        <IconParts styleObj={this.props.style[1]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="notification" to="notification" alt="通知アイコン" innerstr="通知" image={notification} />
-                        <IconParts styleObj={this.props.style[2]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="dm" to="dm" alt="メッセージアイコン" innerstr="メッセージ" image={dm} />
-                        <IconParts styleObj={this.props.style[3]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="profile" to="profile" alt="プロフィールアイコン" innerstr="プロフィール" image={profile} />
-                        <IconParts styleObj={this.props.style[4]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="setting" to="setting" alt="設定アイコン" innerstr="設定" image={setting} />
+                        <IconParts styleObj={this.props.style[0]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="home" to="/home" alt="ホームアイコン" innerstr="ホーム" image={home} />
+                        <IconParts clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="search" to="/search" alt="検索アイコン" innerstr="検索" image={search} />
+                        <IconParts styleObj={this.props.style[1]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="notification" to="/notification" alt="通知アイコン" innerstr="通知" image={notification} />
+                        <IconParts styleObj={this.props.style[2]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="dm" to="/dm" alt="メッセージアイコン" innerstr="メッセージ" image={dm} />
+                        <IconParts styleObj={this.props.style[3]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="profile" to="/profile" alt="プロフィールアイコン" innerstr="プロフィール" image={profile} />
+                        <IconParts styleObj={this.props.style[4]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="setting" to="/setting/account" alt="設定アイコン" innerstr="設定" image={setting} />
                         <div class="div-outside-image icon-container" style={{ width: "70%", marginBottom: "140px" }}>
                             <a class="a-to-block post-icon" href="" style={{ borderRadius: "100px", position: "relative" }}>
                                 <div class="block-to-center">
@@ -54,13 +55,11 @@ class LeftArea extends React.Component {
 
 }
 const IconParts = (props) => {
-    // console.log(props)
     return (
         <div className={props.classNameString} >
             <Link id={props.to} class="link-mark" to={props.to}><a className="spreaded-icon-a" style={props.styleObj} onClick={(e) => {
-
                 props.clickMenuItem(e.target.closest(".link-mark").id)
-                console.log(e.target.closest(".link-mark").id)
+                
             }}>
                 <div style={{ float: "left" }}>
                     <img className="img-size" src={props.image} alt={props.alt} />

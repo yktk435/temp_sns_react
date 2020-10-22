@@ -1,7 +1,7 @@
 // src/containers/Ranking.js
 import { connect } from 'react-redux';
 import OtherUserPage from '../components/centerarea/profile/otherUserPage'
-import * as actions from '../actions/fetch'
+
 import * as profile from '../actions/profile'
 
 const mapStateToProps = (state, ownProps) => {

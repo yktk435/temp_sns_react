@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Profile from '../components/centerarea/profile/profile'
 import * as fetch from '../actions/fetch'
 import * as profile from '../actions/profile'
+import {withRouter} from 'react-router' 
 
 const mapStateToProps = (state, ownProps) => {
     return (
@@ -22,6 +23,8 @@ const mapStateToProps = (state, ownProps) => {
             picObj:state.profile.picObj,
             // ぐっと
             goodObj: state.profile.goodObj,
+            // loocation受け取り
+            profileLocation:state.router.location
         }
     )
 };
@@ -34,4 +37,4 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));

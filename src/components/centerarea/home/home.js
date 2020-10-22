@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
 // 画像
 import pic from '../../images/pic.png'
 import batsu from '../../images/batsu.png'
@@ -9,11 +9,11 @@ const createObjectURL = (window.URL || window.webkitURL).createObjectURL || wind
 class Home extends React.Component {
     handleChangeFile(e) {
         const files = e.target.files;
-        console.log(files)
+        
         
         // ②createObjectURLで、files[0]を読み込む
         const imageUrl = files.length===0 ? "" : createObjectURL(files[0]);
-        console.log(imageUrl)
+        
         // ③setStateする！
         this.props.imageChoce(imageUrl)
 
