@@ -18,13 +18,6 @@ class Profile extends React.Component {
         console.log(this.props)
         console.log(nextProps)
     }
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('shouldComponentUpdate')
-        console.log('shouldComponentUpdate')
-        console.log('shouldComponentUpdate')
-        console.log(nextProps)
-        console.log(nextState)
-    }
     render() {
         // const { userName, userId, iconUrl, headerUrl, postObj, articles } = this.props
         console.log('00000000000000000000000000000000000000000000')
