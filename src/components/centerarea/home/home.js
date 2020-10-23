@@ -1,25 +1,31 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
+
+import {UserPost} from '../profile/MyProfile'
 
 // 画像
 import pic from '../../images/pic.png'
 import batsu from '../../images/batsu.png'
 import userImageUrl from '../../images/user.jpg'
+import good from '../../images/good.png'
+import rep from '../../images/rep.png'
+import retweet from '../../images/retweet.png'
 
 const createObjectURL = (window.URL || window.webkitURL).createObjectURL || window.createObjectURL;
 class Home extends React.Component {
     componentWillMount() {
         this.props.getTimeLine();
     }
-    
+
     handleChangeFile(e) {
         const files = e.target.files;
         // ②createObjectURLで、files[0]を読み込む
-        const imageUrl = files.length===0 ? "" : createObjectURL(files[0]);    
+        const imageUrl = files.length === 0 ? "" : createObjectURL(files[0]);
         // ③setStateする！
         this.props.imageChoce(imageUrl)
     }
     render() {
-console.log(this.props.timeLineInfo)
+        console.log(this.props.timeLineInfo)
 
         let PostedUserInfo = {
             userName: this.props.userName,
@@ -30,7 +36,7 @@ console.log(this.props.timeLineInfo)
 
         }
         const { articles, memberIds } = this.props.timeLineInfo
-        console.log(articles,memberIds)
+        console.log(articles, memberIds)
         return (
             <div className="main-container" style={{ overflow: "auto" }}>
 
@@ -78,8 +84,8 @@ console.log(this.props.timeLineInfo)
                             if (this.props.imageUrl != undefined) {
                                 return (
                                     <div style={{ position: "relative", margin: "5px 15px 0 0", padding: "10px", textAlign: "center", borderRadius: "20px" }} aria-label="投稿した写真を表示">
-                                        <img src={this.props.imageUrl} style={{width:"90%",borderRadius:"20px",height:"250px",objectFit:"cover"}}/>
-                                        <img className="pointer" onClick={()=>this.props.imageClear()} src={batsu} style={{ backgroundColor: "black", borderRadius: "100%", top: "5px", left: "10px", position: "absolute", width: "20px" }} />
+                                        <img src={this.props.imageUrl} style={{ width: "90%", borderRadius: "20px", height: "250px", objectFit: "cover" }} />
+                                        <img className="pointer" onClick={() => this.props.imageClear()} src={batsu} style={{ backgroundColor: "black", borderRadius: "100%", top: "5px", left: "10px", position: "absolute", width: "20px" }} />
                                     </div>
                                 )
                             }
@@ -119,66 +125,13 @@ console.log(this.props.timeLineInfo)
 
                 </div>
                 <div>
-                    {articles.map(article => (<OtherPost article={article} member={memberIds[article.member_id]}/>))}
-                    
+                    {articles.map(article => (<UserPost article={article} member={memberIds[article.member_id]} />))}
+
                 </div>
             </div >
         )
     }
 
-}
-const OtherPost = (props) => {
-    const { created_at,content,id:articleId,postImageUrl}=props.article
-    const {id:memberId,icon,header,name,user_id }=props.member
-    return (
-        <div style={{ padding: "10px 15px", borderBottom: "1px solid rgb(48, 60, 67)", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
-            <React.Fragment>
-                {/* ブロック1 */}
-                <div style={{ marginRight: "10px" }} aria-label="ユーザアイコン">
-                    <div style={{ margin: "5px" }}>
-                        <a className="" href="" aria-label="ユーザアイコン">
-                            <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={icon} alt="ユーザアイコン" />
-                        </a>
-                    </div>
-                </div>
-                {/* ブロック2 */}
-                <div style={{ display: "block" }}>
-
-                    {/* <!-- ユーザ名 --> */}
-                    <div>
-                        <div style={{ float: "left", marginLeft: "5px" }}>
-                            <a style={{ textDecoration: "none", color: "white", fontWeight: "bold" }} href="">{name}</a>
-                        </div>
-                        <div style={{ float: "left", margin: "0 15px" }}>
-                            <a style={{ textDecoration: "none", color: " rgb(115, 129, 136)" }} href="">@{user_id}</a>
-                        </div>
-                        <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>{created_at}</div>
-                    </div>
-                    {/* <!-- 投稿内容 --> */}
-                    <div>
-
-                        <div className="font" style={{ padding: "5px 0", paddingRight: "50px" }} aria-label="投稿した文字を表示">{content}</div>
-                        {(() => {
-                            // 写真があれば表示
-                            if (postImageUrl) {
-                                return (
-                                    <div style={{ padding: "5px 0" }} aria-label="投稿した写真を表示">
-                                        <a href="" >
-                                            <img src={postImageUrl} alt="投稿した写真を表示" style={{ width: "90%", borderRadius: "5%" }} />
-                                        </a>
-                                    </div>
-                                )
-                            }
-                        })()}
-
-
-                    </div>
-
-                </div>
-            </React.Fragment>
-        </div>
-
-    )
 }
 
 export default Home

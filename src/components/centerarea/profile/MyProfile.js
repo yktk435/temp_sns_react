@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import good from '../../images/good.png'
 import rep from '../../images/rep.png'
 import retweet from '../../images/retweet.png'
+import {OtherPost} from '../home/home'
 const MyProfile = (props) => {
-    const { userName, userId, iconUrl, headerUrl, postObj, articles, style, clickMenuItem, menuMode ,profileOrFollowing} = props
+    const { userName, userId, iconUrl, headerUrl, postObj, articles, style, clickMenuItem, menuMode ,profileOrFollowing,member} = props
     console.log('MyProfileMyProfileMyProfileMyProfileMyProfileMyProfile')
     console.log(props)
     return (
@@ -87,7 +88,7 @@ const MyProfile = (props) => {
             {(() => {
                 switch (menuMode) {
                     case "post":
-                        return (<PostArea articles={articles} />)
+                        return (<PostArea articles={articles} member={member}/>)
                         break;
                     case "rep":
                         break;
@@ -105,7 +106,7 @@ const MyProfile = (props) => {
     )
 }
 
-const PostArea = (props) => {
+ const PostArea = (props) => {
 
     if (typeof props.articles === 'undefined') {
         return (<p>読込中</p>)
@@ -113,15 +114,16 @@ const PostArea = (props) => {
         return (
             <div>
                 {props.articles.map((article,i) => {
-                    if (article.id != undefined) return (<UserPost key={i} {...article} />)
+                    if (article.id != undefined) return (<UserPost key={i} article={article} member={props.member} />)
                 })}
             </div>
         )
     }
 }
 
-const UserPost = (props) => {
-    const { id, created_at, content, user_id, name, header, icon, url } = props
+export const UserPost = (props) => {
+    const { created_at, content, id: articleId, postImageUrl } = props.article
+    const { id: memberId, icon, header, name, user_id } = props.member
     return (
         <div>
             <div style={{ padding: "10px 15px", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
@@ -153,11 +155,11 @@ const UserPost = (props) => {
                         <div className="font" style={{ padding: "5px 0", paddingRight: "50px", display: "inline-block" }} aria-label="投稿した文字を表示">{content}</div>
                         {(() => {
                             // 写真があれば表示
-                            if (url != null) {
+                            if (postImageUrl != null) {
                                 return (
                                     <div style={{ padding: "5px 0" }} aria-label="投稿した写真を表示">
                                         <a href="" >
-                                            <img src={url} alt="投稿した写真を表示" style={{ width: "450px",height:"250px",objectFit:"cover", borderRadius: "5%" }} />
+                                            <img src={postImageUrl} alt="投稿した写真を表示" style={{ width: "450px", height: "250px", objectFit: "cover", borderRadius: "5%" }} />
                                         </a>
                                     </div>
                                 )
@@ -196,6 +198,7 @@ const UserPost = (props) => {
                 </div>
             </div>
         </div>
+
 
     )
 }

@@ -6,7 +6,7 @@ import qs from 'qs';
 /**********************************************/
 const getUserInfoInPrrofileAction = (response, error) => ({
   type: 'GET_USERINFO_IN_PROFILE',
-  payload:{ response, error }
+  payload: { response, error }
 })
 
 export const getUserInfoInPrrofile = (userId) => {
@@ -20,7 +20,7 @@ export const getUserInfoInPrrofile = (userId) => {
     }
     // ログインしていなければloginにリダイレクトの処理を書く
     try {
-      const responce = await fetch('http://localhost:8000/api/member/user/edit?userId=' + userId, option);
+      const responce = await fetch('http://localhost:8000/api/member/' + userId + '/edit', option);
       const data = await responce.json();
 
       if ('error' in data) throw data
@@ -359,7 +359,7 @@ export const pushCreateAccountButton = (data) => {
 
       if ('error' in data) throw data
       // document.cookie = 'access_token=' + data.accessToken
-      localStorage.setItem("access_token",data.accessToken);
+      localStorage.setItem("access_token", data.accessToken);
       dispatch(getUserInfoAction(data, null,));
       dispatch(replace('/home'))
 
@@ -472,7 +472,7 @@ export const startLogin = (ipassData) => {
       dispatch(replace('/home'))
       dispatch(getUserInfoAction(data, null,));
       // document.cookie = 'access_token=' + data.accessToken
-      localStorage.setItem("access_token",data.accessToken);
+      localStorage.setItem("access_token", data.accessToken);
 
     } catch (err) {
 
@@ -504,7 +504,7 @@ export const startLoginWithToken = () => {
       // dispatch(replace('/home'))
       dispatch(getUserInfoAction(data, null,));
       // document.cookie = 'access_token=' + data.accessToken
-      localStorage.setItem("access_token",data.accessToken);
+      localStorage.setItem("access_token", data.accessToken);
 
     } catch (err) {
       dispatch(loginErrorWithToken(err));
@@ -528,7 +528,7 @@ export const logout = () => {
 // 関数
 /*****************************/
 const getAccesstoken = () => {
-  
+
   return localStorage.getItem('access_token');
 
 }

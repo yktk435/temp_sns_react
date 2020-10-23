@@ -40,6 +40,11 @@ const mapStateToProps = (state, ownProps) => {
             followingStyle: state.profile.followingStyle,
             // フォロワーかフォロー中のどっちを見ているか
             followerMode: state.profile.followerMode,
+
+            // 記事
+            articles:state.profile.userInfo.articles,
+            // そのアカウント情報
+            member:state.profile.userInfo.member
         }
     )
 };

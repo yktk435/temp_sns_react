@@ -8,6 +8,7 @@ const initialState = {
         response: undefined,
         error: false,
         auth: false,
+        dataGet:false,
     },
     otherUser: {
         userName: undefined,
@@ -30,7 +31,7 @@ export default (state = initialState, action) => {
             return action.payload.error
                 ? {
                     ...state,
-                    user: { error: true, auth: false }
+                    user: { error: true, auth: false ,dataGet:false}
                 }
                 : {
                     // 通信エラーエラーがないなら
@@ -40,6 +41,7 @@ export default (state = initialState, action) => {
                         ...action.payload.response,
                         error: false,
                         auth: true,
+                        dataGet:true
                     },
                 };
             
@@ -56,6 +58,7 @@ export default (state = initialState, action) => {
                     otherUser: {
                         ...action.payload.response,
                         error: false,
+                        dataGet:true
                     },
                 };
             
@@ -65,7 +68,8 @@ export default (state = initialState, action) => {
                 user: {
                     ...state.user,
                     errorObj:action.payload.errorObj,
-                    error: true
+                    error: true,
+                    dataGet:true
                 }
             }
             
@@ -75,14 +79,15 @@ export default (state = initialState, action) => {
                 user: {
                     ...state.user,
                     errorObj:action.payload.errorObj,
-                    
+                    dataGet:true
                 }
             }
             
         case 'LOGOUT':
             return {
                 user: {
-                auth:false   
+                    auth: false,
+                    dataGet:false
                 }
             }
             
