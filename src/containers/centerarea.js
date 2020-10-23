@@ -1,7 +1,7 @@
 // src/containers/Ranking.js
 import { connect } from 'react-redux';
 import CenterArea from '../components/centerarea'
-
+import * as fetch from '../actions/fetch'
 
 const mapStateToProps = (state, ownProps) => {
   let pathname = state.router.location.pathname
@@ -38,5 +38,11 @@ const mapStateToProps = (state, ownProps) => {
   })
 };
 
+const mapDispatchToProps = dispatch => ({
+  
+  getArticles(userId) {
+    dispatch(fetch.getArticles(userId))
+  },
+})
 
-export default connect(mapStateToProps)(CenterArea);
+export default connect(mapStateToProps,mapDispatchToProps)(CenterArea);

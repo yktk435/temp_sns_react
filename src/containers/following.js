@@ -13,24 +13,31 @@ const mapStateToProps = (state, ownProps) => {
             headerUrl: state.userInfo.user.headerUrl,
             accessToken: state.userInfo.user.accessToken,
             style: state.profile.style,
-            // 投稿、返信、写真、グッドのどれを見ているか
-            menuMode:state.profile.menuMode,
-            // 投稿
-            articles:state.articles.user,
-            // 返信
-            // 写真
-            picObj:state.profile.picObj,
-            // ぐっと
-            goodObj: state.profile.goodObj,
+            // フォロワーかフォロー中のどっちを見ているか
+            followerMode: state.profile.followerMode,
+            // 
+            followingStyle: state.profile.followingStyle,
+            followUsers:state.profile.followUsers,
+            followerUsers:state.profile.followerUsers,
+            
         }
     )
 };
 const mapDispatchToProps = dispatch => ({
-    clickMenuItem(e) {
-        dispatch(profile.clickMenuItem(e))
+    clickMenuItemInFollowing(menuMode) {
+        dispatch(profile.clickMenuItemInFollowing(menuMode))
     },
     getArticles(token) {
         dispatch(fetch.getArticles(token))
+    },
+    profileOrFollowing(menuMode) {
+        dispatch(profile.profileOrFollowing(menuMode))
+    },
+    getFriends() {
+        dispatch(fetch.getFriends())
+    },
+    followOr(e,memberId) {
+        dispatch(fetch.followOr(e,memberId))
     }
 })
 

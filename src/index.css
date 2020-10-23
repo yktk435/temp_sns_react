@@ -516,9 +516,17 @@ button.btn {
 
 
 /****************************************************************/
+.blue{
+  filter: invert(91%) sepia(99%) saturate(10000%) hue-rotate(203deg) brightness(169%) contrast(135%);
+}
+/* 戻る */
+.goback:hover{
+  background-color: rgba(255, 255, 255, 0.151);
+  filter: invert(91%) sepia(99%) saturate(10000%) hue-rotate(203deg) brightness(169%) contrast(135%);
+}
 
 .edit-prof:hover {
-  background-color: rgba(86, 86, 255, 0.123);
+  background-color: rgba(255, 255, 255, 0.048);
 }
 .header-image{
   width: 100%;

@@ -7,21 +7,19 @@ import userImageUrl from '../../images/user.jpg'
 
 const createObjectURL = (window.URL || window.webkitURL).createObjectURL || window.createObjectURL;
 class Home extends React.Component {
+    componentWillMount() {
+        this.props.getTimeLine();
+    }
+    
     handleChangeFile(e) {
         const files = e.target.files;
-        
-        
         // ②createObjectURLで、files[0]を読み込む
-        const imageUrl = files.length===0 ? "" : createObjectURL(files[0]);
-        
+        const imageUrl = files.length===0 ? "" : createObjectURL(files[0]);    
         // ③setStateする！
         this.props.imageChoce(imageUrl)
-
-        
-
     }
     render() {
-
+console.log(this.props.timeLineInfo)
 
         let PostedUserInfo = {
             userName: this.props.userName,
@@ -31,7 +29,8 @@ class Home extends React.Component {
             postImageUrl: "./src/work/image/user.jpg",
 
         }
-
+        const { articles, memberIds } = this.props.timeLineInfo
+        console.log(articles,memberIds)
         return (
             <div className="main-container" style={{ overflow: "auto" }}>
 
@@ -120,9 +119,8 @@ class Home extends React.Component {
 
                 </div>
                 <div>
-                    <OtherPost {...PostedUserInfo} />
-                    <OtherPost {...PostedUserInfo} />
-                    <OtherPost {...PostedUserInfo} />
+                    {articles.map(article => (<OtherPost article={article} member={memberIds[article.member_id]}/>))}
+                    
                 </div>
             </div >
         )
@@ -130,7 +128,9 @@ class Home extends React.Component {
 
 }
 const OtherPost = (props) => {
-
+    console.log(props)
+    const { created_at,content,id:articleId,postImageUrl}=props.article
+    const {id:memberId,icon,header,name,user_id }=props.member
     return (
         <div style={{ padding: "10px 15px", borderBottom: "1px solid rgb(48, 60, 67)", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
             <React.Fragment>
@@ -138,7 +138,7 @@ const OtherPost = (props) => {
                 <div style={{ marginRight: "10px" }} aria-label="ユーザアイコン">
                     <div style={{ margin: "5px" }}>
                         <a className="" href="" aria-label="ユーザアイコン">
-                            <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={userImageUrl} alt="ユーザアイコン" />
+                            <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={icon} alt="ユーザアイコン" />
                         </a>
                     </div>
                 </div>
@@ -148,24 +148,24 @@ const OtherPost = (props) => {
                     {/* <!-- ユーザ名 --> */}
                     <div>
                         <div style={{ float: "left", marginLeft: "5px" }}>
-                            <a style={{ textDecoration: "none", color: "white", fontWeight: "bold" }} href="">{props.userName}</a>
+                            <a style={{ textDecoration: "none", color: "white", fontWeight: "bold" }} href="">{name}</a>
                         </div>
                         <div style={{ float: "left", margin: "0 15px" }}>
-                            <a style={{ textDecoration: "none", color: " rgb(115, 129, 136)" }} href="">@{props.userId}</a>
+                            <a style={{ textDecoration: "none", color: " rgb(115, 129, 136)" }} href="">@{user_id}</a>
                         </div>
-                        <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>{props.createdAt}</div>
+                        <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>{created_at}</div>
                     </div>
                     {/* <!-- 投稿内容 --> */}
                     <div>
 
-                        <div className="font" style={{ padding: "5px 0", paddingRight: "50px" }} aria-label="投稿した文字を表示">投稿文字ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ</div>
+                        <div className="font" style={{ padding: "5px 0", paddingRight: "50px" }} aria-label="投稿した文字を表示">{content}</div>
                         {(() => {
                             // 写真があれば表示
-                            if (1) {
+                            if (postImageUrl) {
                                 return (
                                     <div style={{ padding: "5px 0" }} aria-label="投稿した写真を表示">
                                         <a href="" >
-                                            <img src={userImageUrl} alt="投稿した写真を表示" style={{ width: "90%", borderRadius: "5%" }} />
+                                            <img src={postImageUrl} alt="投稿した写真を表示" style={{ width: "90%", borderRadius: "5%" }} />
                                         </a>
                                     </div>
                                 )

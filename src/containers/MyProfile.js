@@ -24,7 +24,11 @@ const mapStateToProps = (state, ownProps) => ({
     // ぐっと
     goodObj: state.profile.goodObj,
     location: ownProps.location,
-    followingMode:state.profile.followingMode,
+    followingMode: state.profile.followingMode,
+    // フォロワー数
+    followerLength:state.profile.followerUsers.length,
+    // フォロー数
+    followLength:state.profile.followUsers.length
 
 });
 

@@ -1,22 +1,24 @@
 import React from 'react'
 
 // import Following from '../../../containers/following'
-import Following from './following'
-import MyProfile from '../../../containers/MyProfile'
-import { Switch, Route } from 'react-router-dom';
+import Following from '../../centerarea/profile/following'
+// import MyProfile from '../../../containers/MyProfile'
+import MyProfile from '../../centerarea/profile/MyProfile'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux'; // 追加
 // import { Provider } from 'react-redux';
 import { useStore } from 'react-redux'
 
 class Profile extends React.Component {
-    
+
     componentWillMount() {
-        this.props.getArticles(this.props.accessToken)
+
+        this.props.getArticles()
+
+        this.props.getFriends()
     }
-    componentWillReceiveProps(nextProps) {
-        console.log('プロップスを受け取るとき')
-        console.log(this.props)
-        console.log(nextProps)
+    componentWillReceiveProps() {
+        console.log(this.props.followingMode)
     }
     render() {
         // const { userName, userId, iconUrl, headerUrl, postObj, articles } = this.props
@@ -24,25 +26,26 @@ class Profile extends React.Component {
         console.log(this.props)
         // let store=useStore()
         return (
-            <div>
+
+            <Switch>
+
+                {/* <Route path="/profile/:menu" component={ProfileMenu} /> */}
+                {/* <Route exact path="/profile" component={MyProfile} /> */}
                 {(() => {
                     if (this.props.followingMode) {
-                        return (<Following />)
-                    } else { 
-                        return(<MyProfile/>)
-                        
+                        console.log('truetruetruetruetruetruetruetruetrue')
+                        return (<Following {...this.props} />)
+                    } else {
+                        console.log('falsefalsefalsefalsefalsefalsefalse')
+                        return (<MyProfile {...this.props}/>)
+
                     }
                 })()}
-</div>            
-                // <Switch>
+                {/* <MyProfile {...this.props} /> */}
+                {/* <Following /> */}
 
-                //     <Route path="/profile/:menu" component={ProfileMenu} />
-                //     <Route path="/profile" component={MyProfile} />
-                //     {/* <MyProfile {...this.props} /> */}
-                //     {/* <Following /> */}
+            </Switch>
 
-                // </Switch>
-            
         )
     }
 }

@@ -7,7 +7,11 @@ const initialState = {
     menuMode:'post',
     response: undefined,
     error: false,
-    followingMode:false
+    followingMode: false,
+    followerMode: true,
+    followingStyle: [filter, {}],
+    followerUsers: [],
+    followUsers: [],
 };
 
 export default (state = initialState, action) => {
@@ -23,6 +27,24 @@ export default (state = initialState, action) => {
                 ...state,
                 followingMode:action.payload.followingMode
             }
+        case 'CLICK_MENU_ITEM_IN_FOLLOWING':
+            return {
+                ...state,
+                followingStyle: action.payload.followingStyle,
+                followerMode: action.payload.followerMode,
+            }
+        case 'RECEIVE_FRIENDS_DATA':
+            return action.payload.error
+                ? {
+                    ...state,
+                    error: true,
+                    errorMessage:action.payload.error
+                }
+                : {
+                    ...state,
+                    followUsers: action.payload.responce.follow,
+                    followerUsers:action.payload.responce.follower,
+                }
         default:
             return state;
     }

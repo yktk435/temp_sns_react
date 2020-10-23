@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Profile from '../components/centerarea/profile/profile'
 import * as fetch from '../actions/fetch'
 import * as profile from '../actions/profile'
-import {withRouter} from 'react-router' 
+import { withRouter } from 'react-router'
 
 const mapStateToProps = (state, ownProps) => {
     return (
@@ -15,27 +15,59 @@ const mapStateToProps = (state, ownProps) => {
             accessToken: state.userInfo.user.accessToken,
             style: state.profile.style,
             // 投稿、返信、写真、グッドのどれを見ているか
-            menuMode:state.profile.menuMode,
+            menuMode: state.profile.menuMode,
             // 投稿
-            articles:state.articles.user,
+            articles: state.articles.user,
             // 返信
             // 写真
-            picObj:state.profile.picObj,
+            picObj: state.profile.picObj,
             // ぐっと
             goodObj: state.profile.goodObj,
             // loocation受け取り
             location: state.router.location,
             router: state.router,
-            followingMode:state.profile.followingMode,
+            followingMode: state.profile.followingMode,
+            otherUserId:
+                ownProps.match
+                    ? ownProps.match.params.userId
+                    : null,
+            // フォロワー数
+            followerLength: state.profile.followerUsers.length,
+            // フォロー数
+            followLength: state.profile.followUsers.length,
+            followUsers:state.profile.followUsers,
+            followerUsers: state.profile.followerUsers,
+            followingStyle: state.profile.followingStyle,
+            // フォロワーかフォロー中のどっちを見ているか
+            followerMode: state.profile.followerMode,
         }
     )
 };
 const mapDispatchToProps = dispatch => ({
+    clickMenuItemInFollowing(menuMode) {
+        dispatch(profile.clickMenuItemInFollowing(menuMode))
+    },
     clickMenuItem(e) {
         dispatch(profile.clickMenuItem(e))
     },
-    getArticles(token) {
-        dispatch(fetch.getArticles(token))
+    getArticles(userId) {
+        dispatch(fetch.getArticles(userId))
+    },
+    getFriends(userId) {
+        dispatch(fetch.getFriends(userId))
+    },
+    
+    startLogin(ipassData) {
+        dispatch(fetch.startLogin(ipassData))
+    },
+    clickMenuItem(menuMode) {
+        dispatch(profile.clickMenuItem(menuMode))
+    },
+    profileOrFollowing(menuMode) {
+        dispatch(profile.profileOrFollowing(menuMode))
+    },
+    followOr(e,memberId) {
+        dispatch(fetch.followOr(e,memberId))
     }
 })
 

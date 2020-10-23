@@ -1,29 +1,142 @@
 // src/actions/Ranking.js
 import { replace } from 'react-router-redux';
 import qs from 'qs';
-// categoryをpayloadに含むように修正
-// const startRequest = response => ({
-//   type: 'START_REQUEST_F',
-//   payload: { response },
-// });
-// const receiveData = (response, error) => ({
-//   type: 'RECEIVE_DATA_F',
-//   payload: { response, error },
-// });
-// const finishRequest = response => ({
-//   type: 'FINISH_REQUEST_F',
-//   payload: { response },
-// });
+/**********************************************/
+// タイムライン取得 自分とフォローしているアカウントの記事取得
+/**********************************************/
+
+const receiveTimeLine = (responce, error) => ({
+  type: 'RECEIVE_TIMELINE',
+  payload: {
+    responce,
+    error
+  }
+})
+
+
+export const getTimeLine = () => {
+  return async (dispatch, getState) => {
+    const option = {
+      method: 'get',
+      headers: {
+        'access_token': getAccesstoken(),
+        // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+    }
+    try {
+      const responce = await fetch('http://localhost:8000/api/article/show', option)
+      const data = await responce.json();
+
+      if ('error' in data) throw data
+      dispatch(receiveTimeLine(data, null));
+    } catch (err) {
+      dispatch(receiveTimeLine(null, err));
+    }
+  }
+}
+
+/**********************************************/
+// フォロー/フォロワー習得
+/**********************************************/
+const receiveFriendsData = (responce, error) => ({
+  type: 'RECEIVE_FRIENDS_DATA',
+  payload: {
+    responce,
+    error
+  }
+})
+
+export const getFriends = (userId) => {
+  return async (dispatch, getState) => {
+    const option = {
+      method: 'get',
+      headers: {
+        'access_token': getAccesstoken(),
+        // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+    }
+
+    try {
+      const responce = await fetch('http://localhost:8000/api/friend?userId='+userId, option)
+      const data = await responce.json();
+
+      if ('error' in data) throw data
+      dispatch(receiveFriendsData(data, null));
+    } catch (err) {
+      dispatch(receiveFriendsData(null, err));
+    }
+  }
+}
+/**********************************************/
+// フォロー/フォロワー習得 ここまで
+/**********************************************/
+
+/**********************************************/
+// フォロー/フォロー解除
+/**********************************************/
+
+const followOrUnlock = (responce, error) => ({
+  type: "FOLLOW_OR",
+  payload: {
+    responce,
+    error
+  }
+})
+
+export const followOr = (e, memberId) => {
+  console.log('?????????????????????????????????')
+  console.log(memberId)
+  return async (dispatch, getState) => {
+    const option = {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        'access_token': getAccesstoken(),
+        // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+      body: JSON.stringify({ targetMemberId: memberId })
+    }
+
+    try {
+      const responce = await fetch('http://localhost:8000/api/friend/' + e, option)
+      const data = await responce.json();
+
+      if ('error' in data) throw data
+      dispatch(followOrUnlock(data, null));
+
+      const option2 = {
+        method: 'get',
+        headers: {
+          'access_token': getAccesstoken(),
+        },
+      }
+
+      const responce2 = await fetch('http://localhost:8000/api/friend?userId=', option2)
+      
+      const data2 = await responce2.json();
+
+      if ('error' in data2) throw data2
+      dispatch(receiveFriendsData(data2, null));
+
+
+    } catch (err) {
+      dispatch(followOrUnlock(null, err));
+    }
+  }
+}
+
+
+/**********************************************/
+// フォロー/フォロー解除
+/**********************************************/
+
 
 const getUserInfoAction = (response, error) => ({
   type: 'GET_USERINFO',
   payload: { response, error },
 });
 
-const getOtherUserInfoAction = (response, error) => ({
-  type: 'GET_OTHER_USERINFO',
-  payload: { response, error },
-});
+
 const loginError = (errorObj, error) => ({
   type: 'LOGIN_ERROR',
   payload: { errorObj, error },
@@ -117,15 +230,15 @@ const changeUserInfoError = (error) => ({
 // 検索
 
 const startSearch = () => ({
-  type:'START_SEARCH'
+  type: 'START_SEARCH'
 })
-export const inputKeyWord= (keyword) => ({
+export const inputKeyWord = (keyword) => ({
   type: 'INPUT_KEYWORD',
   payload: {
     keyword
   }
 })
-const searchRes = (responce,error) => ({
+const searchRes = (responce, error) => ({
   type: 'SEARCH_RESULT',
   payload: {
     responce,
@@ -137,12 +250,12 @@ const searchRes = (responce,error) => ({
 /**********************************************/
 
 export const search = (keyword) => {
-  return async (dispatch, getState) => { 
+  return async (dispatch, getState) => {
     console.log('accesstoken')
     console.log('accesstoken')
     console.log('accesstoken')
     console.log('accesstoken')
-console.log(getAccesstoken())
+    console.log(getAccesstoken())
     const option = {
       method: 'get',
       headers: {
@@ -156,13 +269,13 @@ console.log(getAccesstoken())
     });
     // dispatch(startRequest(category)); // categoryIdからcategoryに変更
     try {
-      const responce = await fetch('http://localhost:8000/api/member?keyword='+ encodeURI(keyword),option)
+      const responce = await fetch('http://localhost:8000/api/member?keyword=' + encodeURI(keyword), option)
       const data = await responce.json();
 
       if ('error' in data) throw data
       dispatch(searchRes(data, null));
     } catch (err) {
-      dispatch(searchRes(null,err ));
+      dispatch(searchRes(null, err));
     }
   }
 }
@@ -172,7 +285,7 @@ console.log(getAccesstoken())
 
 export const saveChanges = (postData, token) => {
   return async (dispatch, getState) => {
-    
+
     const option = {
       method: 'put',
       headers: {
@@ -212,7 +325,7 @@ export const pushCreateAccountButton = (data) => {
     try {
       const responce = await fetch('http://localhost:8000/api/member', option);
       const data = await responce.json();
-      
+
       if ('error' in data) throw data
       document.cookie = 'access_token=' + data.accessToken
       dispatch(getUserInfoAction(data, null,));
@@ -231,7 +344,7 @@ export const post = (requestData, token) => {
   return async (dispatch, getState) => {
     const imageFile = document.querySelector("#filesend").files[0]
 
-    
+
     const formData = new FormData();
     formData.append('text', requestData.text);
     formData.append('imageFile', imageFile);
@@ -257,16 +370,17 @@ export const post = (requestData, token) => {
   };
 };
 
-export const getArticles = (token) => {
+// 記事を取得したいuserId
+export const getArticles = (userId) => {
   return async (dispatch, getState) => {
     const option = {
       headers: {
-        'access_token': token,
+        'access_token': getAccesstoken(),
         // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
       },
     }
     try {
-      const responce = await fetch('http://localhost:8000/api/article', option);
+      const responce = await fetch('http://localhost:8000/api/article?userId='+userId, option);
       const data = await responce.json();
       if ('error' in data) throw data
       dispatch(receiveArticles(data, null));
@@ -300,26 +414,11 @@ export const getUserInfo = () => {
   };
 };
 
-export const getOtherUserInfo = () => {
-  // getState関数でstate.shopping.categoriesにアクセスする
-  return async (dispatch, getState) => {
-
-    // ログインしていなければloginにリダイレクトの処理を書く
-
-    try {
-      const responce = await fetch('http://localhost:8000/api/test');
-      const data = await responce.json();
-      dispatch(getOtherUserInfoAction(data, null,));
-    } catch (err) {
-      // dispatch(loginError(err)); 
-    }
-  };
-};
 
 
 export const startLogin = (ipassData) => {
 
-  
+
   return async (dispatch, getState) => {
     const option = {
       method: 'post',
@@ -343,7 +442,7 @@ export const startLogin = (ipassData) => {
       document.cookie = 'access_token=' + data.accessToken
 
     } catch (err) {
-      
+
       dispatch(loginError(err));
       dispatch(replace('/login'))
 
@@ -400,4 +499,34 @@ const getAccesstoken = () => {
   })
   return token[1]
 
+}
+/*****************************/
+// 他ユーザ情報取得
+/*****************************/
+const getOtherUserInfoAction = (response, error) => ({
+  type: 'GET_OTHER_USERINFO',
+  payload: { response, error },
+});
+
+export const getOtherUserInfo = (userId) => {
+  return async (dispatch, getState) => {
+    const option = {
+      method: 'get',
+      headers: {
+        'access_token': getAccesstoken(),
+        // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+    }
+    // ログインしていなければloginにリダイレクトの処理を書く
+    try {
+      const responce = await fetch('http://localhost:8000/api/member/get_other_user/edit?userId='+userId, option);
+      const data = await responce.json();
+
+      if ('error' in data) throw data
+      // dispatch(replace('/home'))
+      dispatch(getOtherUserInfoAction(data, null,));
+    } catch (err) {
+      dispatch(getOtherUserInfoAction(null,err));
+    }
+  };
 }

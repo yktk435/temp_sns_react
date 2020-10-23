@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Home from '../components/centerarea/home/home'
 import * as actions from '../actions/fetch'
 import * as home from '../actions/home'
+import * as fetch from '../actions/fetch'
 
 const mapStateToProps = (state, ownProps) => {
   return (
@@ -19,7 +20,8 @@ const mapStateToProps = (state, ownProps) => {
       },
       text: state.home.text,
 
-      imageUrl:state.home.imageUrl,
+      imageUrl: state.home.imageUrl,
+      timeLineInfo:state.home.timeLineInfo,
     }
   )
 };
@@ -39,7 +41,11 @@ const mapDispatchToProps = dispatch => ({
   },
   imageClear() {
     dispatch(home.imageClear())
-  }
+  },
+  getTimeLine() {
+    dispatch(fetch.getTimeLine())
+  },
+  
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

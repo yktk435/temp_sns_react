@@ -38,17 +38,17 @@ const MyProfile = (props) => {
                     {/* フォロー フォロワー */}
                     <div style={{ display: "flex" }}>
                         {/* <!-- フォロー --> */}
-                        <Link to="/following" ><div style={{ color: "rgb(115, 129, 136)", marginTop: "5px", marginRight: "10px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロー</div></Link>
+                        {/* <Link to="/following" ><div style={{ color: "rgb(115, 129, 136)", marginTop: "5px", marginRight: "10px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロー</div></Link> */}
                         {/* <!-- フォロワー --> */}
-                        <Link to="/profile/following" ><div style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロワー</div></Link>
+                        {/* <Link to="/profile/following" ><div style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロワー</div></Link> */}
                         
                         {/* <!-- フォロー --> */}
                         <div className="pointer" onClick={(e) => {
                             console.log(e)
                             profileOrFollowing('following')
-                        }} style={{ color: "rgb(115, 129, 136)", marginTop: "5px", marginRight: "10px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロー</div>
+                        }} style={{ color: "rgb(115, 129, 136)", marginTop: "5px", marginRight: "10px" }}><span style={{ color: "white", fontWeight: "bold" }}>{props.followLength}</span>フォロー</div>
                         {/* <!-- フォロワー --> */}
-                        <div className="pointer" onClick={()=>{profileOrFollowing('following')}} style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロワー</div>
+                        <div className="pointer" onClick={()=>{profileOrFollowing('following')}} style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}><span style={{ color: "white", fontWeight: "bold" }}>{props.followerLength}</span>フォロワー</div>
                     </div>
                     {/* <!-- 投稿・返信・メディア(写真)・いいね(ぐっと)を表示 --> */}
                     <div style={{ width: "100%", display: "inline-flex" }}>

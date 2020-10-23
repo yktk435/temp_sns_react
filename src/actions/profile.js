@@ -33,3 +33,23 @@ export const profileOrFollowing = menuMode => (
             followingMode: menuMode == 'following' ? true : false
         }
     })
+
+    export const clickMenuItemInFollowing = menuMode => {
+        let filter = {
+            WebkitFilter: "invert(91%) sepia(99%) saturate(10000%) hue-rotate(203deg) brightness(169%) contrast(135%)"
+        }
+        let followingStyle = [{}, {},]
+        if (menuMode=="follower") {
+                followingStyle[0] = filter
+        } else {
+            followingStyle[1] = filter
+        }
+        return ({
+            type: 'CLICK_MENU_ITEM_IN_FOLLOWING',
+            payload: {
+                followingStyle,
+                followerMode:menuMode=="follower"?true:false,
+            }
+        })
+    }
+    

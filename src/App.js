@@ -44,20 +44,24 @@ class App extends Component {
       </div>
     )
     if (!this.props.userInfo.user.auth) this.comp = (
-      
+
       <Switch>
-        <Route path="/login" component={Login}/>
+        <Route path="/login" component={Login} />
         <Route path="/create" component={CreateAccount} />
+        <Route
+          path="/"
+          render={() => <Redirect to="/login" />}
+        />
       </Switch>
-      
+
     )
     return (
       <div>   {this.comp}</div>
-      
+
       // <div style={{backgroundColor:"red"}}>
       //   <CreateAccount/>
       // </div>
-      
+
 
 
 

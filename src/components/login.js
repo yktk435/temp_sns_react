@@ -50,8 +50,8 @@ const Login = (props) => {
                 })()}
                 {/* <!-- パスワードを忘れた・アカウント作成 --> */}
                 <div>
-                    <Link to="passwasureta" style={{ textDecoration: "none" }}><a href="" className="a-to-block2" style={{ color: "rgb(27, 149, 224)", padding: "6px" }}>パスワードを忘れた</a></Link>
-                    <Link to="create" style={{ textDecoration: "none" }}><a href="" className="a-to-block2" style={{ color: "rgb(27, 149, 224)", padding: "6px" }}>アカウント作成</a></Link>
+                    <Link to="passwasureta" style={{ textDecoration: "none" }}><div  className="a-to-block2" style={{ color: "rgb(27, 149, 224)", padding: "6px" }}>パスワードを忘れた</div></Link>
+                    <Link to="create" style={{ textDecoration: "none" }}><div  className="a-to-block2" style={{ color: "rgb(27, 149, 224)", padding: "6px" }}>アカウント作成</div></Link>
                 </div>
             </div>
         </div>
