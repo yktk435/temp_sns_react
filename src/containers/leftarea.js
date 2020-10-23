@@ -11,7 +11,8 @@ const mapStateToProps = (state, ownProps) => ({
     leftAreaWidth: state.windowSizeChange.leftAreaWidth.leftAreaWidth,
     classNameString: state.windowSizeChange.leftAreaWidth.classNameString,
     displayString: state.windowSizeChange.leftAreaWidth.displayString,
-    style:state.leftarea.style
+    style: state.leftarea.style,
+    userId:state.userInfo.user.userId
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -2,6 +2,37 @@
 import { replace } from 'react-router-redux';
 import qs from 'qs';
 /**********************************************/
+// プロフィールでのユーザ情報取得
+/**********************************************/
+const getUserInfoInPrrofileAction = (response, error) => ({
+  type: 'GET_USERINFO_IN_PROFILE',
+  payload:{ response, error }
+})
+
+export const getUserInfoInPrrofile = (userId) => {
+  return async (dispatch, getState) => {
+    const option = {
+      method: 'get',
+      headers: {
+        'access_token': getAccesstoken(),
+        // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+    }
+    // ログインしていなければloginにリダイレクトの処理を書く
+    try {
+      const responce = await fetch('http://localhost:8000/api/member/user/edit?userId=' + userId, option);
+      const data = await responce.json();
+
+      if ('error' in data) throw data
+      // dispatch(replace('/home'))
+      dispatch(getUserInfoInPrrofileAction(data, null,));
+    } catch (err) {
+      dispatch(getUserInfoInPrrofileAction(null, err));
+    }
+  };
+}
+
+/**********************************************/
 // タイムライン取得 自分とフォローしているアカウントの記事取得
 /**********************************************/
 
@@ -57,7 +88,7 @@ export const getFriends = (userId) => {
     }
 
     try {
-      const responce = await fetch('http://localhost:8000/api/friend?userId='+userId, option)
+      const responce = await fetch('http://localhost:8000/api/friend?userId=' + userId, option)
       const data = await responce.json();
 
       if ('error' in data) throw data
@@ -112,7 +143,7 @@ export const followOr = (e, memberId) => {
       }
 
       const responce2 = await fetch('http://localhost:8000/api/friend?userId=', option2)
-      
+
       const data2 = await responce2.json();
 
       if ('error' in data2) throw data2
@@ -327,7 +358,8 @@ export const pushCreateAccountButton = (data) => {
       const data = await responce.json();
 
       if ('error' in data) throw data
-      document.cookie = 'access_token=' + data.accessToken
+      // document.cookie = 'access_token=' + data.accessToken
+      localStorage.setItem("access_token",data.accessToken);
       dispatch(getUserInfoAction(data, null,));
       dispatch(replace('/home'))
 
@@ -380,7 +412,7 @@ export const getArticles = (userId) => {
       },
     }
     try {
-      const responce = await fetch('http://localhost:8000/api/article?userId='+userId, option);
+      const responce = await fetch('http://localhost:8000/api/article?userId=' + userId, option);
       const data = await responce.json();
       if ('error' in data) throw data
       dispatch(receiveArticles(data, null));
@@ -439,7 +471,8 @@ export const startLogin = (ipassData) => {
       if ('error' in data) throw data
       dispatch(replace('/home'))
       dispatch(getUserInfoAction(data, null,));
-      document.cookie = 'access_token=' + data.accessToken
+      // document.cookie = 'access_token=' + data.accessToken
+      localStorage.setItem("access_token",data.accessToken);
 
     } catch (err) {
 
@@ -450,12 +483,12 @@ export const startLogin = (ipassData) => {
   };
 }
 // アクセストークンを持っているならそれでログイン
-export const startLoginWithToken = (token) => {
+export const startLoginWithToken = () => {
   return async (dispatch, getState) => {
     const option = {
       method: 'get',
       headers: {
-        'access_token': token,
+        'access_token': getAccesstoken(),
         // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
 
       },
@@ -470,7 +503,8 @@ export const startLoginWithToken = (token) => {
       if ('error' in data) throw data
       // dispatch(replace('/home'))
       dispatch(getUserInfoAction(data, null,));
-      document.cookie = 'access_token=' + data.accessToken
+      // document.cookie = 'access_token=' + data.accessToken
+      localStorage.setItem("access_token",data.accessToken);
 
     } catch (err) {
       dispatch(loginErrorWithToken(err));
@@ -483,7 +517,8 @@ export const startLoginWithToken = (token) => {
 
 export const logout = () => {
   return (dispatch, getState) => {
-    document.cookie = 'access_token=;'
+    // document.cookie = 'access_token=;'
+    localStorage.removeItem("access_token");
     dispatch(logoutAction())
     dispatch(replace('/login'))
   }
@@ -493,11 +528,8 @@ export const logout = () => {
 // 関数
 /*****************************/
 const getAccesstoken = () => {
-  let token;
-  document.cookie.split(';').forEach(item => {
-    token = item.match(/access_token=(.*)/)
-  })
-  return token[1]
+  
+  return localStorage.getItem('access_token');
 
 }
 /*****************************/
@@ -519,14 +551,14 @@ export const getOtherUserInfo = (userId) => {
     }
     // ログインしていなければloginにリダイレクトの処理を書く
     try {
-      const responce = await fetch('http://localhost:8000/api/member/get_other_user/edit?userId='+userId, option);
+      const responce = await fetch('http://localhost:8000/api/member/get_other_user/edit?userId=' + userId, option);
       const data = await responce.json();
 
       if ('error' in data) throw data
       // dispatch(replace('/home'))
       dispatch(getOtherUserInfoAction(data, null,));
     } catch (err) {
-      dispatch(getOtherUserInfoAction(null,err));
+      dispatch(getOtherUserInfoAction(null, err));
     }
   };
 }

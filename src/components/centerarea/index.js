@@ -35,14 +35,15 @@ class CenterArea extends React.Component {
                     <Route path="/notification" component={Notification} />
                     <Route path="/dm" component={Dm} />
                     <Route path="/following" component={Following} />
-                    <Route path="/profile" component={Profile} />
                     <Route path="/setting" component={Setting} />
-                    <Route path="/user/:userId" component={OtherUserPage} />
+                    <Route path="/profile/:userId" component={Profile} />
+                    {/* <Route path="/user/:userId" component={OtherUserPage} /> */}
                     {/* <Route path="/user/:userId" component={Profile} /> */}
                     <Route
                         path="/"
                         render={() => <Redirect to="/home" />}
                     />
+                    
                 </Switch>
 
 

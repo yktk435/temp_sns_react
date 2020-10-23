@@ -70,7 +70,7 @@ const Follower = (props) => {
     return (
         <div style={{ padding: "10px 15px", borderBottom: "1px solid rgb(48, 60, 67)", display: "inline-flex", height: "auto", width: "-webkit-fill-available" }} className="post-screen">
             {/* <!-- 1ブロック ユーザ画像 --> */}
-            <Link to={"/user/"+userId}><div  style={{ marginRight: "10px" }} aria-label="ユーザアイコン">
+            <Link to={"/profile/"+userId}><div  style={{ marginRight: "10px" }} aria-label="ユーザアイコン">
                 <div style={{ marginRight: "5px" }}>
                     <a className="" href="" aria-label="ユーザアイコン">
                         <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={iconUrl} alt="ユーザアイコン" />

@@ -128,7 +128,6 @@ console.log(this.props.timeLineInfo)
 
 }
 const OtherPost = (props) => {
-    console.log(props)
     const { created_at,content,id:articleId,postImageUrl}=props.article
     const {id:memberId,icon,header,name,user_id }=props.member
     return (

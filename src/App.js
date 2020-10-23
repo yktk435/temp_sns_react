@@ -13,23 +13,7 @@ import CreateAccount from './containers/createAccount'
 class App extends Component {
   componentWillMount() {
 
-    // this.props.getUserInfo()
-
-    let token;
-    document.cookie.split(';').forEach(item => {
-      token = item.match(/access_token=(.*)/)
-
-    })
-
-    if (token == null) {
-      // クッキーにアクセストークンがないならログインにリダイレクト
-
-    } else {
-      // クッキーにアクセストークンがあるならそれを使ってログイン
-      token = token[1];
-      // dispatch
-      this.props.startLoginWithToken(token)
-    }
+    this.props.startLoginWithToken()
   }
 
   render() {

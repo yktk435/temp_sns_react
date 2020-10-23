@@ -68,7 +68,11 @@ const mapDispatchToProps = dispatch => ({
     },
     followOr(e,memberId) {
         dispatch(fetch.followOr(e,memberId))
-    }
+    },
+    getUserInfoInPrrofile(userId) {
+        dispatch(fetch.getUserInfoInPrrofile(userId))
+    },
+    
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));

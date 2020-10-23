@@ -12,38 +12,28 @@ import { useStore } from 'react-redux'
 class Profile extends React.Component {
 
     componentWillMount() {
+        let userId = this.props.match.params.userId
+        this.props.getUserInfoInPrrofile(userId)
+        this.props.getArticles(userId)
 
-        this.props.getArticles()
-
-        this.props.getFriends()
+        this.props.getFriends(userId)
     }
     componentWillReceiveProps() {
-        console.log(this.props.followingMode)
+        
+
+        
     }
     render() {
-        // const { userName, userId, iconUrl, headerUrl, postObj, articles } = this.props
-        console.log('00000000000000000000000000000000000000000000')
-        console.log(this.props)
-        // let store=useStore()
         return (
-
             <Switch>
-
-                {/* <Route path="/profile/:menu" component={ProfileMenu} /> */}
-                {/* <Route exact path="/profile" component={MyProfile} /> */}
                 {(() => {
                     if (this.props.followingMode) {
-                        console.log('truetruetruetruetruetruetruetruetrue')
                         return (<Following {...this.props} />)
                     } else {
-                        console.log('falsefalsefalsefalsefalsefalsefalse')
-                        return (<MyProfile {...this.props}/>)
+                        return (<MyProfile {...this.props} />)
 
                     }
                 })()}
-                {/* <MyProfile {...this.props} /> */}
-                {/* <Following /> */}
-
             </Switch>
 
         )
