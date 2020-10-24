@@ -3,7 +3,10 @@ let filter = {
 }
 // 初期状態
 const initialState = {
-    userInfo:[],
+    userInfo: {
+        articles: [],
+        member:[]
+    },
     style: [filter, {}, {},],
     menuMode:'post',
     response: undefined,
@@ -51,11 +54,13 @@ export default (state = initialState, action) => {
                 ? {
                     ...state,
                     error: true,
-                    errorMessage:action.payload.error
+                    errorMessage: action.payload.error,
+                    
                 }
                 : {
                     ...state,
-                    userInfo: {...action.payload.response}
+                    userInfo: { ...action.payload.response },
+                    followingMode:false
                 }
         default:
             return state;

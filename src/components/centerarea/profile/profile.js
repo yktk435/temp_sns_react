@@ -18,6 +18,17 @@ class Profile extends React.Component {
 
         this.props.getFriends(userId)
     }
+    componentWillReceiveProps(nextProps) {
+        console.log(this.props.location.pathname)
+        console.log(nextProps.location.pathname)
+        if (this.props.location.pathname != nextProps.location.pathname) {
+            let userId = nextProps.location.pathname.match(/\/profile\/(.*)/)[1]
+            this.props.getUserInfoInPrrofile(userId)
+            this.props.getArticles(userId)
+            this.props.getFriends(userId)
+        }
+    }
+
     render() {
         return (
             <Switch>

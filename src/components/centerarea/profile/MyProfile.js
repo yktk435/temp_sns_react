@@ -5,18 +5,20 @@ import rep from '../../images/rep.png'
 import retweet from '../../images/retweet.png'
 import {OtherPost} from '../home/home'
 const MyProfile = (props) => {
-    const { userName, userId, iconUrl, headerUrl, postObj, articles, style, clickMenuItem, menuMode ,profileOrFollowing,member} = props
+    const {  postObj, articles, style, clickMenuItem, menuMode, profileOrFollowing, member } = props
+    const {id,name,user_id,icon,header }=member
+    // console.log(member.id)
     return (
         <div className="main-container" style={{ overflow: "auto" }}>
             <div style={{ position: "relative" }}>
                 {/* <!-- ヘッダ画像 --> */}
                 < div >
                     <a href="">
-                        <img src={headerUrl} className="header-image" alt="ヘッダ画像" />
+                        <img src={header} className="header-image" alt="ヘッダ画像" />
                     </a>
                     {/* <!-- ユーザ画像 --> */}
                     <a href="" className="user-image-a">
-                        <img style={{ backgroundColor: "rgb(20, 29, 38)" }} src={iconUrl} alt="ユーザ画像" className="user-image-image-tag" /></a>
+                        <img style={{ backgroundColor: "rgb(20, 29, 38)" }} src={icon} alt="ユーザ画像" className="user-image-image-tag" /></a>
 
                 </div>
                 {/* <!-- プロフィール部分 --> */}
@@ -30,9 +32,9 @@ const MyProfile = (props) => {
                     {/* <!-- ユーザ名とユーザIDを表示 --> */}
                     <div>
                         {/* <!-- ユーザ名 --> */}
-                        <div style={{ paddingTop: "60px", fontSize: "20px", fontWeight: "bold" }}>{userName}</div>
+                        <div style={{ paddingTop: "60px", fontSize: "20px", fontWeight: "bold" }}>{name}</div>
                         {/* <!-- ユーザID --> */}
-                        <div style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}>@{userId}</div>
+                        <div style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}>@{user_id}</div>
                     </div>
                     {/* フォロー フォロワー */}
                     <div style={{ display: "flex" }}>
