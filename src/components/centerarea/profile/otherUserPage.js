@@ -17,9 +17,6 @@ class OtherUserPage extends Profile {
         this.props.getFriends(userId)
         this.props.getOtherUserInfo(userId)
     }
-    componentWillReceiveProps() {
-        console.log(this.props.followingMode)
-    }
     render() {
         return (
             <Switch>

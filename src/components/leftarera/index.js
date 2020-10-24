@@ -27,7 +27,7 @@ class LeftArea extends React.Component {
                 <EventListener target="window" onResize={(e) => this.props.windowSizeChange(e.target.innerWidth)} />
                 <div className="main left border" style={{ overflow: "auto", height: "100vh", width: this.props.leftAreaWidth }}>
                     <div className="div-outside-image site-image">
-                        <Link to="home"><a className="icon-link icon-to-center-for-a" href="" aria-label="サイトアイコン">
+                        <Link to="/home"><a className="icon-link icon-to-center-for-a" href="" aria-label="サイトアイコン">
                             <img className="image-icon icon-to-center-for-img site-image-icon" src={siteicon} alt="サイトアイコン" />
                         </a></Link>
                     </div>

@@ -115,8 +115,6 @@ const followOrUnlock = (responce, error) => ({
 })
 
 export const followOr = (e, memberId) => {
-  console.log('?????????????????????????????????')
-  console.log(memberId)
   return async (dispatch, getState) => {
     const option = {
       method: 'put',
@@ -282,11 +280,7 @@ const searchRes = (responce, error) => ({
 
 export const search = (keyword) => {
   return async (dispatch, getState) => {
-    console.log('accesstoken')
-    console.log('accesstoken')
-    console.log('accesstoken')
-    console.log('accesstoken')
-    console.log(getAccesstoken())
+    
     const option = {
       method: 'get',
       headers: {
@@ -294,7 +288,7 @@ export const search = (keyword) => {
         'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
       },
     }
-    console.log(option)
+    
     const queryString = qs.stringify({
       keyword,
     });

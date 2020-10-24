@@ -12,9 +12,9 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => {
   return ({
-    getUserInfo () {
-    dispatch(fetches.getUserInfo());
-    },
+    // getUserInfo () {
+    // dispatch(fetches.getUserInfo());
+    // },
     startLoginWithToken (token) {
       dispatch(fetches.startLoginWithToken(token));
     },

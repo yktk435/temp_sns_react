@@ -18,11 +18,6 @@ class Profile extends React.Component {
 
         this.props.getFriends(userId)
     }
-    componentWillReceiveProps() {
-        
-
-        
-    }
     render() {
         return (
             <Switch>
@@ -31,18 +26,14 @@ class Profile extends React.Component {
                         return (<Following {...this.props} />)
                     } else {
                         return (<MyProfile {...this.props} />)
-
                     }
                 })()}
             </Switch>
-
         )
     }
 }
 
 const ProfileMenu = (props) => {
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-    console.log(props.match.params.menu)
     return (
         <div>
             {(() => {

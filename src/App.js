@@ -27,27 +27,29 @@ class App extends Component {
         <RightArea />
       </div>
     )
-    
+
     if (this.props.userInfo.user.dataGet) {
-      
-      if (!this.props.userInfo.user.auth) this.comp = (
 
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/create" component={CreateAccount} />
-          <Route
-            path="/"
-            render={() => <Redirect to="/login" />}
-          />
-        </Switch>
+      if (!this.props.userInfo.user.auth) {
+        this.comp = (
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/create" component={CreateAccount} />
+            <Route
+              path="/"
+              render={() => <Redirect to="/login" />}
+            />
+          </Switch>
 
-      )
-      return (
-        <div>   {this.comp}</div>
-      )
+        )
+      }
     } else {
       return (<div>読込中</div>)
     }
+    return (
+      <div>   {this.comp}</div>
+    )
+
 
   };
 }

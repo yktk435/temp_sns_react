@@ -8,7 +8,7 @@ const initialState = {
         response: undefined,
         error: false,
         auth: false,
-        dataGet:false,
+        dataGet: false,
     },
     otherUser: {
         userName: undefined,
@@ -34,8 +34,6 @@ export default (state = initialState, action) => {
                     user: { error: true, auth: false ,dataGet:false}
                 }
                 : {
-                    // 通信エラーエラーがないなら
-                    // API側のキーにの撮ってすべて展開
                     ...state,
                     user: {
                         ...action.payload.response,
@@ -69,7 +67,7 @@ export default (state = initialState, action) => {
                     ...state.user,
                     errorObj:action.payload.errorObj,
                     error: true,
-                    dataGet:true
+                    dataGet:false
                 }
             }
             
@@ -79,7 +77,7 @@ export default (state = initialState, action) => {
                 user: {
                     ...state.user,
                     errorObj:action.payload.errorObj,
-                    dataGet:true
+                    dataGet:false
                 }
             }
             
@@ -87,7 +85,7 @@ export default (state = initialState, action) => {
             return {
                 user: {
                     auth: false,
-                    dataGet:false
+                    dataGet:true
                 }
             }
             

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-import {UserPost} from '../profile/MyProfile'
+import { UserPost } from '../profile/MyProfile'
 
 // 画像
 import pic from '../../images/pic.png'
@@ -14,6 +14,10 @@ import retweet from '../../images/retweet.png'
 const createObjectURL = (window.URL || window.webkitURL).createObjectURL || window.createObjectURL;
 class Home extends React.Component {
     componentWillMount() {
+        console.log('componentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMount')
+        // 古いトークンのままにやろうとしているからエラーになる
+        console.log(localStorage.getItem('access_token'))
+        console.log(this.props.dataGet)
         this.props.getTimeLine();
     }
 
@@ -25,52 +29,10 @@ class Home extends React.Component {
         this.props.imageChoce(imageUrl)
     }
     render() {
-        console.log(this.props.timeLineInfo)
-
-        let PostedUserInfo = {
-            userName: this.props.userName,
-            userImageUrl: "./src/work/image/user.jpg",
-            userId: this.props.userId,
-            createdAt: "202x年x月x日",
-            postImageUrl: "./src/work/image/user.jpg",
-
-        }
         const { articles, memberIds } = this.props.timeLineInfo
-        console.log(articles, memberIds)
+        console.log(this.props.dataGet)
         return (
             <div className="main-container" style={{ overflow: "auto" }}>
-
-                {/* メニュー特有のなにか */}
-                {/* <div style={{ borderBottom: "8px solid rgb(48, 60, 67)", height: "auto", padding: "10px" }} className="post-screen">
-            
-                    <div style={{ float: "left" }} aria-label="ユーザアイコン">
-                        <div style={{ margin: "5px" }}>
-                            <a className="" href="" aria-label="ユーザアイコン">
-                                <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={this.props.iconUrl} alt="ユーザアイコン" />
-                            </a>
-                        </div>
-                    </div>
-                    <div onFocus={(e) => this.props.inputPostText(e.target.innerText)} onBlur={(e) => this.props.inputPostText(e.target.innerText)} className="text-area" contentEditable="true" >{this.props.text}</div>
-                    <div style={{ padding: "5px 0" }} aria-label="投稿した写真を表示">
-                                        
-                                        <img src={this.props.imageUrl} />
-                                        
-                                    </div>
-                    <div style={{ display: "flex", marginTop: "15px", marginBottom: "5px" }}>
-                        <div style={{ display: "flex", marginLeft: "auto" }}>
-                            <input type="file" name="photo" accesst="image/jpeg,image/png" onChange={(e) => this.handleChangeFile(e)} /> <a style={{ margin: "0 5px" }} className="icon-link simple-icon" href="" aria-label="写真追加">
-                                <img className="image-icon" src={pic} alt="写真追加アイコン" />
-                            </a>
-                            <a onClick={() => {
-
-                                this.props.post(this.props.requestData, this.props.accessToken)
-                                this.props.clearTextBox()
-                            }} style={{ margin: "0 5px", }} className="btn btn--orange btn--radius" aria-label="投稿ボタン">投稿</a>
-                        </div>
-                    </div>
-
-                </div> */}
-
                 {/* みんなの投稿 */}
                 <div style={{ width: "100%", display: "inline-flex", borderBottom: "5px solid rgb(48, 60, 67)" }} >
                     {/* <!-- ユーザ情報 --> */}

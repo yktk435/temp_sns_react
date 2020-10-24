@@ -17,8 +17,6 @@ class CenterArea extends React.Component {
     }
     
     render() {
-        
-        console.log(this.props)
         const { menuName } = this.props;
         return (
             <div className="main center border" style={{ width: "560px", height: "100vh" ,overflow:"auto"}}>

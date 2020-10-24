@@ -7,8 +7,6 @@ class Following extends React.Component {
     
     render() {
         const { profileOrFollowing, clickMenuItemInFollowing, followingStyle, followerMode, followerUsers, followUsers,followOr } = this.props
-
-        // this.props.followerUsers.forEach(i=>console.log(i))
         return (
             <div>
                 {/* 戻るボタン */}
@@ -41,9 +39,6 @@ class Following extends React.Component {
                 <div>
                     {(() => {
                         if (followerMode) {
-                            console.log(followerUsers)
-                            console.log(Array.isArray(followerUsers))
-                            console.log(followerUsers.length)
                             return (
                                 // <Follower userName="たろう" userId="userid" iconUrl={taro} />
                                 <div>
@@ -66,7 +61,6 @@ class Following extends React.Component {
 }
 const Follower = (props) => {
     const { userName, userId, iconUrl, follow } = props
-    console.log(props)
     return (
         <div style={{ padding: "10px 15px", borderBottom: "1px solid rgb(48, 60, 67)", display: "inline-flex", height: "auto", width: "-webkit-fill-available" }} className="post-screen">
             {/* <!-- 1ブロック ユーザ画像 --> */}

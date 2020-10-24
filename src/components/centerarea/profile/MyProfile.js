@@ -6,8 +6,6 @@ import retweet from '../../images/retweet.png'
 import {OtherPost} from '../home/home'
 const MyProfile = (props) => {
     const { userName, userId, iconUrl, headerUrl, postObj, articles, style, clickMenuItem, menuMode ,profileOrFollowing,member} = props
-    console.log('MyProfileMyProfileMyProfileMyProfileMyProfileMyProfile')
-    console.log(props)
     return (
         <div className="main-container" style={{ overflow: "auto" }}>
             <div style={{ position: "relative" }}>
@@ -45,7 +43,6 @@ const MyProfile = (props) => {
                         
                         {/* <!-- フォロー --> */}
                         <div className="pointer" onClick={(e) => {
-                            console.log(e)
                             profileOrFollowing('following')
                         }} style={{ color: "rgb(115, 129, 136)", marginTop: "5px", marginRight: "10px" }}><span style={{ color: "white", fontWeight: "bold" }}>{props.followLength}</span>フォロー</div>
                         {/* <!-- フォロワー --> */}
@@ -126,10 +123,10 @@ export const UserPost = (props) => {
     const { id: memberId, icon, header, name, user_id } = props.member
     return (
         <div>
-            <div style={{ padding: "10px 15px", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
+            <div style={{ padding: "10px 0", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
 
                 {/* ブロック1 */}
-                <div style={{ marginRight: "10px" }} aria-label="ユーザアイコン">
+                <div style={{ margin: "0 10px" }} aria-label="ユーザアイコン">
                     <div style={{ margin: "5px" }}>
                         <a className="" href="" aria-label="ユーザアイコン">
                             <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={icon} alt="ユーザアイコン" />
