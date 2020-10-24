@@ -202,43 +202,9 @@ const createAccountButtonError = error => ({
 
 // 設定 Action
 
-
-// const changeUserId = (userId) => ({
-//   type: 'CHNAGE_USER_ID',
-//   payload: {
-//     userId
-//   }
-// })
-
-// const saveUserId = () => ({
-//   type: 'SAVE_USER_ID',
-// })
-
 export const saveChange = (s) => ({
   type: 'SAVE_CHANGE'
 })
-
-// const changeMail = (mail) => ({
-//   type: 'CHNAGE_MAIL',
-//   payload: {
-//     mail
-//   }
-// })
-
-// const saveMail = () => ({
-//   type: 'SAVE_MAIL',
-// })
-
-// const changePass = (pass) => ({
-//   type: 'CHNAGE_PASS',
-//   payload: {
-//     pass
-//   }
-// })
-
-// const savePass = () => ({
-//   type: 'SAVE_PASS',
-// })
 
 export const changeInput = (id, input) => ({
   type: 'CHANGE_INPUT',
@@ -419,22 +385,6 @@ export const getArticles = (userId) => {
 // ユーザ情報取得
 /**********************************************/
 
-// export const getUserInfo = () => {
-//   // getState関数でstate.shopping.categoriesにアクセスする
-//   return async (dispatch, getState) => {
-
-//     try {
-//       const responce = await fetch('http://localhost:8000/api/test');
-//       const data = await responce.json();
-//       dispatch(getUserInfoAction(data, null,));
-//     } catch (err) {
-//       // dispatch(receiveData(null, err)); 
-//     }
-//   };
-// };
-
-
-
 export const startLogin = (ipassData) => {
 
 
@@ -456,11 +406,9 @@ export const startLogin = (ipassData) => {
 
 
       if ('error' in data) throw data
+      localStorage.setItem("access_token", data.accessToken);
       dispatch(replace('/home'))
       dispatch(getUserInfoAction(data, null,));
-      // document.cookie = 'access_token=' + data.accessToken
-      localStorage.setItem("access_token", data.accessToken);
-
     } catch (err) {
 
       dispatch(loginError(err));
@@ -488,11 +436,8 @@ export const startLoginWithToken = () => {
       const data = await responce.json();
 
       if ('error' in data) throw data
-      // dispatch(replace('/home'))
       localStorage.setItem("access_token", data.accessToken);
       dispatch(getUserInfoAction(data, null,));
-      // document.cookie = 'access_token=' + data.accessToken
-      
 
     } catch (err) {
       dispatch(loginErrorWithToken(err));
@@ -543,7 +488,6 @@ export const getOtherUserInfo = (userId) => {
       const data = await responce.json();
 
       if ('error' in data) throw data
-      // dispatch(replace('/home'))
       dispatch(getOtherUserInfoAction(data, null,));
     } catch (err) {
       dispatch(getOtherUserInfoAction(null, err));
