@@ -8,6 +8,7 @@ import { withRouter } from 'react-router'
 const mapStateToProps = (state, ownProps) => {
     return (
         {
+            userInfo:state.userInfo,
             userName: state.userInfo.user.userName,
             userId: state.userInfo.user.userId,
             iconUrl: state.userInfo.user.iconUrl,
@@ -61,7 +62,6 @@ const mapDispatchToProps = dispatch => ({
     getFriends(userId) {
         dispatch(fetch.getFriends(userId))
     },
-    
     startLogin(ipassData) {
         dispatch(fetch.startLogin(ipassData))
     },

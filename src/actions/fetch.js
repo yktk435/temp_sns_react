@@ -98,6 +98,37 @@ export const getFriends = (userId) => {
     }
   }
 }
+// ログインしているユーザのフォロー/フォロワー取得
+
+const receiveMyFriendsData = (responce, error) => ({
+  type: 'RECEIVE_MY_FRIENDS_DATA',
+  payload: {
+    responce,
+    error
+  }
+})
+
+export const getMyFriends = (userId) => {
+  return async (dispatch, getState) => {
+    const option = {
+      method: 'get',
+      headers: {
+        'access_token': getAccesstoken(),
+        // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+    }
+
+    try {
+      const responce = await fetch('http://localhost:8000/api/friend?userId=' + userId, option)
+      const data = await responce.json();
+
+      if ('error' in data) throw data
+      dispatch(receiveMyFriendsData(data, null));
+    } catch (err) {
+      dispatch(receiveMyFriendsData(null, err));
+    }
+  }
+}
 /**********************************************/
 // フォロー/フォロワー習得 ここまで
 /**********************************************/
@@ -106,8 +137,8 @@ export const getFriends = (userId) => {
 // フォロー/フォロー解除
 /**********************************************/
 
-const followOrUnlock = (responce, error) => ({
-  type: "FOLLOW_OR",
+const followingInfoUpdate = (responce, error) => ({
+  type: "FOLLOWING_INFO_UPDATE",
   payload: {
     responce,
     error
@@ -131,7 +162,7 @@ export const followOr = (e, memberId) => {
       const data = await responce.json();
 
       if ('error' in data) throw data
-      dispatch(followOrUnlock(data, null));
+      dispatch(followingInfoUpdate(data, null));
 
       const option2 = {
         method: 'get',
@@ -140,16 +171,16 @@ export const followOr = (e, memberId) => {
         },
       }
 
-      const responce2 = await fetch('http://localhost:8000/api/friend?userId=', option2)
+      // const responce2 = await fetch('http://localhost:8000/api/friend?userId=', option2)
 
-      const data2 = await responce2.json();
+      // const data2 = await responce2.json();
 
-      if ('error' in data2) throw data2
-      dispatch(receiveFriendsData(data2, null));
+      // if ('error' in data2) throw data2
+      // dispatch(receiveFriendsData(data2, null));
 
 
     } catch (err) {
-      dispatch(followOrUnlock(null, err));
+      dispatch(followingInfoUpdate(null, err));
     }
   }
 }

@@ -14,6 +14,8 @@ import Following from '../../containers/following';
 class CenterArea extends React.Component {
     componentWillMount() {
         this.props.getArticles()
+        // ここでログインしているユーザのフォロワーとフォローを取得しておく
+        this.props.getMyFriends(this.props.myUserId);
     }
     
     render() {

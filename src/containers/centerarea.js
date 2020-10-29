@@ -33,6 +33,7 @@ const mapStateToProps = (state, ownProps) => {
   }
   
   return ({
+    myUserId: state.userInfo.user.userId,
     menuName: menuname,
     routing:ownProps.location
   })
@@ -43,6 +44,9 @@ const mapDispatchToProps = dispatch => ({
   getArticles(userId) {
     dispatch(fetch.getArticles(userId))
   },
+  getMyFriends(userId) {
+    dispatch(fetch.getMyFriends(userId))
+},
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(CenterArea);

@@ -3,11 +3,18 @@ import { Link } from 'react-router-dom';
 import good from '../../images/good.png'
 import rep from '../../images/rep.png'
 import retweet from '../../images/retweet.png'
-import {OtherPost} from '../home/home'
+import { OtherPost } from '../home/home'
 const MyProfile = (props) => {
-    const {  postObj, articles, style, clickMenuItem, menuMode, profileOrFollowing, member } = props
-    const {id,name,user_id,icon,header }=member
-    // console.log(member.id)
+    console.log(props)
+    const { postObj, articles, style, menuMode, profileOrFollowing, member } = props
+    // 関数
+    const { clickMenuItem, followOr } = props
+    // 表示中のユーザ情報
+    const { id, name, user_id, icon, header } = member
+    const { followerUsers, followUsers}=props
+    // 自分のユーザ情報
+    const {userId,followUsers:myFollowUsers,followerUsers:myFollowerUsers }=props.userInfo.user
+
     return (
         <div className="main-container" style={{ overflow: "auto" }}>
             <div style={{ position: "relative" }}>
@@ -24,11 +31,57 @@ const MyProfile = (props) => {
                 {/* <!-- プロフィール部分 --> */}
                 <div style={{ padding: "15px", borderBottom: "1px solid rgb(48, 60, 67)" }}>
                     {/* <!-- プロフィール編集ボタン --> */}
-                    <div className="icon-container" style={{ width: "170px", margin: "0px 0px 0px auto", height: "40px" }}>
+                    {(() => {
+                        // userId:自分のユーザID
+                        // user_id:表示中のユーザID
+                        if (userId==user_id) {
+                            return (
+                                <div className="icon-container" style={{ width: "170px", margin: "0px 0px 0px auto", height: "40px" }}>
                         <a className="a-to-block edit-prof" href="" style={{ borderRadius: "100px", position: "relative", textDecoration: "none", border: "1px solid rgba(29,161,242,1.00)", color: "rgba(29,161,242,1.00)" }}>
                             <div className="" style={{ position: "absolute", top: "0", right: "0", bottom: "0", left: "0", margin: "auto", width: "80%", height: "20px", textAlign: "center", fontSize: "15px", fontWeight: "bold" }}>プロフィールを編集</div>
                         </a>
                     </div>
+                            )
+                        }
+                        // 他のユーザプロフィールページ
+                        else {
+                            // follow 1:フォローしている 0:フォローしていない
+                            let follow = myFollowUsers.find(user=>user.userId==user_id)?1:0;
+                            if (!follow) {
+                                return (<div id="follow" className="edit-prof pointer" style={{
+                                    borderRadius: "20px",
+                                    border: "1px solid rgb(29, 161, 242)",
+                                    // margin: "auto 10px auto 300px",
+                                    height: "30px",
+                                    width: "120px",
+                                    textAlign: "center",
+                                    lineHeight: "28px",
+                                    color: "rgb(29, 161, 242)",
+                                    position: "absolute",
+                                    transform:"translate(400px, 10px)"
+                                }} onClick={(e)=>props.followOr(e.target.id,user_id)}>
+                                    フォロー
+                                </div>)
+                            } else {
+                                return (<div id="following" className="edit-prof pointer" style={{
+                                    borderRadius: "20px",
+                                    // border: "1px solid rgb(29, 161, 242)",
+                                    // margin: "auto 10px auto 300px",
+                                    height: "30px",
+                                    width: "120px",
+                                    textAlign: "center",
+                                    lineHeight: "28px",
+                                    backgroundColor: "rgb(29, 161, 242)",
+                                    color: "white",
+                                    position: "absolute",
+                                    transform:"translate(400px, 10px)"
+                                }} onClick={(e)=>props.followOr(e.target.id,user_id)}>
+                                    フォロー中
+                                </div>)
+                            } 
+                        }
+                    })()}
+                    
                     {/* <!-- ユーザ名とユーザIDを表示 --> */}
                     <div>
                         {/* <!-- ユーザ名 --> */}
@@ -42,13 +95,13 @@ const MyProfile = (props) => {
                         {/* <Link to="/following" ><div style={{ color: "rgb(115, 129, 136)", marginTop: "5px", marginRight: "10px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロー</div></Link> */}
                         {/* <!-- フォロワー --> */}
                         {/* <Link to="/profile/following" ><div style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}><span style={{ color: "white", fontWeight: "bold" }}>3</span>フォロワー</div></Link> */}
-                        
+
                         {/* <!-- フォロー --> */}
                         <div className="pointer" onClick={(e) => {
                             profileOrFollowing('following')
-                        }} style={{ color: "rgb(115, 129, 136)", marginTop: "5px", marginRight: "10px" }}><span style={{ color: "white", fontWeight: "bold" }}>{props.followLength}</span>フォロー</div>
+                        }} style={{ color: "rgb(115, 129, 136)", marginTop: "5px", marginRight: "10px" }}><span style={{ color: "white", fontWeight: "bold" }}>{followUsers.length}</span>フォロー</div>
                         {/* <!-- フォロワー --> */}
-                        <div className="pointer" onClick={()=>{profileOrFollowing('following')}} style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}><span style={{ color: "white", fontWeight: "bold" }}>{props.followerLength}</span>フォロワー</div>
+                        <div className="pointer" onClick={() => { profileOrFollowing('following') }} style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}><span style={{ color: "white", fontWeight: "bold" }}>{followerUsers.length}</span>フォロワー</div>
                     </div>
                     {/* <!-- 投稿・返信・メディア(写真)・いいね(ぐっと)を表示 --> */}
                     <div style={{ width: "100%", display: "inline-flex" }}>
@@ -87,7 +140,7 @@ const MyProfile = (props) => {
             {(() => {
                 switch (menuMode) {
                     case "post":
-                        return (<PostArea articles={articles} member={member}/>)
+                        return (<PostArea articles={articles} member={member} />)
                         break;
                     case "rep":
                         break;
@@ -105,14 +158,14 @@ const MyProfile = (props) => {
     )
 }
 
- const PostArea = (props) => {
+const PostArea = (props) => {
 
     if (typeof props.articles === 'undefined') {
         return (<p>読込中</p>)
     } else {
         return (
             <div>
-                {props.articles.map((article,i) => {
+                {props.articles.map((article, i) => {
                     if (article.id != undefined) return (<UserPost key={i} article={article} member={props.member} />)
                 })}
             </div>

@@ -9,6 +9,8 @@ const initialState = {
         error: false,
         auth: false,
         dataGet: false,
+        followUsers:[],
+followerUsers:[]
     },
     otherUser: {
         userName: undefined,
@@ -31,18 +33,22 @@ export default (state = initialState, action) => {
             return action.payload.error
                 ? {
                     ...state,
-                    user: { error: true, auth: false ,dataGet:false}
+                    user: {
+                        ...state.user,
+                        error: true, auth: false, dataGet: false
+                    }
                 }
                 : {
                     ...state,
                     user: {
+                        ...state.user,
                         ...action.payload.response,
                         error: false,
                         auth: true,
-                        dataGet:true
+                        dataGet: true
                     },
                 };
-            
+
         case 'GET_OTHER_USERINFO':
             return action.payload.error
                 ? {
@@ -56,39 +62,70 @@ export default (state = initialState, action) => {
                     otherUser: {
                         ...action.payload.response,
                         error: false,
-                        dataGet:true
+                        dataGet: true
                     },
                 };
-            
+
         case 'LOGIN_ERROR':
             return {
                 ...state,
                 user: {
                     ...state.user,
-                    errorObj:action.payload.errorObj,
+                    errorObj: action.payload.errorObj,
                     error: true,
-                    dataGet:false
+                    dataGet: false
                 }
             }
-            
+
         case 'LOGIN_ERROR_EITH_TOKEN':
             return {
                 ...state,
                 user: {
                     ...state.user,
-                    errorObj:action.payload.errorObj,
-                    dataGet:false
+                    errorObj: action.payload.errorObj,
+                    dataGet: false
                 }
             }
-            
+
         case 'LOGOUT':
             return {
                 user: {
                     auth: false,
-                    dataGet:true
+                    dataGet: true
                 }
             }
-            
+        case 'RECEIVE_MY_FRIENDS_DATA':
+            return action.payload.error
+                ? {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.error
+                }
+                : {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        followUsers: action.payload.responce.follow,
+                        followerUsers: action.payload.responce.follower,
+                    }
+
+                }
+        case 'FOLLOWING_INFO_UPDATE':
+            return action.payload.error
+                ? {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.error
+                }
+                : {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        followUsers: action.payload.responce.myFriends.follow,
+                        followerUsers: action.payload.responce.myFriends.follower,
+                    }
+
+                }
         default:
             return state;
     }

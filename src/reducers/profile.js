@@ -5,10 +5,10 @@ let filter = {
 const initialState = {
     userInfo: {
         articles: [],
-        member:[]
+        member: []
     },
     style: [filter, {}, {},],
-    menuMode:'post',
+    menuMode: 'post',
     response: undefined,
     error: false,
     followingMode: false,
@@ -24,12 +24,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 style: { ...action.payload.style },
-                menuMode:action.payload.menuMode,
+                menuMode: action.payload.menuMode,
             };
         case 'PROF_OR_FOLLOW':
             return {
                 ...state,
-                followingMode:action.payload.followingMode
+                followingMode: action.payload.followingMode
             }
         case 'CLICK_MENU_ITEM_IN_FOLLOWING':
             return {
@@ -42,25 +42,37 @@ export default (state = initialState, action) => {
                 ? {
                     ...state,
                     error: true,
-                    errorMessage:action.payload.error
+                    errorMessage: action.payload.error
                 }
                 : {
                     ...state,
                     followUsers: action.payload.responce.follow,
-                    followerUsers:action.payload.responce.follower,
+                    followerUsers: action.payload.responce.follower,
                 }
+        // case 'FOLLOWING_INFO_UPDATE':
+        //     return action.payload.error
+        //         ? {
+        //             ...state,
+        //             error: true,
+        //             errorMessage: action.payload.error
+        //         }
+        //         : {
+        //             ...state,
+        //             followUsers: action.payload.responce.targetsFriends.follow,
+        //             followerUsers: action.payload.responce.targetsFriends.follower,
+        //         }
         case 'GET_USERINFO_IN_PROFILE':
             return action.payload.error
                 ? {
                     ...state,
                     error: true,
                     errorMessage: action.payload.error,
-                    
+
                 }
                 : {
                     ...state,
                     userInfo: { ...action.payload.response },
-                    followingMode:false
+                    followingMode: false
                 }
         default:
             return state;

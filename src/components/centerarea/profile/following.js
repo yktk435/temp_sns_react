@@ -1,12 +1,16 @@
 import React from 'react'
 import left from '../../images/left.png'
 import taro from '../../images/taro.png'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class Following extends React.Component {
-    
+
     render() {
-        const { profileOrFollowing, clickMenuItemInFollowing, followingStyle, followerMode, followerUsers, followUsers,followOr } = this.props
+        
+        const { profileOrFollowing, clickMenuItemInFollowing, followingStyle, followerMode, followerUsers, followUsers, followOr } = this.props
+        // ログインしているユーザのフォロー・フォロワー情報
+        const { followerUsers: myFollowerUsers, followUsers: myFollowUsers } = this.props.userInfo.user
+        console.log(this.props.userInfo.user)
         return (
             <div>
                 {/* 戻るボタン */}
@@ -45,12 +49,14 @@ class Following extends React.Component {
                                     {followerUsers.map(user => (<Follower followOr={followOr} {...user} />))}
                                 </div>
                             )
-                        } else { return (
-                            // <Follower userName="たろう" userId="userid" iconUrl={taro} />
-                            <div>
-                                {followUsers.map(user => (<Follower follow={1} followOr={followOr} {...user} />))}
-                            </div>
-                        )}
+                        } else {
+                            return (
+                                // <Follower userName="たろう" userId="userid" iconUrl={taro} />
+                                <div>
+                                    {followUsers.map(user => (<Follower follow={1} followOr={followOr} {...user} />))}
+                                </div>
+                            )
+                        }
                     })()}
                 </div>
             </div>
@@ -64,7 +70,7 @@ const Follower = (props) => {
     return (
         <div style={{ padding: "10px 15px", borderBottom: "1px solid rgb(48, 60, 67)", display: "inline-flex", height: "auto", width: "-webkit-fill-available" }} className="post-screen">
             {/* <!-- 1ブロック ユーザ画像 --> */}
-            <Link to={"/profile/"+userId}><div  style={{ marginRight: "10px" }} aria-label="ユーザアイコン">
+            <Link to={"/profile/" + userId}><div style={{ marginRight: "10px" }} aria-label="ユーザアイコン">
                 <div style={{ marginRight: "5px" }}>
                     <a className="" href="" aria-label="ユーザアイコン">
                         <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={iconUrl} alt="ユーザアイコン" />
@@ -75,7 +81,7 @@ const Follower = (props) => {
             <div>
                 {/* <!-- ユーザ名・ユーザID --> */}
                 <div >
-                    <div stykle={{width:"max-content"}}>
+                    <div stykle={{ width: "max-content" }}>
                         <a style={{ textDecoration: "none", color: "white", fontWeight: "bold", }} href="">{userName}</a>
                     </div>
                     <div >
@@ -96,8 +102,8 @@ const Follower = (props) => {
                         lineHeight: "28px",
                         color: "rgb(29, 161, 242)",
                         position: "absolute",
-                        transform:"translate(400px, 10px)"
-                    }} onClick={(e)=>props.followOr(e.target.id,props.memberId)}>
+                        transform: "translate(400px, 10px)"
+                    }} onClick={(e) => props.followOr(e.target.id, props.memberId)}>
                         フォロー
                     </div>)
                 } else {
@@ -112,8 +118,8 @@ const Follower = (props) => {
                         backgroundColor: "rgb(29, 161, 242)",
                         color: "white",
                         position: "absolute",
-                        transform:"translate(400px, 10px)"
-                    }} onClick={(e)=>props.followOr(e.target.id,props.memberId)}>
+                        transform: "translate(400px, 10px)"
+                    }} onClick={(e) => props.followOr(e.target.id, props.memberId)}>
                         フォロー中
                     </div>)
                 }
