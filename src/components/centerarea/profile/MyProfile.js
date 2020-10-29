@@ -3,20 +3,43 @@ import { Link } from 'react-router-dom';
 import good from '../../images/good.png'
 import rep from '../../images/rep.png'
 import retweet from '../../images/retweet.png'
-import { OtherPost } from '../home/home'
+
+import left from '../../images/left.png'
+import { goback } from 'react-router-redux'
 const MyProfile = (props) => {
     console.log(props)
-    const { postObj, articles, style, menuMode, profileOrFollowing, member } = props
+    const { postObj, articles, style, menuMode, member } = props
     // 関数
-    const { clickMenuItem, followOr } = props
+    const { profileOrFollowing, clickMenuItem, followOr, goBack } = props
     // 表示中のユーザ情報
-    const { id:member_id, name, user_id, icon, header } = member
-    const { followerUsers, followUsers}=props
+    const { id: member_id, name, user_id, icon, header } = member
+    const { followerUsers, followUsers } = props
     // 自分のユーザ情報
-    const {userId,followUsers:myFollowUsers,followerUsers:myFollowerUsers }=props.userInfo.user
+    const { userId, followUsers: myFollowUsers, followerUsers: myFollowerUsers } = props.userInfo.user
 
     return (
         <div className="main-container" style={{ overflow: "auto" }}>
+            {(() => {
+                // userId:自分のユーザID
+                // user_id:表示中のユーザID
+                if (userId != user_id) {
+                    return (
+                        <div onClick={() => { goBack() }} className="goback pointer" style={{
+                            borderRadius: "100%",
+                            padding: "5px",
+                            position: "absolute",
+                            height: "21px",
+                            width: "21px",
+                            top: "20px",
+                            transform: "translate(3px, 0)"
+                        }}>
+                            <img className="blue" src={left} style={{ width: "20px" }} />
+                        </div>
+                    )
+                }
+            })()}
+
+
             <div style={{ position: "relative" }}>
                 {/* <!-- ヘッダ画像 --> */}
                 < div >
@@ -34,19 +57,19 @@ const MyProfile = (props) => {
                     {(() => {
                         // userId:自分のユーザID
                         // user_id:表示中のユーザID
-                        if (userId==user_id) {
+                        if (userId == user_id) {
                             return (
                                 <div className="icon-container" style={{ width: "170px", margin: "0px 0px 0px auto", height: "40px" }}>
-                        <a className="a-to-block edit-prof" href="" style={{ borderRadius: "100px", position: "relative", textDecoration: "none", border: "1px solid rgba(29,161,242,1.00)", color: "rgba(29,161,242,1.00)" }}>
-                            <div className="" style={{ position: "absolute", top: "0", right: "0", bottom: "0", left: "0", margin: "auto", width: "80%", height: "20px", textAlign: "center", fontSize: "15px", fontWeight: "bold" }}>プロフィールを編集</div>
-                        </a>
-                    </div>
+                                    <a className="a-to-block edit-prof" href="" style={{ borderRadius: "100px", position: "relative", textDecoration: "none", border: "1px solid rgba(29,161,242,1.00)", color: "rgba(29,161,242,1.00)" }}>
+                                        <div className="" style={{ position: "absolute", top: "0", right: "0", bottom: "0", left: "0", margin: "auto", width: "80%", height: "20px", textAlign: "center", fontSize: "15px", fontWeight: "bold" }}>プロフィールを編集</div>
+                                    </a>
+                                </div>
                             )
                         }
                         // 他のユーザプロフィールページ
                         else {
                             // follow 1:フォローしている 0:フォローしていない
-                            let follow = myFollowUsers.find(user=>user.userId==user_id)?1:0;
+                            let follow = myFollowUsers.find(user => user.userId == user_id) ? 1 : 0;
                             if (!follow) {
                                 return (<div id="follow" className="edit-prof pointer" style={{
                                     borderRadius: "20px",
@@ -58,8 +81,8 @@ const MyProfile = (props) => {
                                     lineHeight: "28px",
                                     color: "rgb(29, 161, 242)",
                                     position: "absolute",
-                                    transform:"translate(400px, 10px)"
-                                }} onClick={(e)=>props.followOr(e.target.id,member_id)}>
+                                    transform: "translate(400px, 10px)"
+                                }} onClick={(e) => props.followOr(e.target.id, member_id)}>
                                     フォロー
                                 </div>)
                             } else {
@@ -74,14 +97,14 @@ const MyProfile = (props) => {
                                     backgroundColor: "rgb(29, 161, 242)",
                                     color: "white",
                                     position: "absolute",
-                                    transform:"translate(400px, 10px)"
-                                }} onClick={(e)=>props.followOr(e.target.id,member_id)}>
+                                    transform: "translate(400px, 10px)"
+                                }} onClick={(e) => props.followOr(e.target.id, member_id)}>
                                     フォロー中
                                 </div>)
-                            } 
+                            }
                         }
                     })()}
-                    
+
                     {/* <!-- ユーザ名とユーザIDを表示 --> */}
                     <div>
                         {/* <!-- ユーザ名 --> */}

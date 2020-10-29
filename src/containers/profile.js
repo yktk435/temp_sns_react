@@ -4,7 +4,7 @@ import Profile from '../components/centerarea/profile/profile'
 import * as fetch from '../actions/fetch'
 import * as profile from '../actions/profile'
 import { withRouter } from 'react-router'
-
+import {goBack} from 'react-router-redux'
 const mapStateToProps = (state, ownProps) => {
     return (
         {
@@ -77,6 +77,9 @@ const mapDispatchToProps = dispatch => ({
     getUserInfoInPrrofile(userId) {
         dispatch(fetch.getUserInfoInPrrofile(userId))
     },
+    goBack() {
+        dispatch(goBack())
+    }
     
 })
 
