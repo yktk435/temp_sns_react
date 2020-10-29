@@ -7,10 +7,11 @@ class Following extends React.Component {
 
     render() {
         
-        const { profileOrFollowing, clickMenuItemInFollowing, followingStyle, followerMode, followerUsers, followUsers, followOr } = this.props
+        const { profileOrFollowing, clickMenuItemInFollowing, followingStyle, followerMode, followOr } = this.props
+        // 表示中のユーザ情報
+        const { followerUsers, followUsers}=this.props
         // ログインしているユーザのフォロー・フォロワー情報
         const { followerUsers: myFollowerUsers, followUsers: myFollowUsers } = this.props.userInfo.user
-        console.log(this.props.userInfo.user)
         return (
             <div>
                 {/* 戻るボタン */}
@@ -46,14 +47,14 @@ class Following extends React.Component {
                             return (
                                 // <Follower userName="たろう" userId="userid" iconUrl={taro} />
                                 <div>
-                                    {followerUsers.map(user => (<Follower followOr={followOr} {...user} />))}
+                                    {followerUsers.map(user => (<Follower followOr={followOr} {...user} myFollowUsers={myFollowUsers} myFollowerUsers={myFollowerUsers}  />))}
                                 </div>
                             )
                         } else {
                             return (
                                 // <Follower userName="たろう" userId="userid" iconUrl={taro} />
                                 <div>
-                                    {followUsers.map(user => (<Follower follow={1} followOr={followOr} {...user} />))}
+                                    {followUsers.map(user => (<Follower follow={1} followOr={followOr} {...user} myFollowUsers={myFollowUsers} myFollowerUsers={myFollowerUsers}  />))}
                                 </div>
                             )
                         }
@@ -67,6 +68,7 @@ class Following extends React.Component {
 }
 const Follower = (props) => {
     const { userName, userId, iconUrl, follow } = props
+    const { myFollowerUsers, myFollowUsers}=props
     return (
         <div style={{ padding: "10px 15px", borderBottom: "1px solid rgb(48, 60, 67)", display: "inline-flex", height: "auto", width: "-webkit-fill-available" }} className="post-screen">
             {/* <!-- 1ブロック ユーザ画像 --> */}
@@ -91,6 +93,7 @@ const Follower = (props) => {
             </div>
             {/* フォロー/フォロー中ボタン */}
             {(() => {
+                let follow = myFollowUsers.find(user=>user.userId==userId)?1:0;
                 if (!follow) {
                     return (<div id="follow" className="edit-prof pointer" style={{
                         borderRadius: "20px",
