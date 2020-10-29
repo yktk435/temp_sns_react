@@ -9,8 +9,8 @@ const initialState = {
         error: false,
         auth: false,
         dataGet: false,
-        followUsers:[],
-followerUsers:[]
+        followUsers: [],
+        followerUsers: []
     },
     otherUser: {
         userName: undefined,
@@ -20,7 +20,9 @@ followerUsers:[]
         accessToken: undefined,
         response: undefined,
         error: false
-    }
+    },
+    inputUserNameByEdit: undefined,
+    display:'none',
 
 };
 
@@ -125,6 +127,21 @@ export default (state = initialState, action) => {
                         followerUsers: action.payload.responce.myFriends.follower,
                     }
 
+                }
+        case 'INPUT_USERNAME_BY_EDIT':
+            return {
+                ...state,
+                inputUserNameByEdit:action.payload.userName
+            }
+        case 'MENU_TOGGLE':
+            return state.display=='none'
+                ? {
+                    ...state,
+                    display:'block'
+                }
+                : {
+                    ...state,
+                    display:'none'
                 }
         default:
             return state;

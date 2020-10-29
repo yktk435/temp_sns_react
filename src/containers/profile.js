@@ -79,8 +79,10 @@ const mapDispatchToProps = dispatch => ({
     },
     goBack() {
         dispatch(goBack())
-    }
-    
+    },
+    menuToggle() {
+        dispatch(fetch.menuToggle())
+      }
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));

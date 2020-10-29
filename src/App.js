@@ -9,6 +9,8 @@ import Login from './containers/login'
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './index.css'
 import CreateAccount from './containers/createAccount'
+
+import { ProfileEditPage} from './components/otherPage'
 // import CreateAccount from './components/createAccount'
 class App extends Component {
   componentWillMount() {
@@ -25,6 +27,9 @@ class App extends Component {
         <CenterArea />
         {/* 右側 */}
         <RightArea />
+
+        {/* プロフィール編集画面 */}
+        <ProfileEditPage {...this.props}/>
       </div>
     )
 

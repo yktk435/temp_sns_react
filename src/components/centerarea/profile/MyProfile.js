@@ -10,7 +10,7 @@ const MyProfile = (props) => {
     console.log(props)
     const { postObj, articles, style, menuMode, member } = props
     // 関数
-    const { profileOrFollowing, clickMenuItem, followOr, goBack } = props
+    const {menuToggle, profileOrFollowing, clickMenuItem, followOr, goBack } = props
     // 表示中のユーザ情報
     const { id: member_id, name, user_id, icon, header } = member
     const { followerUsers, followUsers } = props
@@ -60,7 +60,7 @@ const MyProfile = (props) => {
                         if (userId == user_id) {
                             return (
                                 <div className="icon-container" style={{ width: "170px", margin: "0px 0px 0px auto", height: "40px" }}>
-                                    <a className="a-to-block edit-prof" href="" style={{ borderRadius: "100px", position: "relative", textDecoration: "none", border: "1px solid rgba(29,161,242,1.00)", color: "rgba(29,161,242,1.00)" }}>
+                                    <a onClick={()=>{menuToggle()}} className="a-to-block edit-prof" style={{ borderRadius: "100px", position: "relative", textDecoration: "none", border: "1px solid rgba(29,161,242,1.00)", color: "rgba(29,161,242,1.00)" }}>
                                         <div className="" style={{ position: "absolute", top: "0", right: "0", bottom: "0", left: "0", margin: "auto", width: "80%", height: "20px", textAlign: "center", fontSize: "15px", fontWeight: "bold" }}>プロフィールを編集</div>
                                     </a>
                                 </div>

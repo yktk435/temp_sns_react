@@ -525,3 +525,20 @@ export const getOtherUserInfo = (userId) => {
     }
   };
 }
+
+// プロフィール編集
+
+export const inputUserName=(userName) => ({
+  type: 'INPUT_USERNAME_BY_EDIT',
+  payload: {
+    userName
+  }
+})
+
+// メニューを閉じる
+export const menuToggle = (toggle) => ({
+  type: 'MENU_TOGGLE',
+  payload: {
+    toggle
+  }
+})
