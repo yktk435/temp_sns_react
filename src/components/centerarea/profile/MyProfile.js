@@ -10,7 +10,7 @@ const MyProfile = (props) => {
     // 関数
     const { clickMenuItem, followOr } = props
     // 表示中のユーザ情報
-    const { id, name, user_id, icon, header } = member
+    const { id:member_id, name, user_id, icon, header } = member
     const { followerUsers, followUsers}=props
     // 自分のユーザ情報
     const {userId,followUsers:myFollowUsers,followerUsers:myFollowerUsers }=props.userInfo.user
@@ -59,7 +59,7 @@ const MyProfile = (props) => {
                                     color: "rgb(29, 161, 242)",
                                     position: "absolute",
                                     transform:"translate(400px, 10px)"
-                                }} onClick={(e)=>props.followOr(e.target.id,user_id)}>
+                                }} onClick={(e)=>props.followOr(e.target.id,member_id)}>
                                     フォロー
                                 </div>)
                             } else {
@@ -75,7 +75,7 @@ const MyProfile = (props) => {
                                     color: "white",
                                     position: "absolute",
                                     transform:"translate(400px, 10px)"
-                                }} onClick={(e)=>props.followOr(e.target.id,user_id)}>
+                                }} onClick={(e)=>props.followOr(e.target.id,member_id)}>
                                     フォロー中
                                 </div>)
                             } 
