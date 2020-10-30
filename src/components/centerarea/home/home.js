@@ -41,7 +41,7 @@ class Home extends React.Component {
                     </div>
                     {/* <!-- 投稿内容 --> */}
                     <div style={{ display: "block", width: "inherit" }}>
-                        <div onFocus={(e) => this.props.inputPostText(e.target.innerText)} onBlur={(e) => this.props.inputPostText(e.target.innerText)} className="text-area" style={{ padding: "10px", fontSize: "20px", margin: "10px 20px 0 20px", width: "440px" }} contentEditable="true" >{this.props.text}</div>
+                        <div id="post-text" onFocus={(e) => this.props.inputPostText(e.target.innerText)} onBlur={(e) => this.props.inputPostText(e.target.innerText)} className="text-area" style={{ padding: "10px", fontSize: "20px", margin: "10px 20px 0 20px", width: "440px" }} contentEditable="true" ></div>
                         {(() => {
                             if (this.props.imageUrl != undefined) {
                                 return (
@@ -77,7 +77,7 @@ class Home extends React.Component {
                                     <img className="image-icon" src={pic} alt="写真追加アイコン" />
                                 </a> */}
                                 <a onClick={() => {
-
+                                    document.querySelector('#post-text').innerText=''
                                     this.props.post(this.props.requestData, this.props.accessToken)
                                     this.props.clearTextBox()
                                 }} style={{ margin: "0 5px", }} className="btn btn--orange btn--radius" aria-label="投稿ボタン">投稿</a>

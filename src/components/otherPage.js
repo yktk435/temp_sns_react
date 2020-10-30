@@ -163,6 +163,7 @@ export class PostPage extends React.Component{
                         {/* <!-- 投稿内容 --> */}
                         <div style={{ display: "block" }}>
                             <div
+                                 id="post-text2"
                                 onFocus={(e) => inputPostText(e.target.innerText)}
                                 onBlur={(e) => inputPostText(e.target.innerText)}
                                 className="text-area" style={{
@@ -172,7 +173,7 @@ export class PostPage extends React.Component{
                                     width: "440px",
                                     border: "none",
                                     lineHeight:"25px"
-                                }} contentEditable="true" >投稿内容</div>
+                                }} contentEditable="true" ></div>
                             {(() => {
                                 if (this.props.home.imageUrl != undefined) {
                                     return (
@@ -218,6 +219,7 @@ export class PostPage extends React.Component{
                                 </label>
     
                                 <a onClick={() => {
+                                    document.querySelector('#post-text2').innerText=''
                                     post(requestData)
                                     clearTextBox()
                                 }} style={{ margin: "0 5px", }} className="btn btn--orange btn--radius" aria-label="投稿ボタン">投稿</a>

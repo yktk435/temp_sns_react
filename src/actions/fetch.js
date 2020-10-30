@@ -363,9 +363,11 @@ export const pushCreateAccountButton = (data) => {
 /**********************************************/
 // 記事関係
 /**********************************************/
-export const post = (requestData, token) => {
+export const post = (requestData) => {
   return async (dispatch, getState) => {
-    const imageFile = document.querySelector("#filesend").files[0]
+    
+    let array=Array.from(document.querySelectorAll("#filesend"))
+    const imageFile=array.find(i=>i.files.length==1).files[0]
 
 
     const formData = new FormData();
