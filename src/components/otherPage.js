@@ -247,7 +247,7 @@ export class Article extends React.Component {
         // let user_id = "user_id"
         // let created_at = "2020年"
         // let content = "内容"
-        let postImageUrl = testpic
+        // let postImageUrl = testpic
         // let name = "name"
 
         return (
