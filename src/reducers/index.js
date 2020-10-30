@@ -18,4 +18,7 @@ export { default as setting } from './setting'
 export { default as change } from './change'
 
 // 検索
-export {default as search} from './search'
+export { default as search } from './search'
+
+// その他ページ
+export {default as otherPage } from './otherPage'

@@ -55,7 +55,7 @@ export const getTimeLine = () => {
       },
     }
     try {
-      const responce = await fetch('http://localhost:8000/api/article/show', option)
+      const responce = await fetch('http://localhost:8000/api/article/show/edit', option)
       const data = await responce.json();
 
       if ('error' in data) throw data
@@ -550,3 +550,32 @@ export const menuToggle2 = (toggle) => ({
     toggle
   }
 })
+
+/**********************************************/
+// 記事情報取得 
+/**********************************************/
+const getArticleInfoAction = (response, error) => ({
+  type: 'GET_ARTICLEINFO',
+  payload: { response, error },
+});
+
+export const getArticleInfo = (articleId) => {
+  return async (dispatch, getState) => {
+    const option = {
+      headers: {
+        'access_token': getAccesstoken(),
+        // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+    }
+    // ログインしていなければloginにリダイレクトの処理を書く
+    try {
+      const responce = await fetch('http://localhost:8000/api/article/' + articleId, option);
+      const data = await responce.json();
+
+      if ('error' in data) throw data
+      dispatch(getArticleInfoAction(data, null,));
+    } catch (err) {
+      dispatch(getArticleInfoAction(null, err));
+    }
+  };
+}

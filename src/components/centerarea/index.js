@@ -9,6 +9,7 @@ import Profile from '../../containers/profile'
 import Setting from '../../containers/setting'
 import OtherUserPage from '../../containers/otherUserPage'
 import Following from '../../containers/following';
+import Article from '../../containers/Article'
 
 
 class CenterArea extends React.Component {
@@ -37,6 +38,7 @@ class CenterArea extends React.Component {
                     <Route path="/following" component={Following} />
                     <Route path="/setting" component={Setting} />
                     <Route path="/profile/:userId" component={Profile} />
+                    <Route path="/status/:articleId" component={Article} />
                     {/* <Route path="/user/:userId" component={OtherUserPage} /> */}
                     {/* <Route path="/user/:userId" component={Profile} /> */}
                     <Route

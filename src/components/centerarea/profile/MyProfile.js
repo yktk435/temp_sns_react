@@ -5,7 +5,6 @@ import rep from '../../images/rep.png'
 import retweet from '../../images/retweet.png'
 
 import left from '../../images/left.png'
-import { goback } from 'react-router-redux'
 const MyProfile = (props) => {
     console.log(props)
     const { postObj, articles, style, menuMode, member } = props
@@ -15,7 +14,7 @@ const MyProfile = (props) => {
     const { id: member_id, name, user_id, icon, header } = member
     const { followerUsers, followUsers } = props
     // 自分のユーザ情報
-    const { userId, followUsers: myFollowUsers, followerUsers: myFollowerUsers } = props.userInfo.user
+    const { userName,userId, followUsers: myFollowUsers, followerUsers: myFollowerUsers } = props.userInfo.user
 
     return (
         <div className="main-container" style={{ overflow: "auto" }}>
@@ -108,7 +107,11 @@ const MyProfile = (props) => {
                     {/* <!-- ユーザ名とユーザIDを表示 --> */}
                     <div>
                         {/* <!-- ユーザ名 --> */}
-                        <div style={{ paddingTop: "60px", fontSize: "20px", fontWeight: "bold" }}>{name}</div>
+                        <div style={{ paddingTop: "60px", fontSize: "20px", fontWeight: "bold" }}>{
+                            (() => {
+                                if (userId == user_id) { return userName } else { return name}
+                            })()
+                        }</div>
                         {/* <!-- ユーザID --> */}
                         <div style={{ color: "rgb(115, 129, 136)", marginTop: "5px" }}>@{user_id}</div>
                     </div>
@@ -200,7 +203,7 @@ export const UserPost = (props) => {
     const { created_at, content, id: articleId, postImageUrl } = props.article
     const { id: memberId, icon, header, name, user_id } = props.member
     return (
-        <div>
+        <Link  to={"/status/"+articleId} style={{textDecoration:"none",color:"white"}}><div className="article-hover">
             <div style={{ padding: "10px 0", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
 
                 {/* ブロック1 */}
@@ -274,7 +277,7 @@ export const UserPost = (props) => {
             </div>
         </div>
 
-
+        </Link>
     )
 }
 
