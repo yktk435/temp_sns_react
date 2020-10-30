@@ -24,7 +24,10 @@ const mapDispatchToProps = dispatch => ({
     },
     logout() {
         dispatch(fetch.logout())
-    }
+    },
+    menuToggle2() {
+        dispatch(fetch.menuToggle2())
+      },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftArea);

@@ -375,7 +375,7 @@ export const post = (requestData, token) => {
       method: 'post',
       headers: {
         // 'Content-Type': 'application/json',
-        'access_token': token,
+        'access_token': getAccesstoken(),
         'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
       },
       body: formData
@@ -538,6 +538,12 @@ export const inputUserName=(userName) => ({
 // メニューを閉じる
 export const menuToggle = (toggle) => ({
   type: 'MENU_TOGGLE',
+  payload: {
+    toggle
+  }
+})
+export const menuToggle2 = (toggle) => ({
+  type: 'MENU_TOGGLE2',
   payload: {
     toggle
   }

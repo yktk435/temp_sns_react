@@ -22,7 +22,8 @@ const initialState = {
         error: false
     },
     inputUserNameByEdit: undefined,
-    display:'none',
+    display: 'none',
+    displayPostPage: 'none'
 
 };
 
@@ -131,17 +132,27 @@ export default (state = initialState, action) => {
         case 'INPUT_USERNAME_BY_EDIT':
             return {
                 ...state,
-                inputUserNameByEdit:action.payload.userName
+                inputUserNameByEdit: action.payload.userName
             }
         case 'MENU_TOGGLE':
-            return state.display=='none'
+            return state.display == 'none'
                 ? {
                     ...state,
-                    display:'block'
+                    display: 'block'
                 }
                 : {
                     ...state,
-                    display:'none'
+                    display: 'none'
+                }
+        case 'MENU_TOGGLE2':
+            return state.displayPostPage == 'none'
+                ? {
+                    ...state,
+                    displayPostPage: 'block'
+                }
+                : {
+                    ...state,
+                    displayPostPage: 'none'
                 }
         default:
             return state;

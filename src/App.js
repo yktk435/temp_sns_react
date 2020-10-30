@@ -10,7 +10,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import './index.css'
 import CreateAccount from './containers/createAccount'
 
-import { ProfileEditPage} from './components/otherPage'
+import { ProfileEditPage } from './components/otherPage'
+import { PostPage } from './components/otherPage'
 // import CreateAccount from './components/createAccount'
 class App extends Component {
   componentWillMount() {
@@ -29,7 +30,9 @@ class App extends Component {
         <RightArea />
 
         {/* プロフィール編集画面 */}
-        <ProfileEditPage {...this.props}/>
+        <ProfileEditPage {...this.props} />
+        {/* 投稿ページ */}
+        <PostPage {...this.props} />
       </div>
     )
 

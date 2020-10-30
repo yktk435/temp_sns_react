@@ -21,7 +21,8 @@ class LeftArea extends React.Component {
 
     }
     render() {
-        
+        // 関数
+        const {menuToggle2}=this.props
         return (
             <header>
                 <EventListener target="window" onResize={(e) => this.props.windowSizeChange(e.target.innerWidth)} />
@@ -39,7 +40,7 @@ class LeftArea extends React.Component {
                         <IconParts styleObj={this.props.style[3]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="profile" to={"/profile/"+this.props.userId} alt="プロフィールアイコン" innerstr="プロフィール" image={profile} />
                         <IconParts styleObj={this.props.style[4]} clickMenuItem={this.props.clickMenuItem} displayString={this.props.displayString} classNameString={this.props.classNameString} menuname="setting" to="/setting/account" alt="設定アイコン" innerstr="設定" image={setting} />
                         <div class="div-outside-image icon-container" style={{ width: "70%", marginBottom: "140px" }}>
-                            <a class="a-to-block post-icon" href="" style={{ borderRadius: "100px", position: "relative" }}>
+                            <a class="a-to-block post-icon" onClick={()=>menuToggle2()} style={{ borderRadius: "100px", position: "relative" }}>
                                 <div class="block-to-center">
                                     <img class="image-icon" src={cathand2} alt="投稿開始ボタン" />
                                 </div>

@@ -2,11 +2,13 @@
 import { connect } from 'react-redux';
 import App from '../App';
 import * as fetch from '../actions/fetch';
+import * as home from '../actions/home'
 
 
 
 const mapStateToProps = (state, ownProps) => ({
   ...state,
+  
 
 });
 
@@ -26,7 +28,25 @@ const mapDispatchToProps = dispatch => {
     },
     menuToggle() {
       dispatch(fetch.menuToggle())
-    }
+    },
+    menuToggle2() {
+      dispatch(fetch.menuToggle2())
+    },
+    inputPostText(text) {
+      dispatch(home.inputPostText(text))
+    },
+    clearTextBox() {
+      dispatch(home.clearTextBox())
+    },
+    post(requestData,token) {
+      dispatch(fetch.post(requestData,token));
+    },
+    imageChoce(imageUrl) {
+      dispatch(home.imageChoce(imageUrl))
+    },
+    imageClear() {
+      dispatch(home.imageClear())
+    },
   })
 };
 
