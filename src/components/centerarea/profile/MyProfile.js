@@ -8,15 +8,15 @@ import left from '../../images/left.png'
 import { repInfo } from '../../../actions/fetch';
 
 const MyProfile = (props) => {
-    
+
     const { postObj, articles, style, menuMode, member } = props
     // 関数
-    const {getArticleInfo, commentToggle, menuToggle, profileOrFollowing, clickMenuItem, followOr, goBack } = props
+    const { getArticleInfo, commentToggle, menuToggle, profileOrFollowing, clickMenuItem, followOr, goBack } = props
     // 表示中のユーザ情報
     const { id: member_id, name, user_id, icon, header } = member
     const { followerUsers, followUsers } = props
     // 自分のユーザ情報
-    const { userName,userId, followUsers: myFollowUsers, followerUsers: myFollowerUsers } = props.userInfo.user
+    const { userName, userId, followUsers: myFollowUsers, followerUsers: myFollowerUsers } = props.userInfo.user
 
     return (
         <div className="main-container" style={{ overflow: "auto" }}>
@@ -61,7 +61,7 @@ const MyProfile = (props) => {
                         if (userId == user_id) {
                             return (
                                 <div className="icon-container" style={{ width: "170px", margin: "0px 0px 0px auto", height: "40px" }}>
-                                    <a onClick={()=>{menuToggle()}} className="a-to-block edit-prof" style={{ borderRadius: "100px", position: "relative", textDecoration: "none", border: "1px solid rgba(29,161,242,1.00)", color: "rgba(29,161,242,1.00)" }}>
+                                    <a onClick={() => { menuToggle() }} className="a-to-block edit-prof" style={{ borderRadius: "100px", position: "relative", textDecoration: "none", border: "1px solid rgba(29,161,242,1.00)", color: "rgba(29,161,242,1.00)" }}>
                                         <div className="" style={{ position: "absolute", top: "0", right: "0", bottom: "0", left: "0", margin: "auto", width: "80%", height: "20px", textAlign: "center", fontSize: "15px", fontWeight: "bold" }}>プロフィールを編集</div>
                                     </a>
                                 </div>
@@ -111,7 +111,7 @@ const MyProfile = (props) => {
                         {/* <!-- ユーザ名 --> */}
                         <div style={{ paddingTop: "60px", fontSize: "20px", fontWeight: "bold" }}>{
                             (() => {
-                                if (userId == user_id) { return userName } else { return name}
+                                if (userId == user_id) { return userName } else { return name }
                             })()
                         }</div>
                         {/* <!-- ユーザID --> */}
@@ -168,7 +168,7 @@ const MyProfile = (props) => {
             {(() => {
                 switch (menuMode) {
                     case "post":
-                        return (<PostArea articles={articles} member={member} commentToggle={commentToggle} getArticleInfo={getArticleInfo}/>)
+                        return (<PostArea articles={articles} member={member} commentToggle={commentToggle} getArticleInfo={getArticleInfo} />)
                         break;
                     case "rep":
                         break;
@@ -204,10 +204,11 @@ const PostArea = (props) => {
 export const UserPost = (props) => {
     const { created_at, content, id: articleId, postImageUrl } = props.article
     const { id: memberId, icon, header, name, user_id } = props.member
-    const {commentToggle,getArticleInfo}=props
+    const { commentToggle, getArticleInfo } = props
+    const {commentMode}=props
     return (
         <div className="article-hover">
-            <Link  to={"/status/"+articleId} style={{textDecoration:"none",color:"white"}}><div style={{ padding: "10px 0", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
+            <Link to={"/status/" + articleId} style={{ textDecoration: "none", color: "white" }}><div style={{ padding: "10px 0", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
 
                 {/* ブロック1 */}
                 <div style={{ margin: "0 10px" }} aria-label="ユーザアイコン">
@@ -218,7 +219,7 @@ export const UserPost = (props) => {
                     </div>
                 </div>
                 {/* ブロック2 */}
-                <div style={{ display: "block" }}>
+                <div style={{ display: "block", width: "inherit" }}>
 
                     {/* <!-- ユーザ名 --> */}
                     <div>
@@ -232,7 +233,16 @@ export const UserPost = (props) => {
                     </div>
                     {/* <!-- 投稿内容 --> */}
                     <div>
-
+                        {(() => {
+                            if (commentMode) {
+                                return (
+                                    <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>返信先:<div style={{ display: "inline-flex", margin: "0 2px" }}>
+                                        <a style={{ textDecoration: "none", color: "rgb(29, 161, 242)" }} >{user_id}</a>
+                                    </div>
+                                    さん</div>
+                                )
+                            }
+                        })()}
                         <div className="font" style={{ padding: "5px 0", paddingRight: "50px", display: "inline-block" }} aria-label="投稿した文字を表示">{content}</div>
                         {(() => {
                             // 写真があれば表示
@@ -256,7 +266,7 @@ export const UserPost = (props) => {
             {/* いいねボタンなど */}
             <div style={{ width: "100%", display: "inline-flex", paddingBottom: "2px", borderBottom: "1px solid rgb(48, 60, 67)" }}>
                 <div id="prof-menu" className="post-button" align="center" >
-                    <div onClick={() => { commentToggle();getArticleInfo(articleId)}} className="blue-hover rep-button" >
+                    <div onClick={() => { commentToggle(); getArticleInfo(articleId) }} className="blue-hover rep-button" >
                         <img src={rep} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
                     </div>
 
@@ -280,7 +290,7 @@ export const UserPost = (props) => {
             </div>
         </div>
 
-        
+
     )
 }
 

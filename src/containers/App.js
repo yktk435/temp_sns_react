@@ -53,6 +53,10 @@ const mapDispatchToProps = dispatch => {
     getArticleInfo(articleId) {
       dispatch(fetch.getArticleInfo(articleId))
     },
+    postRep(repArticleId, content) {
+      dispatch(fetch.postRep(repArticleId, content))
+    },
+
   })
 };
 

@@ -20,6 +20,9 @@ const mapDispatchToProps = dispatch => {
         getArticleInfo(articleId) {
             dispatch(fetch.getArticleInfo(articleId))
         },
+        commentToggle() {
+            dispatch(fetch.commentToggle())
+        },
         
 
     })

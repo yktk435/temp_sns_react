@@ -10,7 +10,7 @@ import good from '../components/images/good.png'
 import rep from '../components/images/rep.png'
 import retweet from '../components/images/retweet.png'
 import point from '../components/images/point.png'
-
+import { UserPost } from '../components/centerarea/profile/MyProfile'
 
 export class ProfileEditPage extends React.Component {
     render() {
@@ -240,9 +240,14 @@ export class Article extends React.Component {
     render() {
         // 表示している記事のユーザ情報
         console.log(this.props.member)
+        // 表示している記事関連
         const { id: memberId, name, user_id, icon } = this.props.otherPage.article.member
         const { id: articleId, created_at, content, postImageUrl } = this.props.otherPage.article.article
-        const { goBack } = this.props
+        // 表示している記事の返信記事とそのユーザ情報
+        const { comments, commentedMembers } = this.props.otherPage.article
+        // 関数
+        const { goBack, commentToggle, getArticleInfo } = this.props
+
 
         // let icon = testpic
         // let user_id = "user_id"
@@ -268,96 +273,101 @@ export class Article extends React.Component {
 
                 {/* ここから記事情報 */}
                 <div className="main-container" style={{ overflow: "auto", position: "relative" }}>
-                    {/* 削除などのメニューボタン */}
-                    <div onClick={() => { goBack() }} className="goback pointer" style={{
-                        borderRadius: "100%",
-                        padding: "5px",
-                        position: "absolute",
-                        height: "21px",
-                        width: "21px",
-                        top: "8px",
-                        right: "10px"
-                    }}>
-                        <img className="blue" src={point} style={{ width: "20px" }} />
-                    </div>
-                    {/* ユーザ情報 */}
-                    <div style={{ display: "inline-flex", width: "inherit" }}>
-                        {/* ユーザアイコン */}
-                        <div style={{ margin: "0 10px" }} aria-label="ユーザアイコン">
-                            <div style={{ margin: "10px 0 0 5px" }}>
-                                <a className="" href="" aria-label="ユーザアイコン">
-                                    <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={icon} alt="ユーザアイコン" />
-                                </a>
-                            </div>
-                        </div>
-                        {/* ブロック2 */}
-                        <div style={{ display: "block", paddingTop: "10px", width: "100%", position: "relative" }}>
-
-                            {/* <!-- ユーザ名 --> */}
-                            <div>
-                                <div style={{ float: "left", marginLeft: "5px" }}>
-                                    <a style={{ textDecoration: "none", color: "white", fontWeight: "bold" }} href="">{name}</a>
-                                </div>
-                                <div style={{ float: "left", margin: "0 15px" }}>
-                                    <Link to={"/user/" + user_id} style={{ textDecoration: "none" }}><div style={{ color: " rgb(115, 129, 136)" }} href="">@{user_id}</div></Link>
-                                </div>
-                                <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>{created_at}</div>
-
-                            </div>
-                            {/* <!-- 投稿内容 --> */}
-                            <div>
-
-                                <div className="font" style={{ padding: "5px 0", paddingRight: "50px", display: "inline-block" }} aria-label="投稿した文字を表示">{content}</div>
-                                {(() => {
-                                    // 写真があれば表示
-                                    if (postImageUrl != null) {
-                                        return (
-                                            <div style={{ padding: "5px 0" }} aria-label="投稿した写真を表示">
-                                                <a href="" >
-                                                    <img src={postImageUrl} alt="投稿した写真を表示" style={{ width: "450px", borderRadius: "5%" }} />
-                                                </a>
-                                            </div>
-                                        )
-                                    }
-                                })()}
-
-
-                            </div>
-
-                        </div>
-                    </div>
+                    {/* main */}
                     <div>
-
-
-
-                        {/* いいねボタンなど */}
-                        <div style={{ width: "100%", display: "inline-flex", paddingBottom: "2px", borderBottom: "1px solid rgb(48, 60, 67)" }}>
-                            <div id="prof-menu" className="post-button" align="center" >
-                                <div className="blue-hover rep-button" >
-                                    <img src={rep} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
+                        {/* 削除などのメニューボタン */}
+                        <div onClick={() => { goBack() }} className="goback pointer" style={{
+                            borderRadius: "100%",
+                            padding: "5px",
+                            position: "absolute",
+                            height: "21px",
+                            width: "21px",
+                            top: "8px",
+                            right: "10px"
+                        }}>
+                            <img className="blue" src={point} style={{ width: "20px" }} />
+                        </div>
+                        {/* ユーザ情報 */}
+                        <div style={{ display: "inline-flex", width: "inherit" }}>
+                            {/* ユーザアイコン */}
+                            <div style={{ margin: "0 10px" }} aria-label="ユーザアイコン">
+                                <div style={{ margin: "10px 0 0 5px" }}>
+                                    <a className="" href="" aria-label="ユーザアイコン">
+                                        <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={icon} alt="ユーザアイコン" />
+                                    </a>
                                 </div>
-
                             </div>
-                            <div id="prof-menu" className="post-button" align="center" >
-                                <div className="blue-hover rep-button" >
-                                    <img src={retweet} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
+                            {/* ブロック2 */}
+                            <div style={{ display: "block", paddingTop: "10px", width: "100%", position: "relative" }}>
+
+                                {/* <!-- ユーザ名 --> */}
+                                <div>
+                                    <div style={{ float: "left", marginLeft: "5px" }}>
+                                        <a style={{ textDecoration: "none", color: "white", fontWeight: "bold" }} href="">{name}</a>
+                                    </div>
+                                    <div style={{ float: "left", margin: "0 15px" }}>
+                                        <Link to={"/user/" + user_id} style={{ textDecoration: "none" }}><div style={{ color: " rgb(115, 129, 136)" }} href="">@{user_id}</div></Link>
+                                    </div>
+                                    <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px", width: "600px" }}>{created_at}</div>
+
                                 </div>
-                            </div>
-                            <div id="prof-menu" className="post-button" align="center" >
-                                <div className="blue-hover rep-button" >
-                                    <img src={rep} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
+                                {/* <!-- 投稿内容 --> */}
+                                <div>
+
+                                    <div className="font" style={{ padding: "5px 0", paddingRight: "50px", display: "inline-block" }} aria-label="投稿した文字を表示">{content}</div>
+                                    {(() => {
+                                        // 写真があれば表示
+                                        if (postImageUrl != null) {
+                                            return (
+                                                <div style={{ padding: "5px 0" }} aria-label="投稿した写真を表示">
+                                                    <a href="" >
+                                                        <img src={postImageUrl} alt="投稿した写真を表示" style={{ width: "450px", borderRadius: "5%" }} />
+                                                    </a>
+                                                </div>
+                                            )
+                                        }
+                                    })()}
+
+
                                 </div>
 
-                            </div>
-                            <div id="prof-menu" className="post-button" align="center" >
-                                <div className="blue-hover rep-button" >
-                                    <img src={good} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
-                                </div>
                             </div>
                         </div>
+                        <div>
+                            {/* いいねボタンなど */}
+                            <div style={{ width: "100%", display: "inline-flex", paddingBottom: "2px", borderBottom: "10px solid rgb(48, 60, 67)" }}>
+                                <div id="prof-menu" className="post-button" align="center" >
+                                    <div onClick={() => { commentToggle(); getArticleInfo(articleId) }} className="blue-hover rep-button" >
+                                        <img src={rep} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
+                                    </div>
 
+                                </div>
+                                <div id="prof-menu" className="post-button" align="center" >
+                                    <div className="blue-hover rep-button" >
+                                        <img src={retweet} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
+                                    </div>
+                                </div>
+                                <div id="prof-menu" className="post-button" align="center" >
+                                    <div className="blue-hover rep-button" >
+                                        <img src={rep} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
+                                    </div>
+
+                                </div>
+                                <div id="prof-menu" className="post-button" align="center" >
+                                    <div className="blue-hover rep-button" >
+                                        <img src={good} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                     {/* 返信 */}
+                    <div style={{overflow:"auto"}}>
+                        {this.props.otherPage.article.comments.map(comment => <CommentParts comment={comment} commentedMembers={commentedMembers} commentedUserId={user_id} commentToggle={commentToggle} getArticleInfo={getArticleInfo}/>)}
+
+                    </div>
+
 
                 </div>
             </div>
@@ -366,8 +376,106 @@ export class Article extends React.Component {
 
 }
 
-export class CommentPage extends React.Component {
+export const CommentParts = (props) => {
+    // 返信されたユーザID
+
+// 返信した維持の情報
+    const { id:commentId, created_at, content, postImageUrl, member_id } = props.comment
+
+    const commentedMember = props.commentedMembers.find(i => i.id == member_id)
+    // 返信したユーザの情報
+    const { name, user_id, icon } = commentedMember
     
+    // 関数
+    const {commentToggle,getArticleInfo}=props
+    return (
+        <div className="article-hover">
+            {/* <Link to={"/status/" + articleId} style={{ textDecoration: "none", color: "white" }}> */}
+            <div style={{ padding: "10px 0", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
+
+                {/* ブロック1 */}
+                <div style={{ margin: "0 10px" }} aria-label="ユーザアイコン">
+                    <div style={{ margin: "5px" }}>
+                        <a className="" href="" aria-label="ユーザアイコン">
+                            <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={icon} alt="ユーザアイコン" />
+                        </a>
+                    </div>
+                </div>
+                {/* ブロック2 */}
+                <div style={{ display: "block", width: "inherit" }}>
+
+                    {/* <!-- ユーザ名 --> */}
+                    <div>
+                        <div style={{ float: "left", marginLeft: "5px" }}>
+                            <a style={{ textDecoration: "none", color: "white", fontWeight: "bold" }} href="">{name}</a>
+                        </div>
+                        <div style={{ float: "left", margin: "0 15px" }}>
+                            <Link to={"/user/" + user_id} style={{ textDecoration: "none" }}><div style={{ color: " rgb(115, 129, 136)" }} href="">@{user_id}</div></Link>
+                        </div>
+                        <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>{created_at}</div>
+                    </div>
+                    {/* <!-- 投稿内容 --> */}
+                    <div>
+
+                        <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>返信先:<div style={{ display: "inline-flex", margin: "0 2px" }}>
+                            <a style={{ textDecoration: "none", color: "rgb(29, 161, 242)" }} >{props.commentedUserId}</a>
+                        </div>
+                                    さん</div>
+
+                        <div className="font" style={{ padding: "5px 0", paddingRight: "50px", display: "inline-block" }} aria-label="投稿した文字を表示">{content}</div>
+                        {(() => {
+                            // 写真があれば表示
+                            if (postImageUrl != null) {
+                                return (
+                                    <div style={{ padding: "5px 0" }} aria-label="投稿した写真を表示">
+                                        <a href="" >
+                                            <img src={postImageUrl} alt="投稿した写真を表示" style={{ width: "450px", height: "250px", objectFit: "cover", borderRadius: "5%" }} />
+                                        </a>
+                                    </div>
+                                )
+                            }
+                        })()}
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            {/* </Link> */}
+            {/* いいねボタンなど */}
+            <div style={{ width: "100%", display: "inline-flex", paddingBottom: "2px", borderBottom: "1px solid rgb(48, 60, 67)" }}>
+                <div id="prof-menu" className="post-button" align="center" >
+                    <div onClick={() => { commentToggle(); getArticleInfo(commentId) }} className="blue-hover rep-button" >
+                        <img src={rep} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
+                    </div>
+
+                </div>
+                <div id="prof-menu" className="post-button" align="center" >
+                    <div className="blue-hover rep-button" >
+                        <img src={retweet} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
+                    </div>
+                </div>
+                <div id="prof-menu" className="post-button" align="center" >
+                    <div className="blue-hover rep-button" >
+                        <img src={rep} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
+                    </div>
+
+                </div>
+                <div id="prof-menu" className="post-button" align="center" >
+                    <div className="blue-hover rep-button" >
+                        <img src={good} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    )
+}
+
+export class CommentPage extends React.Component {
+
     handleChangeFile(e) {
         const files = e.target.files;
         // ②createObjectURLで、files[0]を読み込む
@@ -376,12 +484,12 @@ export class CommentPage extends React.Component {
         this.props.imageChoce(imageUrl)
     }
     render() {
-        
 
-        
+
+
         const { commentDisplay } = this.props.userInfo
         // 関数
-        const { commentToggle, inputPostText, post, clearTextBox, imageClear } = this.props
+        const { commentToggle, inputPostText, postRep, clearTextBox, imageClear } = this.props
 
         const { iconUrl } = this.props.userInfo.user
         // 投稿に必要なデータをまとめた形
@@ -446,7 +554,7 @@ export class CommentPage extends React.Component {
                                     backgroundColor: "rgb(61, 84, 102)",
                                     width: "2px",
                                     margin: "0 auto",
-                                    zIndex:"1"
+                                    zIndex: "1"
                                 }}></div>
                             </div>
 
@@ -459,7 +567,7 @@ export class CommentPage extends React.Component {
                                     <div style={{ float: "left", margin: "0 15px" }}>
                                         <Link to={"/user/" + user_id} style={{ textDecoration: "none" }}><div style={{ color: " rgb(115, 129, 136)" }} href="">@{user_id}</div></Link>
                                     </div>
-                                    <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>{created_at}</div>
+                                    <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px", width: "600px" }}>{created_at}</div>
                                     {/* 投稿内容 */}
                                     <div className="font" style={{ padding: "10px", display: "inline-block" }} aria-label="投稿した文字を表示">{content}</div>
                                     {(() => {
@@ -480,7 +588,7 @@ export class CommentPage extends React.Component {
                         {/*返信する側 */}
                         <div style={{ display: "inline-flex", }}>
                             {/* ユーザアイコン */}
-                            <div style={{zIndex:"99"}}>
+                            <div style={{ zIndex: "99" }}>
                                 <img style={{
                                     width: "50px",
                                     height: "50px",
@@ -495,9 +603,10 @@ export class CommentPage extends React.Component {
                                     onFocus={(e) => inputPostText(e.target.innerText)}
                                     onBlur={(e) => inputPostText(e.target.innerText)}
                                     className="text-area" style={{
-                                        padding: "10px",
+                                        padding: "0",
                                         fontSize: "20px",
-                                        margin: "10px 20px 0 20px",
+                                        // margin: "10px 20px 0 20px",
+                                        marginTop: "10px",
                                         width: "440px",
                                         border: "none",
                                         lineHeight: "25px"
@@ -547,9 +656,10 @@ export class CommentPage extends React.Component {
                                     </label>
 
                                     <a onClick={() => {
-                                        document.querySelector('#post-text2').innerText = ''
-                                        post(requestData)
+                                        document.querySelectorAll('#post-text2')[1].innerText = ''
+                                        postRep(articleId, this.props.home.text)
                                         clearTextBox()
+                                        commentToggle()
                                     }} style={{ margin: "0 5px", }} className="btn btn--orange btn--radius" aria-label="投稿ボタン">投稿</a>
                                 </div>
                             </div>

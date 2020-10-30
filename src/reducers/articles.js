@@ -9,7 +9,8 @@ const initialState = {
         articleId: undefined,
         memberId: undefined,
         content: undefined,
-    }]
+    }],
+    comments: []
 
 };
 
@@ -30,27 +31,27 @@ export default (state = initialState, action) => {
                     error: false,
                 }
                 ;
-            
+
         case 'RECEIVE_ARTICLES':
             return action.payload.error
-            ? {
-                ...state,
-                errorMessage: action.payload.error,
-                error: true
-            }
-            : {
-                ...state,
-                user: state.user.concat(
-                    action.payload.responce
-                ),
-                error: false,
-            }
-            
+                ? {
+                    ...state,
+                    errorMessage: action.payload.error,
+                    error: true
+                }
+                : {
+                    ...state,
+                    user: state.user.concat(
+                        action.payload.responce
+                    ),
+                    error: false,
+                }
+        
         case 'LOGOUT':
             return {
-                 ...initialState
+                ...initialState
             }
-            
+
         default:
             return state;
     }

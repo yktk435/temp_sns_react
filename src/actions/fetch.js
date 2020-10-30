@@ -367,7 +367,7 @@ export const post = (requestData) => {
   return async (dispatch, getState) => {
     
     let array=Array.from(document.querySelectorAll("#filesend"))
-    const imageFile=array.find(i=>i.files.length==1).files[0]
+    const imageFile=array.find(i=>i.files.length==1)?array.find(i=>i.files.length==1).files[0]:null
 
 
     const formData = new FormData();
@@ -394,6 +394,46 @@ export const post = (requestData) => {
     }
   };
 };
+
+const receivePostedRepData = (response,error) => ({
+  type: 'RECEIVE_POSTED_REP_DATA',
+  payload: {
+    response,
+    error
+  }
+})
+
+export const postRep=(repArticleId, content)=>{
+  return async (dispatch, getState) => {
+    let array=Array.from(document.querySelectorAll("#filesend"))
+    const imageFile = array.find(i => i.files.length == 1) ? array.find(i => i.files.length == 1).files[0] : null
+    
+    const formData = new FormData();
+    formData.append('content', content);
+    formData.append('articleId', repArticleId);
+    formData.append('imageFile', imageFile);
+    
+    const option = {
+      method: 'post',
+      headers: {
+        // 'Content-Type': 'application/json',
+        'access_token': getAccesstoken(),
+        'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+      body: formData
+    }
+    try {
+      const response = await fetch('http://localhost:8000/api/comment', option);
+      const data = await response.json();
+
+      if ('error' in data) throw data
+      dispatch(receivePostedRepData(data, null));
+    } catch (err) {
+      dispatch(receivePostedRepData(null, err));
+    }
+
+   }
+}
 
 // 記事を取得したいuserId
 export const getArticles = (userId) => {
