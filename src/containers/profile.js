@@ -82,7 +82,13 @@ const mapDispatchToProps = dispatch => ({
     },
     menuToggle() {
         dispatch(fetch.menuToggle())
-      }
+    },
+    commentToggle() {
+        dispatch(fetch.commentToggle())
+    },
+    getArticleInfo(articleId) {
+        dispatch(fetch.getArticleInfo(articleId))
+    }
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));

@@ -8,7 +8,7 @@ import * as home from '../actions/home'
 
 const mapStateToProps = (state, ownProps) => ({
   ...state,
-  
+
 
 });
 
@@ -32,20 +32,26 @@ const mapDispatchToProps = dispatch => {
     menuToggle2() {
       dispatch(fetch.menuToggle2())
     },
+    commentToggle() {
+      dispatch(fetch.commentToggle())
+    },
     inputPostText(text) {
       dispatch(home.inputPostText(text))
     },
     clearTextBox() {
       dispatch(home.clearTextBox())
     },
-    post(requestData,token) {
-      dispatch(fetch.post(requestData,token));
+    post(requestData, token) {
+      dispatch(fetch.post(requestData, token));
     },
     imageChoce(imageUrl) {
       dispatch(home.imageChoce(imageUrl))
     },
     imageClear() {
       dispatch(home.imageClear())
+    },
+    getArticleInfo(articleId) {
+      dispatch(fetch.getArticleInfo(articleId))
     },
   })
 };

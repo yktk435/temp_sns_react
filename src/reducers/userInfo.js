@@ -23,7 +23,8 @@ const initialState = {
     },
     inputUserNameByEdit: undefined,
     display: 'none',
-    displayPostPage: 'none'
+    displayPostPage: 'none',
+    commentDisplay: 'none',
 
 };
 
@@ -154,6 +155,17 @@ export default (state = initialState, action) => {
                     ...state,
                     displayPostPage: 'none'
                 }
+        case 'COMMENT_TOGGLE':
+            return state.commentDisplay == 'none'
+                ? {
+                    ...state,
+                    commentDisplay: 'block'
+                }
+                : {
+                    ...state,
+                    commentDisplay: 'none'
+                }
+        
         default:
             return state;
     }

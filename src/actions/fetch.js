@@ -537,19 +537,7 @@ export const inputUserName=(userName) => ({
   }
 })
 
-// メニューを閉じる
-export const menuToggle = (toggle) => ({
-  type: 'MENU_TOGGLE',
-  payload: {
-    toggle
-  }
-})
-export const menuToggle2 = (toggle) => ({
-  type: 'MENU_TOGGLE2',
-  payload: {
-    toggle
-  }
-})
+
 
 /**********************************************/
 // 記事情報取得 
@@ -579,3 +567,33 @@ export const getArticleInfo = (articleId) => {
     }
   };
 }
+
+
+/**********************************************/
+// トグルアクション
+/**********************************************/
+export const menuToggle = (toggle) => ({
+  type: 'MENU_TOGGLE',
+  payload: {
+    toggle
+  }
+})
+export const menuToggle2 = (toggle) => ({
+  type: 'MENU_TOGGLE2',
+  payload: {
+    toggle
+  }
+})
+export const commentToggle = (toggle) => ({
+  type: 'COMMENT_TOGGLE',
+  payload: {
+    toggle
+  }
+})
+
+export const repInfo = (articleId) => ({
+  type: 'REP_INFO',
+  payload: {
+    articleId
+  }
+})

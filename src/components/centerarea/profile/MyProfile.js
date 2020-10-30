@@ -5,11 +5,13 @@ import rep from '../../images/rep.png'
 import retweet from '../../images/retweet.png'
 
 import left from '../../images/left.png'
+import { repInfo } from '../../../actions/fetch';
+
 const MyProfile = (props) => {
-    console.log(props)
+    
     const { postObj, articles, style, menuMode, member } = props
     // 関数
-    const {menuToggle, profileOrFollowing, clickMenuItem, followOr, goBack } = props
+    const {getArticleInfo, commentToggle, menuToggle, profileOrFollowing, clickMenuItem, followOr, goBack } = props
     // 表示中のユーザ情報
     const { id: member_id, name, user_id, icon, header } = member
     const { followerUsers, followUsers } = props
@@ -166,7 +168,7 @@ const MyProfile = (props) => {
             {(() => {
                 switch (menuMode) {
                     case "post":
-                        return (<PostArea articles={articles} member={member} />)
+                        return (<PostArea articles={articles} member={member} commentToggle={commentToggle} getArticleInfo={getArticleInfo}/>)
                         break;
                     case "rep":
                         break;
@@ -192,7 +194,7 @@ const PostArea = (props) => {
         return (
             <div>
                 {props.articles.map((article, i) => {
-                    if (article.id != undefined) return (<UserPost key={i} article={article} member={props.member} />)
+                    if (article.id != undefined) return (<UserPost key={i} article={article} member={props.member} commentToggle={props.commentToggle} getArticleInfo={props.getArticleInfo} />)
                 })}
             </div>
         )
@@ -202,9 +204,10 @@ const PostArea = (props) => {
 export const UserPost = (props) => {
     const { created_at, content, id: articleId, postImageUrl } = props.article
     const { id: memberId, icon, header, name, user_id } = props.member
+    const {commentToggle,getArticleInfo}=props
     return (
-        <Link  to={"/status/"+articleId} style={{textDecoration:"none",color:"white"}}><div className="article-hover">
-            <div style={{ padding: "10px 0", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
+        <div className="article-hover">
+            <Link  to={"/status/"+articleId} style={{textDecoration:"none",color:"white"}}><div style={{ padding: "10px 0", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
 
                 {/* ブロック1 */}
                 <div style={{ margin: "0 10px" }} aria-label="ユーザアイコン">
@@ -249,11 +252,11 @@ export const UserPost = (props) => {
 
                 </div>
 
-            </div>
+            </div></Link>
             {/* いいねボタンなど */}
             <div style={{ width: "100%", display: "inline-flex", paddingBottom: "2px", borderBottom: "1px solid rgb(48, 60, 67)" }}>
                 <div id="prof-menu" className="post-button" align="center" >
-                    <div className="blue-hover rep-button" >
+                    <div onClick={() => { commentToggle();getArticleInfo(articleId)}} className="blue-hover rep-button" >
                         <img src={rep} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
                     </div>
 
@@ -277,7 +280,7 @@ export const UserPost = (props) => {
             </div>
         </div>
 
-        </Link>
+        
     )
 }
 

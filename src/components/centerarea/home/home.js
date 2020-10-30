@@ -30,7 +30,7 @@ class Home extends React.Component {
     }
     render() {
         const { articles, memberIds } = this.props.timeLineInfo
-        console.log(this.props.dataGet)
+        const {commentToggle,repInfo,getArticleInfo}=this.props
         return (
             <div className="main-container" style={{ overflow: "auto" }}>
                 {/* みんなの投稿 */}
@@ -87,7 +87,7 @@ class Home extends React.Component {
 
                 </div>
                 <div>
-                    {articles.map(article => (<UserPost article={article} member={memberIds[article.member_id]} />))}
+                    {articles.map(article => (<UserPost article={article} member={memberIds[article.member_id]} commentToggle={commentToggle} getArticleInfo={getArticleInfo} />))}
 
                 </div>
             </div >

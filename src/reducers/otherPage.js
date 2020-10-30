@@ -1,7 +1,8 @@
 // 初期状態
 const initialState = {
     // ホーム画面で投稿するときの投稿するデータの形
-    article:{article:[],member:[]}
+    article: { article: [], member: [] },
+    repArticleId:undefined
 
 };
 
@@ -19,7 +20,11 @@ export default (state = initialState, action) => {
                     ...state,
                     article:action.payload.response
                 }
-             
+        case 'REP_INFO':
+            return {
+                ...state,
+                repArticleId:action.payload.articleId
+            }
         default:
             return state;
     }

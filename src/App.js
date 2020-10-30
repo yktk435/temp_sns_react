@@ -12,6 +12,7 @@ import CreateAccount from './containers/createAccount'
 
 import { ProfileEditPage } from './components/otherPage'
 import { PostPage } from './components/otherPage'
+import { CommentPage } from './components/otherPage'
 // import CreateAccount from './components/createAccount'
 class App extends Component {
   componentWillMount() {
@@ -33,6 +34,8 @@ class App extends Component {
         <ProfileEditPage {...this.props} />
         {/* 投稿ページ */}
         <PostPage {...this.props} />
+        {/* 返信ページ */}
+        <CommentPage {...this.props} />
       </div>
     )
 

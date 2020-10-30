@@ -45,6 +45,15 @@ const mapDispatchToProps = dispatch => ({
   getTimeLine() {
     dispatch(fetch.getTimeLine())
   },
+  commentToggle() {
+    dispatch(fetch.commentToggle())
+  },
+  repInfo(articleId) {
+    dispatch(fetch.repInfo(articleId))
+  },
+  getArticleInfo(articleId) {
+    dispatch(fetch.getArticleInfo(articleId))
+  },
   
 });
 
