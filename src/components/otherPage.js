@@ -10,7 +10,7 @@ import good from '../components/images/good.png'
 import rep from '../components/images/rep.png'
 import retweet from '../components/images/retweet.png'
 import point from '../components/images/point.png'
-import { UserPost } from '../components/centerarea/profile/MyProfile'
+import UserPost from '../containers/UserPost'
 
 export class ProfileEditPage extends React.Component {
     render() {

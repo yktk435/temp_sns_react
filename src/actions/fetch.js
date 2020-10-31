@@ -277,7 +277,7 @@ const searchRes = (responce, error) => ({
 
 export const search = (keyword) => {
   return async (dispatch, getState) => {
-    
+
     const option = {
       method: 'get',
       headers: {
@@ -285,7 +285,7 @@ export const search = (keyword) => {
         'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
       },
     }
-    
+
     const queryString = qs.stringify({
       keyword,
     });
@@ -365,9 +365,9 @@ export const pushCreateAccountButton = (data) => {
 /**********************************************/
 export const post = (requestData) => {
   return async (dispatch, getState) => {
-    
-    let array=Array.from(document.querySelectorAll("#filesend"))
-    const imageFile=array.find(i=>i.files.length==1)?array.find(i=>i.files.length==1).files[0]:null
+
+    let array = Array.from(document.querySelectorAll("#filesend"))
+    const imageFile = array.find(i => i.files.length == 1) ? array.find(i => i.files.length == 1).files[0] : null
 
 
     const formData = new FormData();
@@ -395,7 +395,7 @@ export const post = (requestData) => {
   };
 };
 
-const receivePostedRepData = (response,error) => ({
+const receivePostedRepData = (response, error) => ({
   type: 'RECEIVE_POSTED_REP_DATA',
   payload: {
     response,
@@ -403,16 +403,16 @@ const receivePostedRepData = (response,error) => ({
   }
 })
 
-export const postRep=(repArticleId, content)=>{
+export const postRep = (repArticleId, content) => {
   return async (dispatch, getState) => {
-    let array=Array.from(document.querySelectorAll("#filesend"))
+    let array = Array.from(document.querySelectorAll("#filesend"))
     const imageFile = array.find(i => i.files.length == 1) ? array.find(i => i.files.length == 1).files[0] : null
-    
+
     const formData = new FormData();
     formData.append('content', content);
     formData.append('articleId', repArticleId);
     formData.append('imageFile', imageFile);
-    
+
     const option = {
       method: 'post',
       headers: {
@@ -432,7 +432,7 @@ export const postRep=(repArticleId, content)=>{
       dispatch(receivePostedRepData(null, err));
     }
 
-   }
+  }
 }
 
 // 記事を取得したいuserId
@@ -570,7 +570,7 @@ export const getOtherUserInfo = (userId) => {
 
 // プロフィール編集
 
-export const inputUserName=(userName) => ({
+export const inputUserName = (userName) => ({
   type: 'INPUT_USERNAME_BY_EDIT',
   payload: {
     userName
@@ -637,3 +637,32 @@ export const repInfo = (articleId) => ({
     articleId
   }
 })
+// いいね
+export const goodToggleAction = (response, error) => ({
+  type: 'GOOD_TOGGLE',
+  payload: {
+    response,
+    error
+  }
+})
+
+export const goodToggle = (articleId) => {
+  return async (dispatch, getState) => {
+    const option = {
+      headers: {
+        'access_token': getAccesstoken(),
+        // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+    }
+    // ログインしていなければloginにリダイレクトの処理を書く
+    try {
+      const responce = await fetch('http://localhost:8000/api/good/' + articleId + '/edit', option);
+      const data = await responce.json();
+
+      if ('error' in data) throw data
+      dispatch(goodToggleAction(data, null,));
+    } catch (err) {
+      dispatch(goodToggleAction(null, err));
+    }
+  };
+}

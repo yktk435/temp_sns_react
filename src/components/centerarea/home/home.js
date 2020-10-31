@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-import { UserPost } from '../profile/MyProfile'
+import UserPost from '../../../containers/UserPost'
 
 // 画像
 import pic from '../../images/pic.png'
@@ -87,7 +87,7 @@ class Home extends React.Component {
 
                 </div>
                 <div>
-                    {articles.map(article => (<UserPost article={article} member={memberIds[article.member_id]} commentToggle={commentToggle} getArticleInfo={getArticleInfo} />))}
+                    {articles.map(article => (<UserPost article={article} member={memberIds[article.member_id]} />))}
 
                 </div>
             </div >

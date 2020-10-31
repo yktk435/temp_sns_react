@@ -10,7 +10,9 @@ const initialState = {
         auth: false,
         dataGet: false,
         followUsers: [],
-        followerUsers: []
+        followerUsers: [],
+        goodArticleIds: [],
+        commentArticleIds:[],
     },
     otherUser: {
         userName: undefined,
@@ -79,7 +81,7 @@ export default (state = initialState, action) => {
                     ...state.user,
                     errorObj: action.payload.errorObj,
                     error: true,
-                    dataGet: false
+                    dataGet: true
                 }
             }
 
@@ -167,7 +169,21 @@ export default (state = initialState, action) => {
                     ...state,
                     commentDisplay: 'none'
                 }
+        case 'GOOD_TOGGLE':
+            return action.payload.error
+                ? {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.error
+                }
+                : {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        goodArticleIds: action.payload.response
+                    }
 
+                }
         default:
             return state;
     }
