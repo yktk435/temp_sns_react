@@ -39,7 +39,9 @@ export default (state = initialState, action) => {
                     ...state,
                     user: {
                         ...state.user,
-                        error: true, auth: false, dataGet: false
+                        error: true,
+                        auth: false,
+                        dataGet: false
                     }
                 }
                 : {
@@ -81,13 +83,13 @@ export default (state = initialState, action) => {
                 }
             }
 
-        case 'LOGIN_ERROR_EITH_TOKEN':
+        case 'LOGIN_ERROR_WEITH_TOKEN':
             return {
                 ...state,
                 user: {
                     ...state.user,
                     errorObj: action.payload.errorObj,
-                    dataGet: false
+                    dataGet: true
                 }
             }
 
@@ -165,7 +167,7 @@ export default (state = initialState, action) => {
                     ...state,
                     commentDisplay: 'none'
                 }
-        
+
         default:
             return state;
     }

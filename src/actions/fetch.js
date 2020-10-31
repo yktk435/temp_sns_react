@@ -202,7 +202,7 @@ const loginError = (errorObj, error) => ({
   payload: { errorObj, error },
 })
 const loginErrorWithToken = (errorObj, error) => ({
-  type: 'LOGIN_ERROR_EITH_TOKEN',
+  type: 'LOGIN_ERROR_WEITH_TOKEN',
   payload: { errorObj, error },
 })
 const logoutAction = () => ({
