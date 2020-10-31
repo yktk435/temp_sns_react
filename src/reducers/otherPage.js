@@ -1,7 +1,8 @@
 // 初期状態
 const initialState = {
     // ホーム画面で投稿するときの投稿するデータの形
-    article: { article: [], member: [] ,comments:[],commentedMembers:[]},
+    article: { article: [], member: [] },
+    comment:{ articles: [], members: [] },
     repArticleId: undefined,
     
 
@@ -19,7 +20,7 @@ export default (state = initialState, action) => {
                 }
                 : {
                     ...state,
-                    article:action.payload.response
+                    ...action.payload.response
                 }
         case 'REP_INFO':
             return {
@@ -36,12 +37,7 @@ export default (state = initialState, action) => {
                     : {
                         ...state,
                         error: false,
-                        article: {
-                            ...state.article,
-                            comments:action.payload.response.comments,
-                            commentedMembers:action.payload.response.members
-                        }
-                        
+                        comment:action.payload.response
                     }
         default:
             return state;

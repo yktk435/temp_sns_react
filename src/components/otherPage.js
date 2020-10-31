@@ -232,22 +232,43 @@ export class PostPage extends React.Component {
 }
 
 export class Article extends React.Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        // if (nextProps.router!=null && nextState.router!=null) { 
+        //     if(nextProps.router.location.pathname!=nextState.router.location.pathname)return
+        // }
+        console.log("nextProps",nextProps)
+        console.log("nextState", nextState)
+        return true;
+    }
+    componentWillReceiveProps(nextProps, nextContext) {
+        console.log("nextProps",nextProps)
+        console.log("nextContext", nextContext)
+    }
     componentWillMount() {
         // その記事の情報を取得する
         const articleId = this.props.match.params.articleId
         this.props.getArticleInfo(articleId)
     }
     render() {
-        // 表示している記事のユーザ情報
-        console.log(this.props.member)
+        // 投稿した記事情報とそれを投稿したユーザ情報
+        const { article,member } = this.props.otherPage.article
+        // コメント記事軍とそれを投稿したユーザ軍
+        const { articles, members } = this.props.otherPage.comment
+        
+
         // 表示している記事関連
-        const { id: memberId, name, user_id, icon } = this.props.otherPage.article.member
-        const { id: articleId, created_at, content, postImageUrl } = this.props.otherPage.article.article
+        const { id: memberId, name, user_id, icon } = member
+        const { id: articleId, created_at, content, postImageUrl } = article
         // 表示している記事の返信記事とそのユーザ情報
         const { comments, commentedMembers } = this.props.otherPage.article
         // 関数
         const { goBack, commentToggle, getArticleInfo } = this.props
 
+
+
+        const hensinId=user_id
+        
+        
 
         // let icon = testpic
         // let user_id = "user_id"
@@ -364,7 +385,7 @@ export class Article extends React.Component {
                     </div>
                     {/* 返信 */}
                     <div style={{overflow:"auto"}}>
-                        {this.props.otherPage.article.comments.map(comment => <CommentParts comment={comment} commentedMembers={commentedMembers} commentedUserId={user_id} commentToggle={commentToggle} getArticleInfo={getArticleInfo}/>)}
+                        {articles.map(article => <CommentParts members={members} article={article} commentToggle={commentToggle}  getArticleInfo={getArticleInfo} hensinId={hensinId} />)}
 
                     </div>
 
@@ -377,20 +398,24 @@ export class Article extends React.Component {
 }
 
 export const CommentParts = (props) => {
-    // 返信されたユーザID
+    
 
 // 返信した維持の情報
-    const { id:commentId, created_at, content, postImageUrl, member_id } = props.comment
+    const { id:articleId, created_at, content, postImageUrl, member_id } = props.article
 
-    const commentedMember = props.commentedMembers.find(i => i.id == member_id)
+    const commentedMember = props.members.find(i => i.id == member_id)
     // 返信したユーザの情報
     const { name, user_id, icon } = commentedMember
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa')
     
     // 関数
-    const {commentToggle,getArticleInfo}=props
+    const { commentToggle, getArticleInfo } = props
+    // 特殊
+    const {hensinId}=props
+    
     return (
         <div className="article-hover">
-            {/* <Link to={"/status/" + articleId} style={{ textDecoration: "none", color: "white" }}> */}
+            <Link to={"/status/" + articleId} style={{ textDecoration: "none", color: "white" }}>
             <div style={{ padding: "10px 0", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
 
                 {/* ブロック1 */}
@@ -418,7 +443,7 @@ export const CommentParts = (props) => {
                     <div>
 
                         <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>返信先:<div style={{ display: "inline-flex", margin: "0 2px" }}>
-                            <a style={{ textDecoration: "none", color: "rgb(29, 161, 242)" }} >{props.commentedUserId}</a>
+                            <a style={{ textDecoration: "none", color: "rgb(29, 161, 242)" }} >{hensinId}</a>
                         </div>
                                     さん</div>
 
@@ -442,11 +467,11 @@ export const CommentParts = (props) => {
                 </div>
 
             </div>
-            {/* </Link> */}
+            </Link>
             {/* いいねボタンなど */}
             <div style={{ width: "100%", display: "inline-flex", paddingBottom: "2px", borderBottom: "1px solid rgb(48, 60, 67)" }}>
                 <div id="prof-menu" className="post-button" align="center" >
-                    <div onClick={() => { commentToggle(); getArticleInfo(commentId) }} className="blue-hover rep-button" >
+                    <div onClick={() => { commentToggle(); getArticleInfo(articleId) }} className="blue-hover rep-button" >
                         <img src={rep} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)" }} />
                     </div>
 
