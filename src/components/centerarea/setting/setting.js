@@ -7,12 +7,13 @@ class Setting extends React.Component{
     }
     render() {
         const { userId } = this.props
+        const {id,name,user_id,}=this.props.member
         return (
             <div className="main-container" style={{ overflow: "auto" }}>
                 <React.Fragment>
                     {/*  <!-- ユーザID --> */}
                     <div class="setting-outer" style={{ height: "30px" }}>
-                        <div class="setting-menu-inner">@{userId}</div>
+                        <div class="setting-menu-inner">@{user_id}</div>
                     </div>
                     {/* アカウント */}
                     <CenterItem id="account" itemName="アカウント" imageUrl={right}  divstyle={this.props.style[0]} clickMenuItem={this.props.clickMenuItem}/>

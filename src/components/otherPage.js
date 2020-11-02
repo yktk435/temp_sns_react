@@ -14,6 +14,7 @@ import UserPost from '../containers/UserPost'
 
 export class ProfileEditPage extends React.Component {
     render() {
+        const {id,name,user_id,icon,header }=this.props.userInfo.user.member
         const { inputUserId, inputPass, inputMail, pushCreateAccountButton, userName, userId, mail, pass, error } = this.props.userInfo.user
         const { inputUserName, saveChanges, menuToggle } = this.props
         const { inputUserNameByEdit } = this.props.userInfo
@@ -75,7 +76,7 @@ export class ProfileEditPage extends React.Component {
                     <div style={{ backgroundColor: "rgb(25, 39, 52)", padding: "1px 10px", margin: "15px", }}>
                         <div style={{ marginLeft: "30px", paddingTop: "5px", color: "rgb(136, 153, 166)", }}>
                             名前</div>
-                        <input placeholder={userName} onChange={(e) => inputUserName(e.target.value)} className="text-area" type="text" style={{ width: "550px", display: "block", margin: "0 auto", height: "25px", backgroundColor: "rgba(0, 0, 0, 0)", border: "1px solid rgba(0, 0, 0, 0)", borderBottom: "3px solid rgb(136, 153, 166)", }} />
+                        <input placeholder={name} onChange={(e) => inputUserName(e.target.value)} className="text-area" type="text" style={{ width: "550px", display: "block", margin: "0 auto", height: "25px", backgroundColor: "rgba(0, 0, 0, 0)", border: "1px solid rgba(0, 0, 0, 0)", borderBottom: "3px solid rgb(136, 153, 166)", }} />
 
                     </div>
 
@@ -217,6 +218,7 @@ export class PostPage extends React.Component {
                                     document.querySelector('#post-text2').innerText = ''
                                     post(requestData)
                                     clearTextBox()
+                                    menuToggle2()
                                 }} style={{ margin: "0 5px", }} className="btn btn--orange btn--radius" aria-label="投稿ボタン">投稿</a>
                             </div>
                         </div>
@@ -236,13 +238,9 @@ export class Article extends React.Component {
         // if (nextProps.router!=null && nextState.router!=null) { 
         //     if(nextProps.router.location.pathname!=nextState.router.location.pathname)return
         // }
-        console.log("nextProps",nextProps)
-        console.log("nextState", nextState)
         return true;
     }
     componentWillReceiveProps(nextProps, nextContext) {
-        console.log("nextProps",nextProps)
-        console.log("nextContext", nextContext)
     }
     componentWillMount() {
         // その記事の情報を取得する
@@ -406,7 +404,6 @@ export const CommentParts = (props) => {
     const commentedMember = props.members.find(i => i.id == member_id)
     // 返信したユーザの情報
     const { name, user_id, icon } = commentedMember
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa')
     
     // 関数
     const { commentToggle, getArticleInfo } = props

@@ -4,7 +4,11 @@ import * as fetch from '../actions/fetch'
 
 const mapStateToProps = (state, ownProps) => ({
     goodArticleIds: state.userInfo.user.goodArticleIds,
-    commentArticleIds:state.userInfo.user.commentArticleIds
+    commentArticleIds: state.userInfo.user.commentArticleIds,
+    photoArticleIds: state.userInfo.user.photoArticleIds,
+    commentInfo: state.profile.userInfo.commentArticleIds,
+    location:state.router.location,
+    
 })
 const mapDispatchToProps = dispatch => ({
     commentToggle() {

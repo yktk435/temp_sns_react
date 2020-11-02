@@ -11,18 +11,21 @@ const initialState = {
         dataGet: false,
         followUsers: [],
         followerUsers: [],
+        member: [],
+        articles: [],
         goodArticleIds: [],
-        commentArticleIds:[],
+        commentArticleIds: [],
+        photoArticleIds: [],
     },
-    otherUser: {
-        userName: undefined,
-        userId: undefined,
-        iconUrl: undefined,
-        headerUrl: undefined,
-        accessToken: undefined,
-        response: undefined,
-        error: false
-    },
+    // otherUser: {
+    //     userName: undefined,
+    //     userId: undefined,
+    //     iconUrl: undefined,
+    //     headerUrl: undefined,
+    //     accessToken: undefined,
+    //     response: undefined,
+    //     error: false
+    // },
     inputUserNameByEdit: undefined,
     display: 'none',
     displayPostPage: 'none',
@@ -183,6 +186,20 @@ export default (state = initialState, action) => {
                         goodArticleIds: action.payload.response
                     }
 
+                }
+        case 'RECEIVE_POST_DATA':
+            return action.payload.error
+                ? {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.error,
+                }
+                : {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        ...action.payload.responce
+                    }
                 }
         default:
             return state;

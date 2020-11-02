@@ -9,21 +9,24 @@ import { repInfo } from '../../../actions/fetch';
 
 const MyProfile = (props) => {
 
-    const { postObj, articles, style, menuMode, member } = props
+    const { postObj, articles, style, menuMode, member, goodArticleIds, commentArticleIds, photoArticleIds } = props
     // 関数
     const { getArticleInfo, commentToggle, menuToggle, profileOrFollowing, clickMenuItem, followOr, goBack } = props
     // 表示中のユーザ情報
     const { id: member_id, name, user_id, icon, header } = member
     const { followerUsers, followUsers } = props
     // 自分のユーザ情報
-    const { userName, userId, followUsers: myFollowUsers, followerUsers: myFollowerUsers } = props.userInfo.user
+    const { followUsers: myFollowUsers, followerUsers: myFollowerUsers, member: myMember } = props.userInfo.user
 
+    const { id, name: myName, icon: myIcon, header: myHeader, user_id: my_user_id } = myMember
+    
+    
     return (
         <div className="main-container" style={{ overflow: "auto" }}>
             {(() => {
                 // userId:自分のユーザID
                 // user_id:表示中のユーザID
-                if (userId != user_id) {
+                if (my_user_id != user_id) {
                     return (
                         <div onClick={() => { goBack() }} className="goback pointer" style={{
                             borderRadius: "100%",
@@ -58,7 +61,9 @@ const MyProfile = (props) => {
                     {(() => {
                         // userId:自分のユーザID
                         // user_id:表示中のユーザID
-                        if (userId == user_id) {
+                        console.log("my_user_id", my_user_id)
+                        console.log("user_id", user_id)
+                        if (my_user_id == user_id) {
                             return (
                                 <div className="icon-container" style={{ width: "170px", margin: "0px 0px 0px auto", height: "40px" }}>
                                     <a onClick={() => { menuToggle() }} className="a-to-block edit-prof" style={{ borderRadius: "100px", position: "relative", textDecoration: "none", border: "1px solid rgba(29,161,242,1.00)", color: "rgba(29,161,242,1.00)" }}>
@@ -111,7 +116,7 @@ const MyProfile = (props) => {
                         {/* <!-- ユーザ名 --> */}
                         <div style={{ paddingTop: "60px", fontSize: "20px", fontWeight: "bold" }}>{
                             (() => {
-                                if (userId == user_id) { return userName } else { return name }
+                                if (my_user_id == user_id) { return myName } else { return name }
                             })()
                         }</div>
                         {/* <!-- ユーザID --> */}
@@ -171,10 +176,25 @@ const MyProfile = (props) => {
                         return (<PostArea articles={articles} member={member} commentToggle={commentToggle} getArticleInfo={getArticleInfo} />)
                         break;
                     case "rep":
+                        return (<CommentArea articles={articles} member={member} commentArticleIds={commentArticleIds} />)
                         break;
                     case "pic":
+                        return (<PhotoArea articles={articles} member={member} photoArticleIds={photoArticleIds} />)
                         break;
                     case "good":
+                        if (typeof articles === 'undefined') {
+                            return (<p>読込中</p>)
+                        } else if (goodArticleIds.length == 0) {
+                            return (<div>なし</div>)
+                        } else {
+                            return (
+                                <div>
+                                    {goodArticleIds.map((item) =>
+                                        (<UserPost article={item.article} member={item.member} />)
+                                    )}
+                                </div>
+                            )
+                        }
                         break;
                 }
             })()}
@@ -185,6 +205,54 @@ const MyProfile = (props) => {
 
     )
 }
+const GoodArea = (props) => {
+    if (typeof props.articles === 'undefined') {
+        return (<p>読込中</p>)
+    } else {
+        return (
+            <div>
+                {props.articles.map((article, i) => {
+                    if (props.photoArticleIds.includes(article.id)) {
+                        return (<UserPost key={i} article={article} member={props.member} />)
+                    }
+                })}
+            </div>
+        )
+    }
+}
+const PhotoArea = (props) => {
+    if (typeof props.articles === 'undefined') {
+        return (<p>読込中</p>)
+    } else {
+        return (
+            <div>
+                {props.articles.map((article, i) => {
+                    if (props.photoArticleIds.includes(article.id)) {
+                        return (<UserPost key={i} article={article} member={props.member} />)
+                    }
+                })}
+            </div>
+        )
+    }
+}
+
+
+const CommentArea = (props) => {
+    if (typeof props.articles === 'undefined') {
+        return (<p>読込中</p>)
+    } else {
+        return (
+            <div>
+                {props.articles.map((article, i) => {
+                    let commentInfo = props.commentArticleIds.find(i => i.articleId == article.id)
+                    if (commentInfo) {
+                        return (<UserPost key={i} article={article} member={props.member} commentInfo={commentInfo} />)
+                    }
+                })}
+            </div>
+        )
+    }
+}
 
 const PostArea = (props) => {
 
@@ -194,7 +262,7 @@ const PostArea = (props) => {
         return (
             <div>
                 {props.articles.map((article, i) => {
-                    if (article.id != undefined) return (<UserPost key={i} article={article} member={props.member}  />)
+                    if (article.id != undefined) return (<UserPost key={i} article={article} member={props.member} />)
                 })}
             </div>
         )

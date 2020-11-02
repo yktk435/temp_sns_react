@@ -5,7 +5,8 @@ let filter = {
 const initialState = {
     userInfo: {
         articles: [],
-        member: []
+        member: [],
+        commentInfo:[]
     },
     style: [filter, {}, {},],
     menuMode: 'post',
@@ -74,6 +75,24 @@ export default (state = initialState, action) => {
                     userInfo: { ...action.payload.response },
                     followingMode: false
                 }
+        case 'RECEIVE_POST_DATA':
+
+            if (state.userInfo.member.id == action.payload.responce.member.id) {
+                return action.payload.error
+                    ? {
+                        ...state,
+                        error: true,
+                        errorMessage: action.payload.error,
+                    }
+                    : {
+                        ...state,
+                        userInfo: {
+                            ...state.userInfo,
+                            ...action.payload.responce
+                        }
+                    }
+            }
+
         default:
             return state;
     }

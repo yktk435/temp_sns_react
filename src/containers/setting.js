@@ -15,6 +15,7 @@ const mapStateToProps = (state, ownProps) => {
       style: state.setting.style,
       menuMode:state.setting.menuMode,
       error: false,
+      member:state.userInfo.user.member
     }
   )
 };

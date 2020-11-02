@@ -7,22 +7,29 @@ import retweet from '../../images/retweet.png'
 import left from '../../images/left.png'
 
 const UserPost = (props) => {
-    console.log(props)
-    const { created_at, content, id: articleId, postImageUrl } = props.article
-    const { id: memberId, icon, header, name, user_id } = props.member
-    // 関数
-    const { commentToggle, getArticleInfo,goodToggle } = props
     
+    // 記事情報
+    const { created_at, content, id: articleId, postImageUrl } = props.article
+    // それを投稿したユーザ情報
+    const { id: memberId, icon, header, name, user_id } = props.member
+    // 返信先のユーザID
+    let commentInfo = props.location.pathname.match(/home/)
+        ? props.commentArticleIds
+        :props.commentInfo;
+    
+    // 関数
+    const { commentToggle, getArticleInfo, goodToggle } = props
+
 
     const { goodArticleIds, commentArticleIds } = props
     let filter = "invert(10%) sepia(10%) saturate(100000%) contrast(60%)"
-    goodArticleIds.some(i => i == articleId)
+    goodArticleIds.some(i => i.article.id == articleId)
         ? filter = "invert(10%) sepia(10%) saturate(100000%) contrast(60%)"
         : filter = ""
 
-    
-    
-    
+
+
+
 
     return (
         <div className="article-hover">
@@ -31,9 +38,9 @@ const UserPost = (props) => {
                 {/* ブロック1 */}
                 <div style={{ margin: "0 10px" }} aria-label="ユーザアイコン">
                     <div style={{ margin: "5px" }}>
-                        <a className="" href="" aria-label="ユーザアイコン">
+                    <Link to={"/profile/" + user_id}><a className="" aria-label="ユーザアイコン">
                             <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={icon} alt="ユーザアイコン" />
-                        </a>
+                        </a></Link>
                     </div>
                 </div>
                 {/* ブロック2 */}
@@ -45,17 +52,18 @@ const UserPost = (props) => {
                             <a style={{ textDecoration: "none", color: "white", fontWeight: "bold" }} href="">{name}</a>
                         </div>
                         <div style={{ float: "left", margin: "0 15px" }}>
-                            <Link to={"/user/" + user_id} style={{ textDecoration: "none" }}><div style={{ color: " rgb(115, 129, 136)" }} href="">@{user_id}</div></Link>
+                            <Link to={"/profile/" + user_id} style={{ textDecoration: "none" }}><div style={{ color: " rgb(115, 129, 136)" }} href="">@{user_id}</div></Link>
                         </div>
                         <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>{created_at}</div>
                     </div>
                     {/* <!-- 投稿内容 --> */}
                     <div>
                         {(() => {
-                            if (commentArticleIds.some(i => i==articleId)) {
+                            const comment=commentInfo.find(i=>i.articleId==articleId)
+                            if (comment) {
                                 return (
                                     <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>返信先:<div style={{ display: "inline-flex", margin: "0 2px" }}>
-                                        <a style={{ textDecoration: "none", color: "rgb(29, 161, 242)" }} >{user_id}</a>
+                                        <Link to={'/profile/'+comment.userId}><a style={{ textDecoration: "none", color: "rgb(29, 161, 242)" }} >{comment.userId}</a></Link>
                                     </div>
                                     さん</div>
                                 )
@@ -101,7 +109,7 @@ const UserPost = (props) => {
 
                 </div>
                 <div id="prof-menu" className="post-button" align="center" >
-                    <div onClick={() => { console.log('ss');goodToggle(articleId)}} className="blue-hover rep-button" >
+                    <div onClick={() => { goodToggle(articleId) }} className="blue-hover rep-button" >
                         <img src={good} style={{ width: "20px", position: "absolute", transform: "translate(-50%, 50%)", filter }} />
                     </div>
                 </div>

@@ -14,10 +14,7 @@ import retweet from '../../images/retweet.png'
 const createObjectURL = (window.URL || window.webkitURL).createObjectURL || window.createObjectURL;
 class Home extends React.Component {
     componentWillMount() {
-        console.log('componentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMountcomponentWillMount')
         // 古いトークンのままにやろうとしているからエラーになる
-        console.log(localStorage.getItem('access_token'))
-        console.log(this.props.dataGet)
         this.props.getTimeLine();
     }
 

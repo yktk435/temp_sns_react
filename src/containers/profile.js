@@ -4,11 +4,11 @@ import Profile from '../components/centerarea/profile/profile'
 import * as fetch from '../actions/fetch'
 import * as profile from '../actions/profile'
 import { withRouter } from 'react-router'
-import {goBack} from 'react-router-redux'
+import { goBack } from 'react-router-redux'
 const mapStateToProps = (state, ownProps) => {
     return (
         {
-            userInfo:state.userInfo,
+            userInfo: state.userInfo,
             userName: state.userInfo.user.userName,
             userId: state.userInfo.user.userId,
             iconUrl: state.userInfo.user.iconUrl,
@@ -36,16 +36,19 @@ const mapStateToProps = (state, ownProps) => {
             followerLength: state.profile.followerUsers.length,
             // フォロー数
             followLength: state.profile.followUsers.length,
-            followUsers:state.profile.followUsers,
+            followUsers: state.profile.followUsers,
             followerUsers: state.profile.followerUsers,
             followingStyle: state.profile.followingStyle,
             // フォロワーかフォロー中のどっちを見ているか
             followerMode: state.profile.followerMode,
 
             // 記事
-            articles:state.profile.userInfo.articles,
+            articles: state.profile.userInfo.articles,
             // そのアカウント情報
-            member:state.profile.userInfo.member
+            member: state.profile.userInfo.member,
+            goodArticleIds: state.profile.userInfo.goodArticleIds,
+            commentArticleIds: state.profile.userInfo.commentArticleIds,
+            photoArticleIds: state.profile.userInfo.photoArticleIds,
         }
     )
 };
@@ -71,8 +74,8 @@ const mapDispatchToProps = dispatch => ({
     profileOrFollowing(menuMode) {
         dispatch(profile.profileOrFollowing(menuMode))
     },
-    followOr(e,memberId) {
-        dispatch(fetch.followOr(e,memberId))
+    followOr(e, memberId) {
+        dispatch(fetch.followOr(e, memberId))
     },
     getUserInfoInPrrofile(userId) {
         dispatch(fetch.getUserInfoInPrrofile(userId))
