@@ -6,7 +6,7 @@ const initialState = {
     userInfo: {
         articles: [],
         member: [],
-        commentInfo:[]
+        commentInfo: []
     },
     style: [filter, {}, {},],
     menuMode: 'post',
@@ -92,7 +92,31 @@ export default (state = initialState, action) => {
                         }
                     }
             }
+        case 'ICON_IMAGE':
+            return {
+                ...state,
+                iconImageUrl: action.payload.imageUrl
+            }
+        case 'HEADER_IMAGE':
+            return {
+                ...state,
+                headerImageUrl: action.payload.imageUrl
+            }
+        case 'PROFILE_CHANGE':
+            return action.payload.error
+                ? {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.error,
+                }
+                : {
+                    ...state,
+                    userInfo: {
+                        ...state.userInfo,
+                        member:action.payload.response
+                    }
 
+                }
         default:
             return state;
     }

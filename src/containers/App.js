@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import App from '../App';
 import * as fetch from '../actions/fetch';
 import * as home from '../actions/home'
-
+import * as profile from '../actions/profile'
 
 
 const mapStateToProps = (state, ownProps) => ({
@@ -56,7 +56,16 @@ const mapDispatchToProps = dispatch => {
     postRep(repArticleId, content) {
       dispatch(fetch.postRep(repArticleId, content))
     },
-
+    iconImage(imageUrl) {
+      dispatch(profile.iconImage(imageUrl))
+    },
+    headerImage(imageUrl) {
+      dispatch(profile.headerImage(imageUrl))
+    },
+    profileChange(data) {
+      dispatch(fetch.profileChange(data))
+    },
+    
   })
 };
 

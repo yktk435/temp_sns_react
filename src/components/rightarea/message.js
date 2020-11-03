@@ -115,8 +115,8 @@ const MessageParts = (props) => {
         ? "right"
         : "left"
     const borderRadius = user_id == myUserId
-        ? "10px 10px 0 10px"
-        : "10px 10px 10px 0"
+        ? "50px 50px 0 50px"
+        : "50px 50px 50px 0"
     const backgroundColor = user_id == myUserId
         ? " rgb(29, 161, 242)"
         : "rgb(61, 84, 102)"

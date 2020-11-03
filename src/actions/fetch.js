@@ -557,7 +557,7 @@ export const getOtherUserInfo = (userId) => {
     }
     // ログインしていなければloginにリダイレクトの処理を書く
     try {
-      const responce = await fetch('http://localhost:8000/api/member/get_other_user/edit?userId=' + userId, option);
+      const responce = await fetch('http://localhost:8000/api/member/get_other_user/edit', option);
       const data = await responce.json();
 
       if ('error' in data) throw data
@@ -734,6 +734,49 @@ export const postDm = (data) => {
       dispatch(postDmAction(data, null));
     } catch (err) {
       dispatch(postDmAction(null, err));
+    }
+  };
+};
+const profileChangeAction = (response, error) => ({
+  type: "PROFILE_CHANGE",
+  payload: {
+    response,
+    error
+  }
+})
+
+
+// アイコン、ヘッダー名前、変更
+export const profileChange = (data) => {
+  return async (dispatch, getState) => {
+
+    
+    const icon = document.querySelector("#filesend-new-icon").files[0]
+    const header = document.querySelector("#filesend-new-header").files[0]
+
+    const formData = new FormData();
+    formData.append('input', data.input);
+    formData.append('icon', icon);
+    formData.append('header', header);
+    const option = {
+      method: 'post',
+      headers: {
+        // 'Content-Type': 'application/json',
+        'access_token': getAccesstoken(),
+        'X-HTTP-Method-Override': 'PUT'
+        // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+      body: formData
+    }
+    // dispatch(startRequest(category)); // categoryIdからcategoryに変更
+    try {
+      const responce = await fetch('http://localhost:8000/api/member/profilechange/', option);
+      const data = await responce.json();
+
+      if ('error' in data) throw data
+      dispatch(profileChangeAction(data, null));
+    } catch (err) {
+      dispatch(profileChangeAction(null, err));
     }
   };
 };

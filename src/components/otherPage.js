@@ -2,6 +2,7 @@ import React from 'react'
 import siteicon from './images/siteicon.png'
 import batsu from '../components/images/batsu2.png'
 import pic from '../components/images/pic.png'
+import camera from '../components/images/camera.png'
 import { menuToggle2 } from '../actions/fetch'
 import { Link } from 'react-router-dom';
 import left from '../components/images/left.png'
@@ -11,14 +12,28 @@ import rep from '../components/images/rep.png'
 import retweet from '../components/images/retweet.png'
 import point from '../components/images/point.png'
 import UserPost from '../containers/UserPost'
-
+const createObjectURL = (window.URL || window.webkitURL).createObjectURL || window.createObjectURL;
 export class ProfileEditPage extends React.Component {
+    handleChangeFile(e) {
+        const files = e.target.files;
+        // ②createObjectURLで、files[0]を読み込む
+        const imageUrl = files.length === 0 ? "" : createObjectURL(files[0]);
+        // ③setStateする！
+        
+        e.target.id == 'filesend-new-icon'
+            ? this.props.iconImage(imageUrl)
+            : this.props.headerImage(imageUrl)
+
+    }
     render() {
-        const {id,name,user_id,icon,header }=this.props.userInfo.user.member
+        const { id, name, user_id, icon, header } = this.props.userInfo.user.member
         const { inputUserId, inputPass, inputMail, pushCreateAccountButton, userName, userId, mail, pass, error } = this.props.userInfo.user
         const { inputUserName, saveChanges, menuToggle } = this.props
         const { inputUserNameByEdit } = this.props.userInfo
         const { display } = this.props.userInfo
+
+        const { iconImageUrl, headerImageUrl } = this.props.profile
+        const {profileChange}=this.props
 
         return (
             <div style={{
@@ -33,7 +48,7 @@ export class ProfileEditPage extends React.Component {
             }}>
                 <div style={{
                     width: "600px",
-                    height: "350px",
+                    height: "450px",
                     margin: 'auto',
                     backgroundColor: "rgba(20, 29, 38)",
                     borderRadius: "15px",
@@ -60,7 +75,7 @@ export class ProfileEditPage extends React.Component {
                             <img className="blue" src={batsu} style={{ width: "20px", position: "absolute" }} />
                         </div>
                         {/* <!-- 保存ボタン --> */}
-                        <div onClick={() => { saveChanges({ id: 'username', input: inputUserNameByEdit }) }}
+                        <div onClick={() => { profileChange({ input: inputUserNameByEdit }) }}
                             style={{
                                 marginBottom: "20px", borderRadius: "30px", height: "20px", textAlign: "center", width: "30px", fontSize: "15px",
                                 position: "absolute",
@@ -71,6 +86,74 @@ export class ProfileEditPage extends React.Component {
                             保存
                     </div>
                         プロフィールを編集</div>
+                    {/* ヘッダー画像 アイコン画像追加 */}
+                    <div style={{ position: "relative", paddingBottom: "60px" }}>
+                        <div style={{ position: "relative" }}>
+                            <img src={headerImageUrl ? headerImageUrl : header} className="header-image" alt="ヘッダ画像" style={{ filter: "contrast(0.4)" }} />
+                            <label>
+                                {/* <!-- ▽見せる部分 --> */}
+                                <span class="filelabel" title="ファイルを選択">
+                                    <div style={{
+                                        position: "absolute",
+                                        top: "50%",
+                                        left: "50%",
+                                        transform: "translate(-50%, -50%)",
+                                    }}>
+                                        <div className="a-to-block2 send-pic" style={{
+                                            borderRadius: "100%",
+                                            padding: "10px",
+                                            height: "21px",
+                                            width: "21px",
+                                            marginBottom: "5px",
+                                            position: "relative"
+                                        }}><img style={{
+                                            position: "absolute",
+                                            top: "50%",
+                                            left: "50%",
+                                            transform: "translate(-50%, -50%)",
+                                        }} src={camera} className="image-icon" alt="＋画像" />
+                                        </div>
+                                    </div>
+
+                                </span>
+                                {/* <!-- ▽本来の選択フォームは隠す --> */}
+                                <input style={{ display: 'none' }} type="file" id="filesend-new-header" name="photo" accesst=".jpg,image/jpeg,image/png" onChange={(e) => this.handleChangeFile(e)} />
+                            </label>
+                        </div>
+                        {/* <!-- ユーザ画像 --> */}
+                        <a className="user-image-a" style={{ top: "200px" }}>
+                            <img style={{ filter: "contrast(0.4)", backgroundColor: "rgb(20, 29, 38)" }} src={iconImageUrl ? iconImageUrl : icon} alt="ユーザ画像" className="user-image-image-tag" />
+                            <label>
+                                {/* <!-- ▽見せる部分 --> */}
+                                <span class="filelabel" title="ファイルを選択">
+                                    <div style={{
+                                        position: "absolute",
+                                        top: "50%",
+                                        left: "50%",
+                                        transform: "translate(-50%, -50%)",
+                                    }}>
+                                        <div className="a-to-block2 send-pic" style={{
+                                            borderRadius: "100%",
+                                            padding: "10px",
+                                            height: "21px",
+                                            width: "21px",
+                                            marginBottom: "5px",
+                                            position: "relative"
+                                        }}><img style={{
+                                            position: "absolute",
+                                            top: "50%",
+                                            left: "50%",
+                                            transform: "translate(-50%, -50%)",
+                                        }} src={camera} className="image-icon" alt="＋画像" />
+                                        </div>
+                                    </div>
+
+                                </span>
+                                {/* <!-- ▽本来の選択フォームは隠す --> */}
+                                <input style={{ display: 'none' }} type="file" id="filesend-new-icon" name="photo" accesst=".jpg,image/jpeg,image/png" onChange={(e) => this.handleChangeFile(e)} />
+                            </label>
+                        </a>
+                    </div>
 
                     {/* 名前 */}
                     <div style={{ backgroundColor: "rgb(25, 39, 52)", padding: "1px 10px", margin: "15px", }}>
@@ -80,12 +163,14 @@ export class ProfileEditPage extends React.Component {
 
                     </div>
 
+
+
                 </div>
             </div>
         )
     }
 }
-const createObjectURL = (window.URL || window.webkitURL).createObjectURL || window.createObjectURL;
+
 export class PostPage extends React.Component {
     handleChangeFile(e) {
         const files = e.target.files;
@@ -249,10 +334,10 @@ export class Article extends React.Component {
     }
     render() {
         // 投稿した記事情報とそれを投稿したユーザ情報
-        const { article,member } = this.props.otherPage.article
+        const { article, member } = this.props.otherPage.article
         // コメント記事軍とそれを投稿したユーザ軍
         const { articles, members } = this.props.otherPage.comment
-        
+
 
         // 表示している記事関連
         const { id: memberId, name, user_id, icon } = member
@@ -264,9 +349,9 @@ export class Article extends React.Component {
 
 
 
-        const hensinId=user_id
-        
-        
+        const hensinId = user_id
+
+
 
         // let icon = testpic
         // let user_id = "user_id"
@@ -382,8 +467,8 @@ export class Article extends React.Component {
                         </div>
                     </div>
                     {/* 返信 */}
-                    <div style={{overflow:"auto"}}>
-                        {articles.map(article => <CommentParts members={members} article={article} commentToggle={commentToggle}  getArticleInfo={getArticleInfo} hensinId={hensinId} />)}
+                    <div style={{ overflow: "auto" }}>
+                        {articles.map(article => <CommentParts members={members} article={article} commentToggle={commentToggle} getArticleInfo={getArticleInfo} hensinId={hensinId} />)}
 
                     </div>
 
@@ -396,74 +481,74 @@ export class Article extends React.Component {
 }
 
 export const CommentParts = (props) => {
-    
 
-// 返信した維持の情報
-    const { id:articleId, created_at, content, postImageUrl, member_id } = props.article
+
+    // 返信した維持の情報
+    const { id: articleId, created_at, content, postImageUrl, member_id } = props.article
 
     const commentedMember = props.members.find(i => i.id == member_id)
     // 返信したユーザの情報
     const { name, user_id, icon } = commentedMember
-    
+
     // 関数
     const { commentToggle, getArticleInfo } = props
     // 特殊
-    const {hensinId}=props
-    
+    const { hensinId } = props
+
     return (
         <div className="article-hover">
             <Link to={"/status/" + articleId} style={{ textDecoration: "none", color: "white" }}>
-            <div style={{ padding: "10px 0", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
+                <div style={{ padding: "10px 0", display: "inline-flex", height: "auto", width: "560px" }} className="post-screen">
 
-                {/* ブロック1 */}
-                <div style={{ margin: "0 10px" }} aria-label="ユーザアイコン">
-                    <div style={{ margin: "5px" }}>
-                        <a className="" href="" aria-label="ユーザアイコン">
-                            <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={icon} alt="ユーザアイコン" />
-                        </a>
+                    {/* ブロック1 */}
+                    <div style={{ margin: "0 10px" }} aria-label="ユーザアイコン">
+                        <div style={{ margin: "5px" }}>
+                            <a className="" href="" aria-label="ユーザアイコン">
+                                <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={icon} alt="ユーザアイコン" />
+                            </a>
+                        </div>
                     </div>
-                </div>
-                {/* ブロック2 */}
-                <div style={{ display: "block", width: "inherit" }}>
+                    {/* ブロック2 */}
+                    <div style={{ display: "block", width: "inherit" }}>
 
-                    {/* <!-- ユーザ名 --> */}
-                    <div>
-                        <div style={{ float: "left", marginLeft: "5px" }}>
-                            <a style={{ textDecoration: "none", color: "white", fontWeight: "bold" }} href="">{name}</a>
+                        {/* <!-- ユーザ名 --> */}
+                        <div>
+                            <div style={{ float: "left", marginLeft: "5px" }}>
+                                <a style={{ textDecoration: "none", color: "white", fontWeight: "bold" }} href="">{name}</a>
+                            </div>
+                            <div style={{ float: "left", margin: "0 15px" }}>
+                                <Link to={"/user/" + user_id} style={{ textDecoration: "none" }}><div style={{ color: " rgb(115, 129, 136)" }} href="">@{user_id}</div></Link>
+                            </div>
+                            <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>{created_at}</div>
                         </div>
-                        <div style={{ float: "left", margin: "0 15px" }}>
-                            <Link to={"/user/" + user_id} style={{ textDecoration: "none" }}><div style={{ color: " rgb(115, 129, 136)" }} href="">@{user_id}</div></Link>
-                        </div>
-                        <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>{created_at}</div>
-                    </div>
-                    {/* <!-- 投稿内容 --> */}
-                    <div>
+                        {/* <!-- 投稿内容 --> */}
+                        <div>
 
-                        <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>返信先:<div style={{ display: "inline-flex", margin: "0 2px" }}>
-                            <a style={{ textDecoration: "none", color: "rgb(29, 161, 242)" }} >{hensinId}</a>
-                        </div>
+                            <div style={{ color: "rgb(115, 129, 136)", marginLeft: "15px" }}>返信先:<div style={{ display: "inline-flex", margin: "0 2px" }}>
+                                <a style={{ textDecoration: "none", color: "rgb(29, 161, 242)" }} >{hensinId}</a>
+                            </div>
                                     さん</div>
 
-                        <div className="font" style={{ padding: "5px 0", paddingRight: "50px", display: "inline-block" }} aria-label="投稿した文字を表示">{content}</div>
-                        {(() => {
-                            // 写真があれば表示
-                            if (postImageUrl != null) {
-                                return (
-                                    <div style={{ padding: "5px 0" }} aria-label="投稿した写真を表示">
-                                        <a href="" >
-                                            <img src={postImageUrl} alt="投稿した写真を表示" style={{ width: "450px", height: "250px", objectFit: "cover", borderRadius: "5%" }} />
-                                        </a>
-                                    </div>
-                                )
-                            }
-                        })()}
+                            <div className="font" style={{ padding: "5px 0", paddingRight: "50px", display: "inline-block" }} aria-label="投稿した文字を表示">{content}</div>
+                            {(() => {
+                                // 写真があれば表示
+                                if (postImageUrl != null) {
+                                    return (
+                                        <div style={{ padding: "5px 0" }} aria-label="投稿した写真を表示">
+                                            <a href="" >
+                                                <img src={postImageUrl} alt="投稿した写真を表示" style={{ width: "450px", height: "250px", objectFit: "cover", borderRadius: "5%" }} />
+                                            </a>
+                                        </div>
+                                    )
+                                }
+                            })()}
 
+
+                        </div>
 
                     </div>
 
                 </div>
-
-            </div>
             </Link>
             {/* いいねボタンなど */}
             <div style={{ width: "100%", display: "inline-flex", paddingBottom: "2px", borderBottom: "1px solid rgb(48, 60, 67)" }}>

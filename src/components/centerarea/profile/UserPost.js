@@ -39,7 +39,7 @@ const UserPost = (props) => {
                 <div style={{ margin: "0 10px" }} aria-label="ユーザアイコン">
                     <div style={{ margin: "5px" }}>
                     <Link to={"/profile/" + user_id}><a className="" aria-label="ユーザアイコン">
-                            <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={icon} alt="ユーザアイコン" />
+                            <img style={{ width: "50px", height: "50px", borderRadius: "50%" ,objectFit:"cover",objectPosition: "20% 45%"}} className="" src={icon} alt="ユーザアイコン" />
                         </a></Link>
                     </div>
                 </div>

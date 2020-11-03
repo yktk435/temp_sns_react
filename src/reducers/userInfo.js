@@ -26,7 +26,7 @@ const initialState = {
     //     response: undefined,
     //     error: false
     // },
-    inputUserNameByEdit: undefined,
+    inputUserNameByEdit: '',
     display: 'none',
     displayPostPage: 'none',
     commentDisplay: 'none',
@@ -207,27 +207,45 @@ export default (state = initialState, action) => {
                 }
         case 'GET_DM':
             return action.payload.error
-            ? {
-                ...state,
-                error: true,
-                errorMessage: action.payload.error,
-            }
-            : {
-                ...state,
-                dm: action.payload.response
+                ? {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.error,
+                }
+                : {
+                    ...state,
+                    dm: action.payload.response
                 }
         case 'RECEIVE_POST_DM':
             return action.payload.error
-            ? {
-                ...state,
-                error: true,
-                errorMessage: action.payload.error,
-            }
-            : {
-                ...state,
-                dm: action.payload.response
+                ? {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.error,
                 }
+                : {
+                    ...state,
+                    dm: action.payload.response
+                }
+        case 'PROFILE_CHANGE':
+            return action.payload.error
+                ? {
+                    ...state,
+                    error: true,
+                    errorMessage: action.payload.error,
+                }
+                : {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        userName: action.payload.response.name,
+                        userId: action.payload.response.user_id,
+                        iconUrl: action.payload.response.icon,
+                        headerUrl: action.payload.response.header,
+                        member: action.payload.response
+                    }
 
+                }
         default:
             return state;
     }

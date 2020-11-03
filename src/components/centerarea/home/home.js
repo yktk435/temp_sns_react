@@ -34,7 +34,7 @@ class Home extends React.Component {
                 <div style={{ width: "100%", display: "inline-flex", borderBottom: "5px solid rgb(48, 60, 67)" }} >
                     {/* <!-- ユーザ情報 --> */}
                     <div style={{ margin: "5px" }}>
-                        <img style={{ width: "50px", height: "50px", borderRadius: "50%" }} className="" src={this.props.iconUrl} alt="ユーザアイコン" />
+                        <img style={{ width: "50px", height: "50px", borderRadius: "50%" ,objectFit:"cover",objectPosition: "20% 45%"}} className="" src={this.props.iconUrl} alt="ユーザアイコン" />
                     </div>
                     {/* <!-- 投稿内容 --> */}
                     <div style={{ display: "block", width: "inherit" }}>
