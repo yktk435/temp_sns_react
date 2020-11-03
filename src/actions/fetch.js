@@ -666,3 +666,74 @@ export const goodToggle = (articleId) => {
     }
   };
 }
+
+/**********************************************/
+// DM関連
+/**********************************************/
+const getDmAction = (response, error) => ({
+  type: 'GET_DM',
+  payload: { response, error },
+});
+
+export const getDm = () => {
+  return async (dispatch, getState) => {
+    const option = {
+      headers: {
+        'access_token': getAccesstoken(),
+        // 'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+    }
+    // ログインしていなければloginにリダイレクトの処理を書く
+    try {
+      const responce = await fetch('http://localhost:8000/api/message', option);
+      const data = await responce.json();
+
+      if ('error' in data) throw data
+      dispatch(getDmAction(data, null,));
+    } catch (err) {
+      dispatch(getDmAction(null, err));
+    }
+  };
+}
+
+// DM送信
+
+const postDmAction = (response, error) => ({
+  type: "RECEIVE_POST_DM",
+  payload: {
+    response,
+    error
+  }
+})
+
+export const postDm = (data) => {
+  return async (dispatch, getState) => {
+
+    
+    const imageFile = document.querySelector("#filesend-dm").files[0]
+
+    const formData = new FormData();
+    formData.append('text', data.text);
+    formData.append('targetId', data.targetId);
+    formData.append('imageFile', imageFile);
+    const option = {
+      method: 'post',
+      headers: {
+        // 'Content-Type': 'application/json',
+        'access_token': getAccesstoken(),
+        'X-CSRF-TOKEN': '5xFoCpfLihSVCf6gU8mY0Ko1n0HVYHbclMQFPSXj',
+      },
+      body: formData
+    }
+    // dispatch(startRequest(category)); // categoryIdからcategoryに変更
+    try {
+      const responce = await fetch('http://localhost:8000/api/message', option);
+      const data = await responce.json();
+
+      if ('error' in data) throw data
+      dispatch(postDmAction(data, null));
+    } catch (err) {
+      dispatch(postDmAction(null, err));
+    }
+  };
+};

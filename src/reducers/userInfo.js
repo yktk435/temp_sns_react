@@ -30,6 +30,10 @@ const initialState = {
     display: 'none',
     displayPostPage: 'none',
     commentDisplay: 'none',
+    dm: {
+        messages: [],
+        members: [],
+    },
 
 };
 
@@ -201,6 +205,29 @@ export default (state = initialState, action) => {
                         ...action.payload.responce
                     }
                 }
+        case 'GET_DM':
+            return action.payload.error
+            ? {
+                ...state,
+                error: true,
+                errorMessage: action.payload.error,
+            }
+            : {
+                ...state,
+                dm: action.payload.response
+                }
+        case 'RECEIVE_POST_DM':
+            return action.payload.error
+            ? {
+                ...state,
+                error: true,
+                errorMessage: action.payload.error,
+            }
+            : {
+                ...state,
+                dm: action.payload.response
+                }
+
         default:
             return state;
     }

@@ -39,7 +39,6 @@ export const RightAreaSetting = (props) => {
     
     return (
         <div className="main right border" style={{ overflow: "auto", height: "100vh", width: "350px", display: props.display }}>
-            <React.Fragment>
                 {/* <!-- 設定項目 --> */}
                 <div class="menu-name-parent" aria-label="メニュー名">
                     <div class="menu-name" aria-label="メニュー名">{props.menuMode}</div>
@@ -54,8 +53,6 @@ export const RightAreaSetting = (props) => {
                     <Route path="/setting/security" component={ChangeUserId} />
                     {/* <Route path="/setting/notification" component={Notification} /> */}
                 </Switch>
-
-            </React.Fragment>
         </div>
     )
 }

@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Home from '../../containers/home'
 // import { Switch, Route, Redirect } from 'react-router-dom';
 import Notification from './notification/notification'
-import Dm from './dm/dm'
+import Dm from '../../containers/dm'
 import Profile from '../../containers/profile'
 
 import Setting from '../../containers/setting'

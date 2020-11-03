@@ -280,6 +280,9 @@ div.left>a {
 #filesend{
   display: none;
 }
+#filesend-dm{
+  display: none;
+}
 .send-pic:hover{
   background-color: rgba(90, 230, 255, 0.068);
   cursor: pointer;
@@ -640,4 +643,21 @@ button.btn {
 
 .article-hover:hover{
   background-color: rgb(255 255 255/5%);
+}
+
+
+/* DMのメッセージデザイン */
+.message{
+  background-color: rgb(29, 161, 242);
+  font-size: 15px;
+  color: white;
+  text-align: center;
+  line-height: 30px;
+  width:max-content;
+  word-wrap: break-word;
+  padding :0 15px;
+}
+
+.message-outer-right{
+  float: right;
 }
